@@ -1,0 +1,21 @@
+{
+  "parser": "babel-eslint",
+  "plugins": [
+    "mocha"
+  ],
+  "rules": {
+    "semi": [2, "always"],
+    "indent": 2,
+    "mocha/no-exclusive-tests": 2,
+    "consistent-return": 0,
+  },
+  "extends": "airbnb/base",
+  "globals": {
+    "describe": false,
+    "it": false,
+    "before": false,
+    "beforeEach": false,
+    "after": false,
+    "afterEach": false,
+  }
+}
