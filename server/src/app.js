@@ -1,20 +1,37 @@
 import http from 'http';
 import express from 'express';
+import morgan from 'morgan';
+import winston from 'winston';
+
+import config from './helper/config.js';
 
 const app = express();
 app.server = http.createServer(app);
 
 /**
- * Insert Express middleware
+ * Middleware
  */
+app.use(morgan('combined'));
 
 /**
- * [listen description]
- * @param  {[type]} config.api.port [description]
- * @param  {[type]} config.api.host [description]
- * @param  {[type]} (               [description]
- * @return {[type]}                 [description]
+ * Controller
+ */
+// ...
+
+/**
+ * Services
+ */
+// ...
+
+/**
+ * Listen for connections
  */
 app.server.listen(config.api.port, config.api.host, () => {
-  console.log('[%s] API startet on %s:%s', config.name, config.api.host, config.api.port);
+  winston.info(
+      '[%s] API startet on %s:%s in \'%s\'-mode',
+      config.name,
+      config.api.host,
+      config.api.port,
+      config.mode
+  );
 });

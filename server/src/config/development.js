@@ -3,7 +3,8 @@
  */
 export default {
 
-  name: 'Sambia Server (Development)',
+  name: 'Sambia Server',
+  mode: 'development',
 
   controller: [],
 
@@ -11,4 +12,9 @@ export default {
 
   service: [],
 
-}
+  api: {
+    port: 8080,
+    host: 'localhost',
+  },
+
+};
