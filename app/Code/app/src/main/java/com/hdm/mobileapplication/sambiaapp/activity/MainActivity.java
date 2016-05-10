@@ -1,8 +1,9 @@
 package com.hdm.mobileapplication.sambiaapp.activity;
 
-import android.content.Context;
-import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -10,22 +11,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.hdm.mobileapplication.sambiaapp.pages.MyAdapter;
 import com.hdm.mobileapplication.sambiaapp.pages.MyViewPager;
 import com.hdm.mobileapplication.sambiaapp.pages.NavBar;
 import com.hdm.mobileapplication.sambiaapp.R;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
 import com.hdm.mobileapplication.sambiaapp.listener.MainActivityListener;
-import com.hdm.mobileapplication.sambiaapp.readers.PropertyReader;
 
 public class MainActivity extends AppCompatActivity implements
         MainActivityListener,
@@ -45,9 +39,6 @@ public class MainActivity extends AppCompatActivity implements
     private Toolbar toolbar;
 
 
-    private PropertyReader propertyReader;
-    private Context context;
-    private Properties properties;
 
 
     @Override
@@ -65,20 +56,11 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initConfiguration();
         intiLayout();
         initStartPage(0);
 
-        context = this;
-        propertyReader = new PropertyReader(context);
-        properties = propertyReader.getMyProperties("configuration.properties");
-        String a = properties.getProperty("hello");
-
-        if( a!= null) {
-            Toast.makeText(this, a, Toast.LENGTH_LONG).show();
-        }
-
     }
-
 
 
 
@@ -167,9 +149,60 @@ public class MainActivity extends AppCompatActivity implements
      *******************************************/
 
 
+
+
+
+
+    private void initConfiguration() {
+
+        EventManager.init();
+        FileHandler fl = new FileHandler(this);
+        fl.initPropertyReader();
+
+//        // Create Main Folder
+//        String mainFolder = fl.getPropertiesFromAssets("configuration.properties")
+//                .getProperty("mainFolder");
+//        fl.createExternalFolder(mainFolder);
+
+        // Create Main ImageFolder
+        String imageFolder = fl.getPropertiesFromAssets("configuration.properties")
+                .getProperty("imageFolder");
+        fl.createExternalFolder(imageFolder);
+
+
+        String jsonString = fl.readFromAssets(this, "activitys.json");
+        MyJsonParser mJasonParser = new MyJsonParser();
+        mJasonParser.createOjectFromJson("activitys", jsonString);
+
+
+
+        int a = R.drawable.onfarmwork_bagging;
+        int b = R.drawable.onfarmwork_weeding;
+        int[] resources = new int[] {a, b};
+        fl.CopyImagesFromResourceToStorage(resources, imageFolder);
+
+
+
+        EventManager.getInstance().createImageMap();
+
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ALPHA_8;
+        options.inSampleSize = 4; //reduce quality
+
+        String imgPath = Environment.getExternalStorageDirectory() + "/" + "SambiaApp/Images/" + "onfarmwork_bagging.png";
+        Bitmap bitmap = BitmapFactory.decodeFile(imgPath, options);
+        EventManager.getInstance().putImage("onfarmwork_bagging", bitmap);
+    }
+
+
+
+
+
+
+
+
     private void intiLayout() {
-
-
         mPager = (MyViewPager) findViewById(R.id.pager);
         mAdapter = new MyAdapter(getSupportFragmentManager());
         mPager.setAdapter(mAdapter);
@@ -186,9 +219,6 @@ public class MainActivity extends AppCompatActivity implements
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
-//        getSupportActionBar().setHomeButtonEnabled(true);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -212,6 +242,10 @@ public class MainActivity extends AppCompatActivity implements
 //                ? R.drawable.ic_action_photo
 //                : R.drawable.ic_action_info);
 //        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-
     }
+
+
+
+
+
 }

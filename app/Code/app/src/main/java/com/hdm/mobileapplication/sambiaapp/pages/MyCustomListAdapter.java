@@ -2,6 +2,9 @@ package com.hdm.mobileapplication.sambiaapp.pages;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.hdm.mobileapplication.sambiaapp.R;
+import com.hdm.mobileapplication.sambiaapp.activity.EventManager;
 
 import java.util.ArrayList;
 import java.util.TreeSet;
@@ -81,13 +85,13 @@ public class MyCustomListAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
 
+            // Change Style of Row Item
             switch (type) {
 
                 case TYPE_ITEM:
                     convertView = mInflater.inflate(R.layout.rowlayout, null);
                     holder.textView = (TextView) convertView.findViewById(R.id.label);
                     holder.imageView = (ImageView) convertView.findViewById(R.id.icon);
-//                    Log.d("getView", "getView " + type + " " + convertView);
                     convertView.setClickable(false);
                     break;
 
@@ -103,8 +107,22 @@ public class MyCustomListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
+
+
         if(holder.textView != null) holder.textView.setText((CharSequence) mData.get(position));
-        if(holder.imageView != null) holder.imageView.setImageResource(R.drawable.ic_action_photo);
+
+        if(holder.imageView != null)  {
+
+
+            Bitmap bitmap = EventManager.getInstance().getImageMap().get("onfarmwork_bagging");
+            if (bitmap != null) {
+
+                holder.imageView.setImageBitmap(bitmap);
+            } else {
+
+                holder.imageView.setImageResource(R.drawable.ic_action_photo);
+            }
+        }
         return convertView;
     }
 

@@ -1,0 +1,31 @@
+{ "activitys": [
+    {
+      "group_activity": "On-Farm-Work",
+      "sub_activity": "Land Preparation ",
+      "activity": "Ploughing",
+      "id": 1,
+      "image": ""
+    },
+    {
+      "group_activity": "On-Farm-Work",
+      "sub_activity": "Land Preparation ",
+      "activity": "Harrowing",
+      "id": 2,
+      "image": ""
+    },
+    {
+      "group_activity": "On-Farm-Work",
+      "sub_activity": "Land Preparation",
+      "activity": "Ridging",
+      "id": 3,
+      "image": "a"
+    },
+    {
+      "group_activity": "On-Farm-Work",
+      "sub_activity": "Land Preparation ",
+      "activity": "Others",
+      "id": 4,
+      "image": "a"
+    }
+  ]
+}

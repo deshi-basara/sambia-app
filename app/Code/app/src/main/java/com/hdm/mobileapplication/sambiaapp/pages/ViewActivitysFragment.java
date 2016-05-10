@@ -16,6 +16,7 @@ import com.hdm.mobileapplication.sambiaapp.R;
  */
 public class ViewActivitysFragment extends Fragment{
 
+    private static final String TAG = "ViewActivitysFragment";
     // Store instance variables
     private String title;
     private int page;
@@ -44,9 +45,11 @@ public class ViewActivitysFragment extends Fragment{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_second, container, false);
 
+        StringBuffer strBuffer = new StringBuffer();
 
+        strBuffer = new StringBuffer();
         TextView tvLabel = (TextView) view.findViewById(R.id.tvLabel);
-        tvLabel.setText(page + " --------- " + title);
+        tvLabel.setText(strBuffer.toString());
 
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
@@ -57,8 +60,6 @@ public class ViewActivitysFragment extends Fragment{
                         .setAction("Action", null).show();
             }
         });
-
-
         return view;
     }
 }
