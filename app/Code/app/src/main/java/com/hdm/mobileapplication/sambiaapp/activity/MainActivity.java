@@ -99,6 +99,14 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
+
+    // Listen from ChooseActivityFragment if CurrentActivity has changed
+    @Override
+    public void setCurrentActivity(String currentActivity) {
+        EventManager.getInstance().setCurrentActivity(currentActivity);
+
+    }
+
     private void setHeading(int i) {
         setTitle(mAdapter.getPageTitle(mPager.getCurrentItem()));
         navBar.setItemChecked(i);
@@ -232,16 +240,16 @@ public class MainActivity extends AppCompatActivity implements
 
 
     private void initMenu(Menu menu) {
-//        // Add either a "photo" or "finish" button to the action bar, depending on which page
-//        // is currently selected.
-//        MenuItem item = menu.add(Menu.NONE, R.id.item_pageChange, Menu.NONE, mShowingBack
-//                ? R.string.action_photo
-//                : R.string.action_info);
-//
-//        item.setIcon(mShowingBack
-//                ? R.drawable.ic_action_photo
-//                : R.drawable.ic_action_info);
-//        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        // Add either a "photo" or "finish" button to the action bar, depending on which page
+        // is currently selected.
+        MenuItem item = menu.add(Menu.NONE, R.id.item_pageChange, Menu.NONE, mShowingBack
+                ? R.string.action_photo
+                : R.string.action_info);
+
+        item.setIcon(mShowingBack
+                ? R.drawable.ic_action_photo
+                : R.drawable.ic_action_info);
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
     }
 
 

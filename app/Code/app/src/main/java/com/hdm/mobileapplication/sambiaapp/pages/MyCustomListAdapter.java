@@ -4,6 +4,7 @@ package com.hdm.mobileapplication.sambiaapp.pages;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.hdm.mobileapplication.sambiaapp.R;
 import com.hdm.mobileapplication.sambiaapp.activity.EventManager;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
@@ -25,6 +27,8 @@ public class MyCustomListAdapter extends BaseAdapter {
 
 
     private ArrayList mData = new ArrayList();
+    private ArrayList mImage = new ArrayList();
+    private ArrayList mId = new ArrayList();
     private LayoutInflater mInflater;
     private TreeSet mSeparatorsSet = new TreeSet();
 
@@ -36,13 +40,17 @@ public class MyCustomListAdapter extends BaseAdapter {
 
 
 
-    public void addItem(final String item) {
+    public void addItem(final String item, String image, int id) {
         mData.add(item);
+        mImage.add(image);
+        mId.add(id);
         notifyDataSetChanged();
     }
 
-    public void addSeparatorItem(final String item) {
+    public void addSeparatorItem(final String item, String image) {
         mData.add(item);
+        mImage.add(image);
+
         // save separator position
         mSeparatorsSet.add(mData.size() - 1);
         notifyDataSetChanged();
@@ -85,6 +93,7 @@ public class MyCustomListAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
 
+
             // Change Style of Row Item
             switch (type) {
 
@@ -108,16 +117,18 @@ public class MyCustomListAdapter extends BaseAdapter {
         }
 
 
+        holder.id = (int) mId.get(position);
 
         if(holder.textView != null) holder.textView.setText((CharSequence) mData.get(position));
 
         if(holder.imageView != null)  {
 
 
-            Bitmap bitmap = EventManager.getInstance().getImageMap().get("onfarmwork_bagging");
-            if (bitmap != null) {
-
-                holder.imageView.setImageBitmap(bitmap);
+            String name = (String) mImage.get(position);
+            if (name != null) {
+                int d = getId(name, R.drawable.class);
+                holder.imageView.setImageResource(d);
+//                holder.imageView.setImageBitmap(bitmap);
             } else {
 
                 holder.imageView.setImageResource(R.drawable.ic_action_photo);
@@ -126,8 +137,17 @@ public class MyCustomListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public static class ViewHolder {
-        public TextView textView;
-        public ImageView imageView;
+
+
+
+
+    public int getId(String resourceName, Class<?> c) {
+        try {
+            Field idField = c.getDeclaredField(resourceName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
+            throw new RuntimeException("No resource ID found for: "
+                    + resourceName + " / " + c, e);
+        }
     }
 }

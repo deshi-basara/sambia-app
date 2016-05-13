@@ -7,4 +7,6 @@ public interface MainActivityListener {
 
 
     void setPage(int i);
+
+    void setCurrentActivity(String currentActivity);
 }

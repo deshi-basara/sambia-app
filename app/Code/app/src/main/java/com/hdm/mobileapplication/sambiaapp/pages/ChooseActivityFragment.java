@@ -9,17 +9,23 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
+import com.hdm.mobileapplication.sambiaapp.R;
+import com.hdm.mobileapplication.sambiaapp.activity.ActivityObject;
+import com.hdm.mobileapplication.sambiaapp.activity.EventManager;
+import com.hdm.mobileapplication.sambiaapp.listener.MainActivityListener;
+
+import java.util.ArrayList;
+
 /**
  * Created by Hannes on 05.05.2016.
  */
 public class ChooseActivityFragment extends ListFragment{
+    private final String TAG = "ChooseActivityFragment";
 
     // Store instance variables
-    private String title;
-    private int page;
-    private ListView listview;
-    private View view;
     private MyCustomListAdapter mAdapter;
+    MainActivityListener listener;
+
 
     // newInstance constructor for creating fragment with arguments
     public static ChooseActivityFragment newInstance(int page, String title) {
@@ -38,12 +44,22 @@ public class ChooseActivityFragment extends ListFragment{
         super.onActivityCreated(savedInstanceState);
 
         mAdapter = new MyCustomListAdapter(getActivity());
+        listener = (MainActivityListener) getActivity();
 
-        for (int i = 1; i < 50; i++) {
-            mAdapter.addItem("item " + i);
-            if (i % 4 == 0) {
-                mAdapter.addSeparatorItem("separator " + i);
-            }
+        ArrayList<ActivityObject> arrayList = EventManager.getInstance().getActivityObject();
+        int size = arrayList.size();
+
+        Log.d(TAG, "" + arrayList);
+
+        for (int i = 0; i < size; i++) {
+           ActivityObject mActivityObject = arrayList.get(i);
+           String name = mActivityObject.activity;
+           String image = mActivityObject.image;
+            int id = mActivityObject.id;
+//            if (i % 4 == 0) {
+//                mAdapter.addSeparatorItem("separator " + i);
+//            } else {
+            mAdapter.addItem(name, image, id);
         }
 
         setListAdapter(mAdapter);
@@ -60,6 +76,8 @@ public class ChooseActivityFragment extends ListFragment{
         // TODO implement some logic
         Log.d("item", "getSelectedItemPosition " + getListView().getCheckedItemCount());
         l.setItemChecked(position, true);
+        Log.d(TAG, "position " + l.getAdapter().getItem(position).toString());
+        listener.setCurrentActivity(l.getAdapter().getItem(position).toString());
     }
 
 

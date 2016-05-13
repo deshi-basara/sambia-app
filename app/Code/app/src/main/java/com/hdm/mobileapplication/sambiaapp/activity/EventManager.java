@@ -17,9 +17,25 @@ public class EventManager {
 
     private ActivityObjectMap mObjectMap = null;
     private ArrayList<ActivityObject> mActivityObject = null;
-
-
     private HashMap<String, Bitmap> imageMap;
+
+
+
+
+    private String currentActivity = null;
+
+    public String getCurrentActivity() {
+        return currentActivity;
+    }
+
+    public void setCurrentActivity(String currentActivity) {
+        this.currentActivity = currentActivity;
+    }
+
+
+
+
+
 
     public void createImageMap() {
         imageMap = new HashMap<String, Bitmap>();
@@ -54,19 +70,20 @@ public class EventManager {
         return mActivityObject;
     }
 
+    public void setActivityObjectArrayList(ArrayList<ActivityObject> activityObject) {
+        this.mActivityObject = activityObject;
+    }
+
 
     public ActivityObjectMap getObjectMap() {
         return mObjectMap;
     }
 
 
-    public void setObjectMap(ActivityObjectMap mObjectMap) {
+    public void setActivityObjectMap(ActivityObjectMap mObjectMap) {
         this.mObjectMap = mObjectMap;
     }
 
-    public void setActivityObject(ArrayList<ActivityObject> activityObject) {
-        this.mActivityObject = activityObject;
-    }
 
 
     public ActivityObject findById(int id) {
@@ -97,4 +114,8 @@ public class EventManager {
     }
 
 
+    public void setArrayMap(ArrayList<ActivityObject> arrayList) {
+
+
+    }
 }
