@@ -5,16 +5,11 @@ package org.hdm.app.sambia.views;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import org.hdm.app.sambia.R;
-import org.hdm.app.sambia.main.MainActivityListener;
-import org.hdm.app.sambia.main.ViewInteractionListener;
+import org.hdm.app.sambia.listener.MenuListener;
 
 
 public class MyImageView extends RelativeLayout implements View.OnClickListener{
@@ -32,20 +27,14 @@ public class MyImageView extends RelativeLayout implements View.OnClickListener{
 	private Context parentContext;
 
 
-	private ViewInteractionListener mListener;
+	private MenuListener mListener;
 
 	
 	
 	
 	
 	/* ############################  Constructor  ################################### */
-	
-	/**
-	 * Constructor called if View is created dynamic in ContentFragemnt
-	 * 
-	 * @param context of ContentFragment
-	 * 
-	 */
+
 	public MyImageView(Context context) {
 		super(context);
 		this.context = context;
@@ -53,15 +42,6 @@ public class MyImageView extends RelativeLayout implements View.OnClickListener{
 	}
 
 
-
-
-	/**
-	 * Constructor called if View is created in XML
-	 * 
-	 * @param context of ContentFragment
-	 * @param attr
-	 * 
-	 */
 	public MyImageView(Context context, AttributeSet attr) {
 		super(context, attr);
 		this.context = context;
@@ -84,13 +64,11 @@ public class MyImageView extends RelativeLayout implements View.OnClickListener{
 				context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		view = inflater.inflate(R.layout.view_slider, this, true);
-
-		iv_flip = view.findViewById(R.id.iv_flip);
 		view.setOnClickListener(this);
 	}
 
 
-	public void setOnCountReachedListener(ViewInteractionListener listener) {
+	public void setOnCountReachedListener(MenuListener listener) {
 		mListener = listener;
 	}
 
@@ -98,7 +76,7 @@ public class MyImageView extends RelativeLayout implements View.OnClickListener{
 
 	@Override
 	public void onClick(View v) {
-		mListener.mClickInteraction(v);
+//		mListener.mClickInteraction(v);
 	}
 
 

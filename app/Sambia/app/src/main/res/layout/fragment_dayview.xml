@@ -1,14 +1,21 @@
 
 
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#666"
-    android:padding="16dp"
-    android:gravity="bottom"
+    android:background="@android:color/holo_green_light"
     >
 
 
-</LinearLayout>
+    <org.hdm.app.sambia.views.MenuView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/frag_menu"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:elevation="5dp"
+        />
+
+</RelativeLayout>

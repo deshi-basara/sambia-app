@@ -8,23 +8,42 @@
     android:background="#a6c"
     >
 
-    <org.hdm.app.sambia.views.MyImageView
-        android:id="@+id/btn_flip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_margin="20dp" />
 
 
-    <FrameLayout
+    <ListView
+        android:id="@+id/activity_frag_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/swipeView"
+        />
+
+
+    <org.hdm.app.sambia.views.SwipeView
+        android:id="@+id/swipeView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/frag_menu"
+        android:background="@android:color/holo_green_light" />
+
+
+    <org.hdm.app.sambia.views.MenuView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/frag_menu"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
         android:layout_alignParentTop="true"
-
+        android:elevation="5dp"
         />
 
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

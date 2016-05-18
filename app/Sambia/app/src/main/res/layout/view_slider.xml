@@ -1,8 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <ImageView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/iv_flip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/ic_action_info"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerVertical="true"
+    android:layout_centerHorizontal="true"
+    android:padding="10dp"
+    android:orientation="horizontal"
+    >
+
+
+    <!--ListView
+
+    One Item
+    if one activity recorded show this one activity
+    if more than one activity show icons of actvity
+
+    if swipe down
+    show all activitys listetd in own row (same row layout as one activity)
+    -->
+
+
+    <ListView
+        android:id="@+id/lv_01"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/holo_green_dark"/>
+
+
+    <ImageButton
+        android:id="@+id/btn_play"
+        android:layout_weight="10"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@android:drawable/ic_media_play"
+        android:background="@android:color/transparent"/>
+
+</LinearLayout>
