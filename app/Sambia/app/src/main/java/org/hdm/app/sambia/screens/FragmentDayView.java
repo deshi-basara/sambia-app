@@ -22,12 +22,6 @@ public class FragmentDayView extends BaseFragemnt {
 
 
 
-    public FragmentDayView(FragmentContainer context) {
-        super(context);
-    }
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

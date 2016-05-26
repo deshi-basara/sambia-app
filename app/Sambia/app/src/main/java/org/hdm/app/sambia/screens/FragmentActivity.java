@@ -40,12 +40,6 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
 
-    public FragmentActivity(FragmentContainer context) {
-        super(context);
-    }
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -147,4 +141,5 @@ public class FragmentActivity extends BaseFragemnt implements
         Log.d(TAG, "paren " + parent +  " view " + view + " position " + position + " id " +id);
         Log.d(TAG, "" + view.getBackground());
     }
+
 }

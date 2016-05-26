@@ -5,5 +5,4 @@ package org.hdm.app.sambia.listener;
  */
 public interface MainListener {
     void flip();
-
 }

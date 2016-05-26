@@ -28,9 +28,6 @@ public class BaseFragemnt extends Fragment implements
     private MenuView menuView;
 
 
-    public BaseFragemnt(FragmentContainer context) {
-        this.listener = context;
-    }
 
 
 
@@ -59,8 +56,8 @@ public class BaseFragemnt extends Fragment implements
 
 
 
-    public void setMenuListener(MainListener listener) {
-    }
+
+
 
 
     @Override
@@ -73,4 +70,9 @@ public class BaseFragemnt extends Fragment implements
     public void mClickInteraction(View v) {
         this.listener.flip();
     }
+
+    public void setContext(FragmentContainer fragmentContainer) {
+        this.listener = fragmentContainer;
+    }
+
 }

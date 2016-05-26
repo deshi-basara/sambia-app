@@ -48,8 +48,11 @@ public class FragmentContainer extends Fragment  implements
 
 
 	private void initFragments() {
-		dayViewFragemnt = new FragmentDayView(this);
-		activityFragemnt = new FragmentActivity(this);
+		dayViewFragemnt = new FragmentDayView();
+		activityFragemnt = new FragmentActivity();
+
+		dayViewFragemnt.setContext(this);
+		activityFragemnt.setContext(this);
 	}
 
 
