@@ -33,12 +33,11 @@ public class BaseFragemnt extends Fragment implements
     }
 
 
-    public void initMenu(View view) {
 
+    public void initMenu(View view) {
         menuView = (MenuView) view.findViewById(R.id.frag_menu);
         menuView.setListener(this);
     }
-
 
 
     public void setMenuBackground(int i) {
@@ -46,15 +45,18 @@ public class BaseFragemnt extends Fragment implements
             menuView.setBackground(i);}
     }
 
+
     public void setMenuTitle(String title) {
         if (menuView != null) {
             menuView.setTitle(title);}
     }
 
+
     public void setMenuBtn(int d) {
         if (menuView != null) {
             menuView.setImage(d);}
     }
+
 
 
     public void setMenuListener(MainListener listener) {

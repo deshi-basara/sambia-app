@@ -28,7 +28,7 @@ public class MenuView extends RelativeLayout implements View.OnClickListener{
 
 	private TextView menu_tv;
 	private String title = "";
-	private LinearLayout menu_rl;
+	private RelativeLayout menu_rl;
 
 
 
@@ -57,7 +57,7 @@ public class MenuView extends RelativeLayout implements View.OnClickListener{
 				context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		view = inflater.inflate(R.layout.view_menu, this, true);
-		menu_rl = (LinearLayout) view.findViewById(R.id.menu_rl);
+		menu_rl = (RelativeLayout) view.findViewById(R.id.menu_rl);
 		menu_btn_flip = (ImageButton) view.findViewById(R.id.menu_btn_flip);
 		menu_tv = (TextView) view.findViewById(R.id.menu_tv);
 	}
@@ -66,7 +66,9 @@ public class MenuView extends RelativeLayout implements View.OnClickListener{
 
 
 	private void initListener() {
-		menu_btn_flip.setOnClickListener(this);
+//		menu_btn_flip.setOnClickListener(this);
+//		menu_rl.setOnClickListener(this);
+		view.setOnClickListener(this);
 	}
 
 
@@ -85,6 +87,7 @@ public class MenuView extends RelativeLayout implements View.OnClickListener{
 	public void setBackground(int id){
 		menu_rl.setBackgroundColor(getResources().getColor(id));
 	}
+
 
 
 	public void setImage(int imageId) {

@@ -23,12 +23,13 @@ import java.util.Properties;
 /**
  * Created by Hannes on 09.05.2016.
  */
-public class FileHandler {
+public class MyFileHandler {
 
-    private static final String TAG = "FileHandler";
+    private static final String TAG = "MyFileHandler";
+
 
     String state = Environment.getExternalStorageState();
-    File enviroment = Environment.getExternalStorageDirectory();
+    private File enviroment = Environment.getExternalStorageDirectory();
     private Context context;
     private Properties properties;
 
@@ -37,7 +38,7 @@ public class FileHandler {
      *************************/
 
 
-    public FileHandler(MainActivity mainActivity) {
+    public MyFileHandler(MainActivity mainActivity) {
         context = mainActivity;
     }
 
@@ -71,9 +72,10 @@ public class FileHandler {
     }
 
 
-
-    public boolean CopyImagesFromResourceToStorage(int[] resources, String imageFolder) {
+    public boolean CopyImagesFromResourceToStorage(int[] resources) {
         if (resources.length != 0) {
+            String imageFolder = getPropertiesFromAssets("configuration.properties")
+                    .getProperty("imageFolder");
             for (int i = 0; i < resources.length; i++) {
                 String fileName = enviroment + "/" + imageFolder + "/" +
                         context.getResources().getResourceEntryName(resources[i]) +
@@ -90,7 +92,6 @@ public class FileHandler {
             }
             return true;
         }
-
         return false;
     }
 
@@ -114,6 +115,7 @@ public class FileHandler {
         return (Environment.MEDIA_MOUNTED.equals(state));
     }
 
+
     public boolean isExternalFileExists(String filePath) {
         File f = new File(filePath);
         if (f.exists()) {
@@ -123,19 +125,26 @@ public class FileHandler {
     }
 
 
+
     /**************************
      * Create External Folder
      *************************/
-
     public String createExternalFolder(String folderName) {
+
+        if(!isExternalStorageWritable()) {
+            Toast.makeText(context, folderName + " External Storage is not writeble", Toast.LENGTH_SHORT).show();
+            return null;
+        }
         File f = new File(enviroment, folderName);
         if (!f.exists()) {
             f.mkdirs();
-            return f.toString();
+            if(f.exists()) return f.toString();
         }
         Toast.makeText(context, folderName + " already exists", Toast.LENGTH_SHORT).show();
         return null;
     }
+
+
 
 
     /**************************
@@ -159,4 +168,30 @@ public class FileHandler {
         }
         return properties;
     }
+
+
+
+
+
+    public void initFolder() {
+
+        // Create Main Folder
+        String mainFolder = getPropertiesFromAssets("configuration.properties")
+                .getProperty("mainFolder");
+        createExternalFolder(mainFolder);
+
+
+        // Create Main ImageFolder
+        String imageFolder = getPropertiesFromAssets("configuration.properties")
+                .getProperty("imageFolder");
+        createExternalFolder(imageFolder);
+
+    }
+
+
+
+    public File getEnvironment() {
+        return enviroment;
+    }
+
 }

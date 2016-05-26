@@ -81,9 +81,9 @@ public class FragmentContainer extends Fragment  implements
 		mShowingBack = true;
 
 		getFragmentManager().beginTransaction()
-//				.setCustomAnimations(
-//						R.animator.card_flip_right_in, R.animator.card_flip_right_out,
-//						R.animator.card_flip_left_in, R.animator.card_flip_left_out)
+				.setCustomAnimations(
+						R.animator.card_flip_right_in, R.animator.card_flip_right_out,
+						R.animator.card_flip_left_in, R.animator.card_flip_left_out)
 				.replace(R.id.container, dayViewFragemnt)
 				.addToBackStack(null)
 				.commit();

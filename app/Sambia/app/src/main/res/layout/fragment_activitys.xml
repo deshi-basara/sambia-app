@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#a6c"
     >
+
 
 
 
@@ -14,36 +14,33 @@
         android:id="@+id/activity_frag_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/swipeView"
+        android:layout_below="@+id/displayActivityView"
         />
 
 
-    <org.hdm.app.sambia.views.SwipeView
-        android:id="@+id/swipeView"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+    <org.hdm.app.sambia.views.DisplayActivityView
+        android:id="@+id/displayActivityView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/frag_menu"
-        android:background="@android:color/holo_green_light" />
+        android:background="@android:color/holo_green_dark" />
 
 
     <org.hdm.app.sambia.views.MenuView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/frag_menu"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:elevation="5dp"
-        />
-
-
-    <TextView
-        android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text=""
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_alignParentTop="true"
+        android:background="@drawable/myrect"/>
 
+
+    <ImageButton
+        android:id="@+id/btn_record"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@android:color/holo_red_light"
+        android:src="@android:drawable/ic_media_pause"
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>
