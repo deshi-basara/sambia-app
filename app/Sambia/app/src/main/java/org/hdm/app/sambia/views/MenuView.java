@@ -81,7 +81,8 @@ public class MenuView extends RelativeLayout implements View.OnClickListener{
 
 
 	public void setTitle(String title) {
-		menu_tv.setText(title);}
+//		menu_tv.setText(title);
+	}
 
 
 	public void setBackground(int id){

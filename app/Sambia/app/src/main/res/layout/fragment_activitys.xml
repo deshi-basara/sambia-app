@@ -1,12 +1,17 @@
-
-
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    xmlns:card="http://schemas.android.com/tools"
+    android:orientation="vertical">
 
+
+    <android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/displayActivityView"
+        android:background="@android:color/holo_red_light"/>
 
 
 
@@ -15,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/displayActivityView"
+        android:visibility="invisible"
         />
 
 
@@ -35,12 +41,4 @@
         android:layout_alignParentTop="true"
         android:background="@drawable/myrect"/>
 
-
-    <ImageButton
-        android:id="@+id/btn_record"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="@android:color/holo_red_light"
-        android:src="@android:drawable/ic_media_pause"
-        android:layout_alignParentBottom="true"/>
 </RelativeLayout>
