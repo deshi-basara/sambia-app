@@ -4,9 +4,11 @@ package org.hdm.app.sambia.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,12 +25,12 @@ public class MenuView extends RelativeLayout implements View.OnClickListener{
 
 	private View view;
 
-	private ImageButton menu_btn_flip;
 	private MenuListener listener;
 
 	private TextView menu_tv;
 	private String title = "";
 	private RelativeLayout menu_rl;
+	private ImageView menu_btn_flip;
 
 
 
@@ -58,7 +60,7 @@ public class MenuView extends RelativeLayout implements View.OnClickListener{
 
 		view = inflater.inflate(R.layout.view_menu, this, true);
 		menu_rl = (RelativeLayout) view.findViewById(R.id.menu_rl);
-		menu_btn_flip = (ImageButton) view.findViewById(R.id.menu_btn_flip);
+		menu_btn_flip = (ImageView) view.findViewById(R.id.menu_btn_flip);
 		menu_tv = (TextView) view.findViewById(R.id.menu_tv);
 	}
 
@@ -66,9 +68,11 @@ public class MenuView extends RelativeLayout implements View.OnClickListener{
 
 
 	private void initListener() {
+		menu_rl.setOnClickListener(this);
 //		menu_btn_flip.setOnClickListener(this);
-//		menu_rl.setOnClickListener(this);
-		view.setOnClickListener(this);
+//		menu_tv.setOnClickListener(this);
+//		view.setOnClickListener(this);
+
 	}
 
 
@@ -81,7 +85,7 @@ public class MenuView extends RelativeLayout implements View.OnClickListener{
 
 
 	public void setTitle(String title) {
-//		menu_tv.setText(title);
+		menu_tv.setText(title);
 	}
 
 
@@ -100,6 +104,7 @@ public class MenuView extends RelativeLayout implements View.OnClickListener{
 
 	@Override
 	public void onClick(View v) {
+		Log.d(TAG, "click" + v);
 		listener.mClickInteraction(view);
 	}
 }

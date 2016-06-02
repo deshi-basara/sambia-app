@@ -10,13 +10,14 @@
 
 
 
-    <ImageButton
+    <ImageView
         android:id="@+id/menu_btn_flip"
         android:layout_weight="5"
         android:layout_width="40dp"
         android:layout_height="match_parent"
         android:layout_marginRight="10dp"
         android:layout_alignParentRight="true"
+        android:padding="10dp"
         android:src="@drawable/ic_action_info"
         android:background="@android:color/transparent"
         />
@@ -29,14 +30,7 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:textSize="32sp"
+        android:textSize="28sp"
         android:textColor="@android:color/white"/>
 
-    <ImageButton
-        android:id="@+id/menu_btn_record"
-        android:layout_weight="5"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginRight="10dp"
-        android:background="@android:color/transparent"/>
 </RelativeLayout>

@@ -1,15 +1,10 @@
 package org.hdm.app.sambia.views;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Point;
 import android.util.AttributeSet;
-import android.view.Display;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import org.hdm.app.sambia.R;
@@ -79,7 +74,7 @@ public class DisplayActivityView extends RelativeLayout implements View.OnClickL
 		LayoutInflater inflater = (LayoutInflater)
 				context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		view = inflater.inflate(R.layout.view_dispaly_activity, this, true);
+		view = inflater.inflate(R.layout.view_recorded_activity, this, true);
 		view.setOnClickListener(this);
 
 	}
@@ -98,7 +93,7 @@ public class DisplayActivityView extends RelativeLayout implements View.OnClickL
 
 	@Override
 	public void onClick(View v) {
-		listener.mClickInteraction(view);
+	if(listener != null) listener.mClickInteraction(view);
 	}
 
 

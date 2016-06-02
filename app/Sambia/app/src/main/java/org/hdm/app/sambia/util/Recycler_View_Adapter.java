@@ -1,8 +1,8 @@
 package org.hdm.app.sambia.util;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +20,19 @@ import java.util.List;
 public class Recycler_View_Adapter extends RecyclerView.Adapter<View_Holder> implements ViewHolderListener {
 
     private final String TAG = "Recycler_View_Adapter";
-    private List<Data> list = Collections.emptyList();
+    public List<Data> list = null;
 
 
-    private Context context;
+
+    public SparseBooleanArray selectedItems = null;
 
 
-    public Recycler_View_Adapter(List<Data> list, Context context) {
+
+
+    public Recycler_View_Adapter(List<Data> list) {
+
         this.list = list;
-        this.context = context;
+        selectedItems = new SparseBooleanArray();
     }
 
 
@@ -37,9 +41,11 @@ public class Recycler_View_Adapter extends RecyclerView.Adapter<View_Holder> imp
     public View_Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         //Inflate the layout, initialize the View Holder
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_layout, parent, false);
-        View_Holder holder = new View_Holder(v);
-        return holder;
+        View_Holder holder = new View_Holder(v, this);
 
+        Log.d(TAG, "onCreateViewHolder");
+
+        return holder;
     }
 
 
@@ -50,10 +56,15 @@ public class Recycler_View_Adapter extends RecyclerView.Adapter<View_Holder> imp
     @Override
     public void onBindViewHolder(View_Holder holder, int position) {
         //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
-
         holder.setListener(this);
         holder.title.setText(list.get(position).title);
         holder.imageView.setImageResource(list.get(position).imageId);
+        holder.setBackground(list.get(position).getState());
+
+        // Set the selected state of the row depending on the position
+
+        Log.d(TAG, "onBilnde " + selectedItems.get(position, false));
+
     }
 
 
@@ -63,6 +74,8 @@ public class Recycler_View_Adapter extends RecyclerView.Adapter<View_Holder> imp
     public long getItemId(int position) {
         return super.getItemId(position);
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -75,11 +88,13 @@ public class Recycler_View_Adapter extends RecyclerView.Adapter<View_Holder> imp
         super.onAttachedToRecyclerView(recyclerView);
     }
 
+
     // Insert a new item to the RecyclerView on a predefined position
     public void insert(int position, Data data) {
         list.add(position, data);
         notifyItemInserted(position);
     }
+
 
 
     // Remove a RecyclerView item containing a specified Data object
@@ -96,22 +111,24 @@ public class Recycler_View_Adapter extends RecyclerView.Adapter<View_Holder> imp
 
 
 
+
     @Override
     public void didClickOnView(View view, int position) {
-        Log.d("Clicked", "Clicked");
-        if (view.getId() == R.id.title) {
-            Log.d("Clicked Title", "Clicked Title");
-        }
+
+        Log.d("onClick ",  "" + position );
     }
+
+
 
     @Override
     public void didClickOnView(View view, String title) {
         Log.d(TAG, "didClickOnView " + view.getId() + " "+  title);
-
     }
 
     @Override
     public void didLongClickOnView(View view, int position) {
-        Log.d("Long Clicked", "Clicked");
+
+        Log.d("onLongClick", ""+ position);
     }
+
 }

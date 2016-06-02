@@ -1,44 +1,47 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:card="http://schemas.android.com/tools"
     android:orientation="vertical">
-
-
-    <android.support.v7.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/displayActivityView"
-        android:background="@android:color/holo_red_light"/>
-
-
-
-    <ListView
-        android:id="@+id/activity_frag_lv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/displayActivityView"
-        android:visibility="invisible"
-        />
-
-
-    <org.hdm.app.sambia.views.DisplayActivityView
-        android:id="@+id/displayActivityView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/frag_menu"
-        android:background="@android:color/holo_green_dark" />
 
 
     <org.hdm.app.sambia.views.MenuView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/frag_menu"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@drawable/myrect"/>
+        android:background="@drawable/myrect"
+        android:elevation="6dp"/>
+    />
 
-</RelativeLayout>
+    <!--<org.hdm.app.sambia.views.DisplayActivityView-->
+        <!--android:id="@+id/displayActivityView"-->
+        <!--android:layout_weight="2.5"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_below="@+id/frag_menu"-->
+        <!--android:background="@android:color/holo_green_dark"-->
+        <!--android:elevation="5dp"/>-->
+
+
+    <android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/recyclerview"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/displayActivityView"
+        />
+
+
+
+    <!--<ListView-->
+        <!--android:id="@+id/activity_frag_lv"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@+id/displayActivityView"-->
+        <!--android:visibility="invisible"-->
+        <!--/>-->
+
+</LinearLayout>
