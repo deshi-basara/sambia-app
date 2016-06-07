@@ -61,10 +61,14 @@ public class MainActivity extends Activity  {
         fl.initPropertyReader();
         fl.initFolder();
 
+
         // Load Content
         String jsonString = fl.readFromAssets(this, "activitys.json");
         MyJsonParser mJasonParser = new MyJsonParser();
         mJasonParser.createOjectFromJson("activitys", jsonString);
+
+
+
 
 
         // Copy Images to Image Folder For Testing

@@ -1,5 +1,7 @@
 package org.hdm.app.sambia.util;
 
+import android.app.Application;
+import android.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -9,7 +11,9 @@ import android.view.ViewGroup;
 
 import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.data.Data;
+import org.hdm.app.sambia.dialogs.DFragment;
 import org.hdm.app.sambia.listener.ViewHolderListener;
+import org.hdm.app.sambia.screens.FragmentActivity;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +25,7 @@ public class Recycler_View_Adapter extends RecyclerView.Adapter<View_Holder> imp
 
     private final String TAG = "Recycler_View_Adapter";
     public List<Data> list = null;
-
+    FragmentActivity fr;
 
 
     public SparseBooleanArray selectedItems = null;
@@ -35,6 +39,11 @@ public class Recycler_View_Adapter extends RecyclerView.Adapter<View_Holder> imp
         selectedItems = new SparseBooleanArray();
     }
 
+    public Recycler_View_Adapter(FragmentActivity fragmentActivity, List<Data> data) {
+        fr = fragmentActivity;
+        this.list = data;
+        selectedItems = new SparseBooleanArray();
+    }
 
 
     @Override
@@ -81,6 +90,7 @@ public class Recycler_View_Adapter extends RecyclerView.Adapter<View_Holder> imp
     public int getItemCount() {
         //returns the number of elements the RecyclerView will display
         return list.size();
+
     }
 
     @Override
@@ -116,6 +126,13 @@ public class Recycler_View_Adapter extends RecyclerView.Adapter<View_Holder> imp
     public void didClickOnView(View view, int position) {
 
         Log.d("onClick ",  "" + position );
+
+        DFragment dFragment = new DFragment();
+        // Show DialogFragment
+
+
+        FragmentManager fm = fr.getFragmentManager();
+        dFragment.show(fm, "Dialog Fragment");
     }
 
 

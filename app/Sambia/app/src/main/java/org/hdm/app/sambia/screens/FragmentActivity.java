@@ -49,7 +49,7 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
 
-    private int rows =3;
+    private int rows =2;
     private List<Data> data;
 
 
@@ -87,7 +87,7 @@ public class FragmentActivity extends BaseFragemnt implements
 
         // fill List
         data = fill_with_data();
-        adapter = new Recycler_View_Adapter(data);
+        adapter = new Recycler_View_Adapter(this, data);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

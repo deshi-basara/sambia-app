@@ -17,19 +17,66 @@ public class EventManager {
     private ActivityObjectMap mObjectMap = null;
     private ArrayList<ActivityObject> mActivityObject = null;
     private HashMap<String, Bitmap> imageMap;
+    private HashMap<String, Data> activityMap = null;
 
 
 
 
-    private String currentActivity = null;
 
-    public String getCurrentActivity() {
-        return currentActivity;
+    public boolean createActivityMap() {
+        if(activityMap != null) {
+            activityMap = new HashMap<>();
+            return true;
+        }
+        return false;
     }
 
-    public void setCurrentActivity(String currentActivity) {
-        this.currentActivity = currentActivity;
+
+    public boolean createActivity(String name, Data data) {
+        if(name != null) {
+            if(!activityMap.containsKey(name)) {
+
+                if(data != null) {
+                    activityMap.put(name, data);
+                } else {
+                    activityMap.put(name, new Data(name));
+                }
+                return true;
+            }
+        }
+        return false;
     }
+
+
+
+
+    public boolean setActivity(Data data) {
+        if (data != null) {
+            activityMap.put(data.getTitle(), data);
+            return true;
+        }
+        return false;
+    }
+
+
+
+    public Data getActivity(String name) {
+        if(name != null && activityMap.containsKey(name)) {
+            return activityMap.get(name);
+        }
+        return null;
+    }
+
+
+    public int getAcrivityCount() {
+        return activityMap.size();
+    }
+
+    public HashMap getActivityMap() {
+        return activityMap;
+    }
+
+
 
 
 
@@ -59,6 +106,8 @@ public class EventManager {
 
         return null;
     }
+
+
 
     /************
      * create new event
