@@ -3,6 +3,7 @@ package org.hdm.app.sambia.data;
 import android.graphics.Bitmap;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -10,57 +11,55 @@ import java.util.List;
  */
 public class Data {
 
-    public String title;
+    // General Parameter
+    public String title = null;
     public int id;
 
-    public String group_activity;
-    public String sub_activity;
-    public Bitmap image;
+    public String group_activity = null;
+    public String sub_activity = null;
+    public boolean sub_category = false;
+    public Bitmap image = null;
     public int imageId;
-    public ArrayList<RecordedData> recordedDataList;
+
+
 
     // Dynamic parameters
-    public boolean active = false;
+    public boolean activeState = false;
+    public String subCategoryName = "";
+    public ArrayList<RecordedData> recordedDataList = null;
+    public Date startTime;
+    public Date endTime;
 
 
-
-
-
-
-    public Data(String title , int imageId) {
-        this.title = title;
-        this.imageId = imageId;
+    public Data() {
+        recordedDataList = new ArrayList<>();
     }
-
 
 
     public Data(String name) {
+
         title = name;
+        recordedDataList = new ArrayList<>();
     }
 
-    public String getTitle(){
-        return title;
-    }
+
+
+
 
 
 
     public void setState() {
-        if(active) {
-            this.active = false;
+        if(activeState) {
+            this.activeState = false;
         } else {
-            this.active = true;
+            this.activeState = true;
         }
     }
 
 
 
-    public void setState(boolean state) {
-        this.active = state;
-    }
-
-
     public boolean getState() {
-        return active;
+        return activeState;
     }
 
 }

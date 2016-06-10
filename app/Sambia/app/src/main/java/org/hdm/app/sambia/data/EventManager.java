@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Created by Hannes on 06.05.2016.
@@ -16,8 +17,10 @@ public class EventManager {
 
     private ActivityObjectMap mObjectMap = null;
     private ArrayList<ActivityObject> mActivityObject = null;
+
+
     private HashMap<String, Bitmap> imageMap;
-    private HashMap<String, Data> activityMap = null;
+    private LinkedHashMap<String, Data> activityMap = new LinkedHashMap<>();
 
 
 
@@ -25,14 +28,14 @@ public class EventManager {
 
     public boolean createActivityMap() {
         if(activityMap != null) {
-            activityMap = new HashMap<>();
+            activityMap = new LinkedHashMap<>();
             return true;
         }
         return false;
     }
 
 
-    public boolean createActivity(String name, Data data) {
+    public boolean createActivityObject(String name, Data data) {
         if(name != null) {
             if(!activityMap.containsKey(name)) {
 
@@ -50,17 +53,23 @@ public class EventManager {
 
 
 
-    public boolean setActivity(Data data) {
-        if (data != null) {
-            activityMap.put(data.getTitle(), data);
+    public boolean setActivityObject(Data data) {
+
+        String title = data.title;
+        if (title != null && activityMap != null) {
+
+            if(!activityMap.containsKey(title)) {
+                createActivityObject(title, data);
+            }
+            activityMap.put(title, data);
             return true;
-        }
+            }
         return false;
     }
 
 
 
-    public Data getActivity(String name) {
+    public Data getActivityObject(String name) {
         if(name != null && activityMap.containsKey(name)) {
             return activityMap.get(name);
         }
@@ -72,7 +81,7 @@ public class EventManager {
         return activityMap.size();
     }
 
-    public HashMap getActivityMap() {
+    public LinkedHashMap getActivityMap() {
         return activityMap;
     }
 

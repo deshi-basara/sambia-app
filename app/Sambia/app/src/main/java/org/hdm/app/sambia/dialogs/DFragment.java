@@ -10,11 +10,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.hdm.app.sambia.R;
+import org.hdm.app.sambia.data.Data;
 
 /**
  * Created by Hannes on 03.06.2016.
  */
 public class DFragment extends DialogFragment {
+
+
+    private Data data;
+
+    public DFragment(){}
+
+
+    public DFragment(Data data) {
+        this.data = data;
+    }
 
 
     @Override

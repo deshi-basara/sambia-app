@@ -49,6 +49,7 @@ public class View_Holder extends RecyclerView.ViewHolder implements
 
 
     public void setListener(ViewHolderListener listener) {
+
         this.listener = listener;
     }
 
@@ -57,17 +58,7 @@ public class View_Holder extends RecyclerView.ViewHolder implements
 
     @Override
     public void onClick(View v) {
-
-        parentAdapter.list.get(getAdapterPosition()).setState();
-        boolean state = parentAdapter.list.get(getAdapterPosition()).getState();
-
-        setBackground(state);
-
-
-
-        if(listener!= null) {
-            listener.didClickOnView(v, position);
-        }
+        if(listener!= null) listener.didClickOnView(v, position, this);
     }
 
 
@@ -84,12 +75,6 @@ public class View_Holder extends RecyclerView.ViewHolder implements
         return false;
     }
 
-
-
-    public void setActive() {
-
-
-    }
 
 
     public void setBackground(boolean state) {

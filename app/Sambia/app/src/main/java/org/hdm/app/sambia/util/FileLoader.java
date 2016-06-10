@@ -23,9 +23,9 @@ import java.util.Properties;
 /**
  * Created by Hannes on 09.05.2016.
  */
-public class MyFileHandler {
+public class FileLoader {
 
-    private static final String TAG = "MyFileHandler";
+    private static final String TAG = "FileLoader";
 
 
     String state = Environment.getExternalStorageState();
@@ -38,9 +38,12 @@ public class MyFileHandler {
      *************************/
 
 
-    public MyFileHandler(MainActivity mainActivity) {
+    public FileLoader(MainActivity mainActivity) {
         context = mainActivity;
     }
+
+
+
 
 
     /**************************

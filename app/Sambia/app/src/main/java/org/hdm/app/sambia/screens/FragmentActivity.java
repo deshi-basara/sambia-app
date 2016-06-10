@@ -19,14 +19,19 @@ import android.widget.Toast;
 
 import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.data.Data;
+import org.hdm.app.sambia.data.EventManager;
+import org.hdm.app.sambia.listener.AdapterListener;
 import org.hdm.app.sambia.listener.ClickListener;
 import org.hdm.app.sambia.listener.RecyclerTouchListener;
 import org.hdm.app.sambia.util.MyCustomListAdapter;
 import org.hdm.app.sambia.util.Recycler_View_Adapter;
+import org.hdm.app.sambia.util.View_Holder;
 import org.hdm.app.sambia.views.DisplayActivityView;
 import org.hdm.app.sambia.views.DividerItemDecoration;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 
@@ -34,7 +39,7 @@ import java.util.List;
  * A fragment representing the front of the card.
  */
 public class FragmentActivity extends BaseFragemnt implements
-        ClickListener {
+        AdapterListener {
 
 
     private final String TAG = "FragmentActivity";
@@ -88,15 +93,12 @@ public class FragmentActivity extends BaseFragemnt implements
         // fill List
         data = fill_with_data();
         adapter = new Recycler_View_Adapter(this, data);
+        adapter.setListener(this);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(
                 rows,StaggeredGridLayoutManager.VERTICAL));
-
-//        recyclerView.addOnItemTouchListener(
-//                new RecyclerTouchListener(getActivity().getApplicationContext(),
-//                        recyclerView, this));
 
     }
 
@@ -118,13 +120,17 @@ public class FragmentActivity extends BaseFragemnt implements
     private List<Data> fill_with_data() {
 
 
-        List<Data> data = new ArrayList<>();
+        LinkedHashMap<String, Data> activityMap =  EventManager.getInstance().getActivityMap();
+        List<Data> data = new ArrayList<>(activityMap.values());
 
-        for(int i = 0; i<20; i++) {
-            String name = ""+i;
-            data.add(new Data(name, R.drawable.onfarmwork_bagging));
-            Log.d(TAG, ""+i);
-        }
+//        int size = activityMap.size();
+//
+//        for(int i = 0; i<size; i++) {
+//            Data value = (new ArrayList<Data>(activityMap.values())).get(i);
+//            String name = value.getTitle();
+//            data.add(new Data(name, R.drawable.onfarmwork_bagging));
+//            Log.d(TAG, ""+i);
+//        }
 
         return data;
     }
@@ -133,20 +139,10 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
 
+    @Override
+    public void didOnClick(int position, View_Holder holder) {
 
 
 
-
-
-    public void onClick(View view, int position) {
-        Data movie = data.get(position);
-        Log.d(TAG,"Titleeeee "+ movie.getTitle() + " " +position);
     }
-
-
-    public void onLongClick(View view, int position) {
-        Data movie = data.get(position);
-        Log.d(TAG,"Title long "+ movie.getTitle());
-    }
-
 }
