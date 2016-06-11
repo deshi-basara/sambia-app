@@ -1,6 +1,7 @@
 package org.hdm.app.sambia.util;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -78,8 +79,41 @@ public class View_Holder extends RecyclerView.ViewHolder implements
 
 
     public void setBackground(boolean state) {
-        cv.setBackgroundColor(Color.WHITE);
-        if(state) cv.setBackgroundColor(Color.RED);
+//        cv.setBackgroundColor(Color.WHITE);
+
+        if(state) {
+
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+                // below lillipop
+                cv.setCardBackgroundColor(Color.GREEN);
+                // working for lower questions as per another answer posted here
+            } else {
+                // lollipop and above
+                cv.setBackgroundColor(cv.getResources().getColor(R.color.green));
+                // known to be working for lillipop as per your question
+            }
+
+        } else {
+
+
+
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+                // below lillipop
+                cv.setCardBackgroundColor(Color.WHITE);
+                // working for lower questions as per another answer posted here
+            } else {
+                // lollipop and above
+                cv.setBackgroundColor(cv.getResources().getColor(R.color.white));
+                // known to be working for lillipop as per your question
+            }
+
+        }
+
+
+
+
+
+// cv.setBackgroundColor(Color.RED);
     }
 
 
