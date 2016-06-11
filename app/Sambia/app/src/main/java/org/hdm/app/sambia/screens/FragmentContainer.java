@@ -4,6 +4,8 @@ package org.hdm.app.sambia.screens;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,15 +85,32 @@ public class FragmentContainer extends Fragment  implements
 		// Flip to the back.
 		mShowingBack = true;
 
-		getFragmentManager().beginTransaction()
-				.setCustomAnimations(
-						R.animator.card_flip_right_in, R.animator.card_flip_right_out,
-						R.animator.card_flip_left_in, R.animator.card_flip_left_out)
-				.replace(R.id.container, dayViewFragemnt)
-				.addToBackStack(null)
-				.commit();
-	}
 
+
+
+
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+
+			// below lillipop
+			getFragmentManager().beginTransaction()
+					.replace(R.id.container, dayViewFragemnt)
+					.addToBackStack(null)
+					.commit();
+			// working for lower questions as per another answer posted here
+
+		} else {
+
+			// lollipop and above
+			getFragmentManager().beginTransaction()
+					.setCustomAnimations(
+							R.animator.card_flip_right_in, R.animator.card_flip_right_out,
+							R.animator.card_flip_left_in, R.animator.card_flip_left_out)
+					.replace(R.id.container, dayViewFragemnt)
+					.addToBackStack(null)
+					.commit();
+			// known to be working for lollipop as per your question
+		}
+	}
 
 
 
