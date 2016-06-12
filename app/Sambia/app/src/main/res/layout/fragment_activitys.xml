@@ -14,15 +14,7 @@
         android:elevation="6dp"/>
     />
 
-    <!--<org.hdm.app.sambia.views.DisplayActivityView-->
-        <!--android:id="@+id/displayActivityView"-->
-        <!--android:layout_weight="2.5"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_below="@+id/frag_menu"-->
-        <!--android:background="@android:color/holo_green_dark"-->
-        <!--android:elevation="5dp"/>-->
+
 
 
     <android.support.v7.widget.RecyclerView

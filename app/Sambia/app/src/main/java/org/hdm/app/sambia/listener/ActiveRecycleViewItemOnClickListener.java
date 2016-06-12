@@ -5,7 +5,7 @@ import org.hdm.app.sambia.util.View_Holder;
 /**
  * Created by Hannes on 10.06.2016.
  */
-public interface AdapterListener {
+public interface ActiveRecycleViewItemOnClickListener {
 
-    public void didOnClick(int position, View_Holder holder);
+    public void didOnClickActivityList(int position, View_Holder holder);
 }

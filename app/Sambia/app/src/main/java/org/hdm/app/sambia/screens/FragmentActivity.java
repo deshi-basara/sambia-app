@@ -12,18 +12,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.data.Data;
 import org.hdm.app.sambia.data.EventManager;
 import org.hdm.app.sambia.data.RecordedData;
-import org.hdm.app.sambia.listener.AdapterListener;
-import org.hdm.app.sambia.util.MyCustomListAdapter;
-import org.hdm.app.sambia.util.Recycler_View_Adapter;
-import org.hdm.app.sambia.util.Recycler_View_Adapter_Active;
+import org.hdm.app.sambia.listener.ActiveRecycleViewItemOnClickListener;
+import org.hdm.app.sambia.listener.ListRecycleViewItemOnClickListener;
+import org.hdm.app.sambia.util.ListRecyclerViewAdapter;
+import org.hdm.app.sambia.util.ActiveRecycleViewAdapter;
 import org.hdm.app.sambia.util.View_Holder;
-import org.hdm.app.sambia.views.DisplayActivityView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,7 +33,8 @@ import java.util.List;
  * A fragment representing the front of the card.
  */
 public class FragmentActivity extends BaseFragemnt implements
-        AdapterListener {
+        ListRecycleViewItemOnClickListener,
+        ActiveRecycleViewItemOnClickListener {
 
 
     private static final boolean DEBUGMODE = true;
@@ -45,11 +44,8 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
     private View view;
-    private MyCustomListAdapter mAdapter;
-    private ListView activity_frag_lv;
-    private DisplayActivityView mDisplayActivityView;
     private RecyclerView recyclerView;
-    private Recycler_View_Adapter adapter;
+    private ListRecyclerViewAdapter adapter;
 
 
 
@@ -58,7 +54,7 @@ public class FragmentActivity extends BaseFragemnt implements
     private List<Data> activeData;
     private int activeCount = 0;
     private RecyclerView recyclerView_activeData;
-    private Recycler_View_Adapter_Active activeAdapter;
+    private ActiveRecycleViewAdapter activeAdapter;
 
 
     @Override
@@ -89,7 +85,7 @@ public class FragmentActivity extends BaseFragemnt implements
     private void initActiveActivityList() {
 
         activeData = new ArrayList<>();
-        activeAdapter = new Recycler_View_Adapter_Active(this, activeData);
+        activeAdapter = new ActiveRecycleViewAdapter(this, activeData);
         activeAdapter.setListener(this);
         recyclerView_activeData = (RecyclerView) view.findViewById(R.id.rv_active);
         recyclerView_activeData.setAdapter(activeAdapter);
@@ -104,7 +100,7 @@ public class FragmentActivity extends BaseFragemnt implements
     private void initActivityList() {
 
         data = fill_with_data();
-        adapter = new Recycler_View_Adapter(this, data);
+        adapter = new ListRecyclerViewAdapter(this, data);
         adapter.setListener(this);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_list);
         recyclerView.setAdapter(adapter);
@@ -136,11 +132,8 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
     private List<Data> fill_with_data() {
-
-
         LinkedHashMap<String, Data> activityMap =  EventManager.getInstance().getActivityMap();
         List<Data> data = new ArrayList<>(activityMap.values());
-
 //        int size = activityMap.size();
 //
 //        for(int i = 0; i<size; i++) {
@@ -149,7 +142,6 @@ public class FragmentActivity extends BaseFragemnt implements
 //            data.add(new Data(name, R.drawable.onfarmwork_bagging));
 //            Log.d(TAG, ""+i);
 //        }
-
         return data;
     }
 
@@ -160,16 +152,11 @@ public class FragmentActivity extends BaseFragemnt implements
     @Override
     public void didOnClick(int position, View_Holder holder) {
 
-        Log.d(TAG, "position " + position);
-
-
-
-        // Get the DataObject which was selected
-        // here are all information stored about the activity object
+        // Get the DataObject which was clicked
+        // there are all information stored about the activity object
         // state, names image ect.
         String name = data.get(position).title;
         Data data = EventManager.getInstance().getActivityObject(name);
-
 
         if(!data.activeState){
 
@@ -232,9 +219,15 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
         if(DEBUGMODE) {
+            Log.d(TAG, "position " + position);
             Log.d(TAG, "activeCount " + activeCount);
         }
+    }
 
 
+
+    @Override
+    public void didOnClickActivityList(int position, View_Holder holder) {
+        Log.d(TAG, "didOnClickActivityList " + position);
     }
 }

@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,7 +34,7 @@ public class View_Holder extends RecyclerView.ViewHolder implements
 
 
 
-    View_Holder(View itemView, Recycler_View_Adapter recycler_view_adapter) {
+    View_Holder(View itemView, ListRecyclerViewAdapter recycler_view_adapter) {
         super(itemView);
 
 
@@ -48,7 +47,7 @@ public class View_Holder extends RecyclerView.ViewHolder implements
 
     }
 
-    public View_Holder(View v, Recycler_View_Adapter_Active recycler_view_adapter_active) {
+    public View_Holder(View v, ActiveRecycleViewAdapter recycler_view_adapter_active) {
         super(v);
 
         cv = (CardView) itemView.findViewById(R.id.cardView);
@@ -58,12 +57,13 @@ public class View_Holder extends RecyclerView.ViewHolder implements
     }
 
     private void initListener() {
+
         cv.setOnClickListener(this);
+        
     }
 
 
     public void setListener(ViewHolderListener listener) {
-
         this.listener = listener;
     }
 
@@ -88,6 +88,7 @@ public class View_Holder extends RecyclerView.ViewHolder implements
         if(listener != null) listener.didLongClickOnView(v, position);
         return false;
     }
+
 
 
 
