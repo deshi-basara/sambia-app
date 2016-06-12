@@ -40,7 +40,7 @@ public class ActiveRecycleViewAdapter extends RecyclerView.Adapter<View_Holder> 
 
         //Inflate the layout, initialize the View Holder
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_layout_active, parent, false);
-        View_Holder holder = new View_Holder(v, this);
+        View_Holder holder = new View_Holder(v);
         return holder;
     }
 
@@ -110,8 +110,6 @@ public class ActiveRecycleViewAdapter extends RecyclerView.Adapter<View_Holder> 
 
     @Override
     public void didClickOnView(View view, int position, View_Holder holder) {
-        Log.d(TAG, "didOnClickActivityList " + position);
-
         if(listener != null) listener.didOnClickActivityList(position, holder);
     }
 

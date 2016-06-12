@@ -34,33 +34,30 @@ public class View_Holder extends RecyclerView.ViewHolder implements
 
 
 
-    View_Holder(View itemView, ListRecyclerViewAdapter recycler_view_adapter) {
-        super(itemView);
 
 
-        cv = (CardView) itemView.findViewById(R.id.cardView);
-        title = (TextView) itemView.findViewById(R.id.title);
-        imageView = (ImageView) itemView.findViewById(R.id.imageView);
-        iv_play = (ImageView) itemView.findViewById(R.id.iv_play);
-        iv_play.setVisibility(View.GONE);
-        initListener();
 
-    }
-
-    public View_Holder(View v, ActiveRecycleViewAdapter recycler_view_adapter_active) {
+    public View_Holder(View v) {
         super(v);
+        initLayout();
+        initListener();
+    }
 
+
+
+    private void initLayout() {
         cv = (CardView) itemView.findViewById(R.id.cardView);
         imageView = (ImageView) itemView.findViewById(R.id.imageView);
+        title = (TextView) itemView.findViewById(R.id.title);
         iv_play = (ImageView) itemView.findViewById(R.id.iv_play);
         iv_play.setVisibility(View.GONE);
     }
+
 
     private void initListener() {
-
         cv.setOnClickListener(this);
-        
     }
+
 
 
     public void setListener(ViewHolderListener listener) {
