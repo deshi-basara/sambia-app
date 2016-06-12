@@ -20,6 +20,9 @@ public class View_Holder extends RecyclerView.ViewHolder implements
         View.OnLongClickListener {
 
     private final String TAG = "View_Holder";
+
+
+    private ImageView iv_play;
     private ViewHolderListener listener;
 
 
@@ -29,19 +32,29 @@ public class View_Holder extends RecyclerView.ViewHolder implements
     public TextView title;
     public ImageView imageView;
     public int position;
-    Recycler_View_Adapter parentAdapter;
 
 
 
     View_Holder(View itemView, Recycler_View_Adapter recycler_view_adapter) {
         super(itemView);
 
-        parentAdapter = recycler_view_adapter;
+
         cv = (CardView) itemView.findViewById(R.id.cardView);
         title = (TextView) itemView.findViewById(R.id.title);
         imageView = (ImageView) itemView.findViewById(R.id.imageView);
+        iv_play = (ImageView) itemView.findViewById(R.id.iv_play);
+        iv_play.setVisibility(View.GONE);
         initListener();
 
+    }
+
+    public View_Holder(View v, Recycler_View_Adapter_Active recycler_view_adapter_active) {
+        super(v);
+
+        cv = (CardView) itemView.findViewById(R.id.cardView);
+        imageView = (ImageView) itemView.findViewById(R.id.imageView);
+        iv_play = (ImageView) itemView.findViewById(R.id.iv_play);
+        iv_play.setVisibility(View.GONE);
     }
 
     private void initListener() {
@@ -82,7 +95,6 @@ public class View_Holder extends RecyclerView.ViewHolder implements
 //        cv.setBackgroundColor(Color.WHITE);
 
         if(state) {
-
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
                 // below lillipop
                 cv.setCardBackgroundColor(Color.GREEN);
@@ -92,11 +104,9 @@ public class View_Holder extends RecyclerView.ViewHolder implements
                 cv.setBackgroundColor(cv.getResources().getColor(R.color.green));
                 // known to be working for lillipop as per your question
             }
+            iv_play.setVisibility(View.VISIBLE);
 
         } else {
-
-
-
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
                 // below lillipop
                 cv.setCardBackgroundColor(Color.WHITE);
@@ -106,14 +116,8 @@ public class View_Holder extends RecyclerView.ViewHolder implements
                 cv.setBackgroundColor(cv.getResources().getColor(R.color.white));
                 // known to be working for lillipop as per your question
             }
-
+            iv_play.setVisibility(View.GONE);
         }
-
-
-
-
-
-// cv.setBackgroundColor(Color.RED);
     }
 
 

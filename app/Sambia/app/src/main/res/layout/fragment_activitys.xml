@@ -27,11 +27,22 @@
 
     <android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/recyclerview"
+        android:id="@+id/rv_active"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:elevation="20dp"
+        android:layout_below="@+id/displayActivityView"
+        android:layout_gravity="bottom"
+        android:background="@android:color/holo_green_dark"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rv_list"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/displayActivityView"
+        android:layout_below="@+id/rv_active"
         />
 
 

@@ -1,6 +1,5 @@
 package org.hdm.app.sambia.util;
 
-import android.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,20 +8,16 @@ import android.view.ViewGroup;
 
 import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.data.Data;
-import org.hdm.app.sambia.data.EventManager;
-import org.hdm.app.sambia.data.RecordedData;
-import org.hdm.app.sambia.dialogs.DFragment;
 import org.hdm.app.sambia.listener.AdapterListener;
 import org.hdm.app.sambia.listener.ViewHolderListener;
 import org.hdm.app.sambia.screens.FragmentActivity;
 
-import java.util.Calendar;
 import java.util.List;
 
 /**
  * Created by Hannes on 27.05.2016.
  */
-public class Recycler_View_Adapter extends RecyclerView.Adapter<View_Holder> implements ViewHolderListener {
+public class Recycler_View_Adapter_Active extends RecyclerView.Adapter<View_Holder> implements ViewHolderListener {
 
     private final String TAG = "Recycler_View_Adapter";
 
@@ -32,16 +27,18 @@ public class Recycler_View_Adapter extends RecyclerView.Adapter<View_Holder> imp
 
 
 
-    public Recycler_View_Adapter(FragmentActivity fragmentActivity, List<Data> data) {
+    public Recycler_View_Adapter_Active(FragmentActivity fragmentActivity, List<Data> data) {
         fr = fragmentActivity;
         this.list = data;
     }
 
 
+
     @Override
     public View_Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         //Inflate the layout, initialize the View Holder
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_layout, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_layout_active, parent, false);
         View_Holder holder = new View_Holder(v, this);
         return holder;
     }
@@ -53,17 +50,12 @@ public class Recycler_View_Adapter extends RecyclerView.Adapter<View_Holder> imp
 
     @Override
     public void onBindViewHolder(View_Holder holder, int position) {
-        //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
 
+        //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
         holder.setListener(this);
-        holder.title.setText("T" + list.get(position).title +" " +" P" + position );
         holder.imageView.setImageResource(list.get(position).imageId);
         holder.position = position;
         holder.setBackground(list.get(position).activeState);
-
-        // Set the selected state of the row depending on the position
-
-        Log.d(TAG, "onBilnde ");
     }
 
 
