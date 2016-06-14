@@ -69,7 +69,7 @@ public class View_Holder extends RecyclerView.ViewHolder implements
 
     @Override
     public void onClick(View v) {
-        if(listener!= null) listener.didClickOnView(v, position, this);
+        if(listener!= null) listener.didClickOnView(v, position, title.getText().toString(), this);
     }
 
 

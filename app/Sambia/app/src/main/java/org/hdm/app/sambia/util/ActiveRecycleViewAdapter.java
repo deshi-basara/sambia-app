@@ -1,7 +1,6 @@
 package org.hdm.app.sambia.util;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +53,7 @@ public class ActiveRecycleViewAdapter extends RecyclerView.Adapter<View_Holder> 
 
         //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
         holder.setListener(this);
+        holder.title.setText(list.get(position).title);
         holder.imageView.setImageResource(list.get(position).imageId);
         holder.position = position;
         holder.setBackground(list.get(position).activeState);
@@ -109,8 +109,8 @@ public class ActiveRecycleViewAdapter extends RecyclerView.Adapter<View_Holder> 
 
 
     @Override
-    public void didClickOnView(View view, int position, View_Holder holder) {
-        if(listener != null) listener.didOnClickActivityList(position, holder);
+    public void didClickOnView(View view, int position, String s, View_Holder holder) {
+        if(listener != null) listener.didOnClickActivityList(position, s, holder);
     }
 
 

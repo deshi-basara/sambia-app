@@ -7,5 +7,5 @@ import org.hdm.app.sambia.util.View_Holder;
  */
 public interface ListRecycleViewItemOnClickListener {
 
-    public void didOnClick(int position, View_Holder holder);
+    public void didOnClick(int position, String s, View_Holder holder);
 }

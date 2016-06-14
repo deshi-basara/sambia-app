@@ -127,13 +127,17 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
     @Override
-    public void didOnClick(int position, View_Holder holder) {
+    public void didOnClick(int position, String title, View_Holder holder) {
 
+
+        Log.d(TAG, "title " + title);
         // Get the DataObject which was clicked
         // there are all information stored about the activity object
         // state, names image ect.
-        String name = data.get(position).title;
-        Data data = EventManager.getInstance().getActivityObject(name);
+
+        Data data = EventManager.getInstance().getActivityObject(title);
+
+        Log.d(TAG, "Data " + data);
 
         if(!data.activeState){
 
@@ -152,7 +156,7 @@ public class FragmentActivity extends BaseFragemnt implements
             // Count how many activity are active
             activeCount++;
 
-//            activeData.add(data);
+            EventManager.getInstance().setActiveObject(data);
         } else  {
             // Deactivate Activity
             data.activeState = false;
@@ -162,6 +166,10 @@ public class FragmentActivity extends BaseFragemnt implements
 
             //Count how many activitys are active
             activeCount--;
+
+
+            // Remove the active Data from the active dataList
+            EventManager.getInstance().removeActiveObject(data);
 
 
             // Calculation for Time messurement
@@ -183,31 +191,46 @@ public class FragmentActivity extends BaseFragemnt implements
             data.startTime = null;
             data.endTime = null;
             data.subCategoryName = "";
-
-            activeData.
         }
 
-        holder.setBackground(data.activeState);
+
 
         // Store edited Data back in EventManager
         EventManager.getInstance().setActivityObject(data);
 
 
+        // Set Background
+        if(holder!= null){
+        holder.setBackground(data.activeState);
+        } else {
+            adapter.list = new ArrayList<>(EventManager.getInstance().getActivityMap().values());
+            adapter.notifyDataSetChanged();
+         }
 
+
+
+        activeAdapter.list = new ArrayList<>(EventManager.getInstance().getActiveMap().values());
         activeAdapter.notifyDataSetChanged();
 
+
+        // get activeMap look into and for every entry add to
 
         if(DEBUGMODE) {
             Log.d(TAG, "position " + position);
             Log.d(TAG, "activeCount " + activeCount);
+            Log.d(TAG, "activeCount " + activeCount);
+
+
         }
     }
 
 
 
     @Override
-    public void didOnClickActivityList(int position, View_Holder holder) {
+    public void didOnClickActivityList(int position, String s, View_Holder holder) {
         Log.d(TAG, "didOnClickActivityList " + position);
+        didOnClick(position, s, null);
+
     }
 
 
@@ -229,4 +252,6 @@ public class FragmentActivity extends BaseFragemnt implements
 //        }
         return data;
     }
+
+
 }

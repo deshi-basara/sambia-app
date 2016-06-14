@@ -52,7 +52,7 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<View_Holder> i
         //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
 
         holder.setListener(this);
-        holder.title.setText("T" + list.get(position).title +" " +" P" + position );
+        holder.title.setText(list.get(position).title);
         holder.imageView.setImageResource(list.get(position).imageId);
         holder.position = position;
         holder.setBackground(list.get(position).activeState);
@@ -112,8 +112,8 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<View_Holder> i
 
 
     @Override
-    public void didClickOnView(View view, int position, View_Holder holder) {
-        if(listener != null) listener.didOnClick(position, holder);
+    public void didClickOnView(View view, int position, String s, View_Holder holder) {
+        if(listener != null) listener.didOnClick(position, s, holder);
     }
 
 

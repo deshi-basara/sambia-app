@@ -20,9 +20,15 @@ public class EventManager {
 
 
     private HashMap<String, Bitmap> imageMap;
+
+    // In this Map are all the Activity Objects stored
+    // It is used as DataBase from every Screen
     private LinkedHashMap<String, Data> activityMap = new LinkedHashMap<>();
 
-//    private LinkedHashMap<String, Data> activeAMap = new LinkedHashMap<>();
+    // In this map are all the active ActivityObjects stored
+    // It is used from the FragmentActivity RecycleView to display all the Activitys
+    // which are current recorded
+    private LinkedHashMap<String, Data> activeMap = new LinkedHashMap<>();
 
 
 
@@ -95,19 +101,17 @@ public class EventManager {
 
 
 
+
+
+
+
+
+
+
     public void createImageMap() {
+
         imageMap = new HashMap<String, Bitmap>();
     }
-
-    public HashMap<String, Bitmap> getImageMap() {
-        return imageMap;
-    }
-
-
-    public void setImageMap(HashMap<String, Bitmap> imageMap) {
-        this.imageMap = imageMap;
-    }
-
 
     public Bitmap putImage(String keyName, Bitmap image) {
 
@@ -153,6 +157,56 @@ public class EventManager {
     /***********
      * create new event
      ***********/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public boolean setActiveObject(Data data) {
+        if (data != null && activeMap != null) {
+            activeMap.put(data.title, data);
+            return true;
+        }
+        return false;
+    }
+
+
+
+    public boolean removeActiveObject(String name) {
+        if (name != null && activeMap != null) {
+            activeMap.remove(name);
+            return true;
+        }
+        return false;
+    }
+
+
+
+
+    public boolean removeActiveObject(Data data) {
+        if (data != null && activeMap != null) {
+            activeMap.remove(data.title);
+            return true;
+        }
+        return false;
+    }
+
+    public LinkedHashMap getActiveMap() {
+        return activeMap;
+    }
+
+
+
 
 
     /***********
