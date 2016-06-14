@@ -22,6 +22,9 @@ public class EventManager {
     private HashMap<String, Bitmap> imageMap;
     private LinkedHashMap<String, Data> activityMap = new LinkedHashMap<>();
 
+//    private LinkedHashMap<String, Data> activeAMap = new LinkedHashMap<>();
+
+
 
 
 

@@ -66,7 +66,6 @@ public class FragmentActivity extends BaseFragemnt implements
         initActiveActivityList();
         initActivityList();
         return view;
-
     }
 
     @Override
@@ -127,28 +126,6 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
 
-
-
-
-
-    private List<Data> fill_with_data() {
-        LinkedHashMap<String, Data> activityMap =  EventManager.getInstance().getActivityMap();
-        List<Data> data = new ArrayList<>(activityMap.values());
-//        int size = activityMap.size();
-//
-//        for(int i = 0; i<size; i++) {
-//            Data value = (new ArrayList<Data>(activityMap.values())).get(i);
-//            String name = value.getTitle();
-//            data.add(new Data(name, R.drawable.onfarmwork_bagging));
-//            Log.d(TAG, ""+i);
-//        }
-        return data;
-    }
-
-
-
-
-
     @Override
     public void didOnClick(int position, View_Holder holder) {
 
@@ -175,7 +152,7 @@ public class FragmentActivity extends BaseFragemnt implements
             // Count how many activity are active
             activeCount++;
 
-            activeData.add(data);
+//            activeData.add(data);
         } else  {
             // Deactivate Activity
             data.activeState = false;
@@ -206,6 +183,8 @@ public class FragmentActivity extends BaseFragemnt implements
             data.startTime = null;
             data.endTime = null;
             data.subCategoryName = "";
+
+            activeData.
         }
 
         holder.setBackground(data.activeState);
@@ -229,5 +208,25 @@ public class FragmentActivity extends BaseFragemnt implements
     @Override
     public void didOnClickActivityList(int position, View_Holder holder) {
         Log.d(TAG, "didOnClickActivityList " + position);
+    }
+
+
+
+
+
+
+
+    private List<Data> fill_with_data() {
+        LinkedHashMap<String, Data> activityMap =  EventManager.getInstance().getActivityMap();
+        List<Data> data = new ArrayList<>(activityMap.values());
+//        int size = activityMap.size();
+//
+//        for(int i = 0; i<size; i++) {
+//            Data value = (new ArrayList<Data>(activityMap.values())).get(i);
+//            String name = value.getTitle();
+//            data.add(new Data(name, R.drawable.onfarmwork_bagging));
+//            Log.d(TAG, ""+i);
+//        }
+        return data;
     }
 }
