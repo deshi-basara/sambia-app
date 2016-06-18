@@ -119,4 +119,8 @@ public class View_Holder extends RecyclerView.ViewHolder implements
     }
 
 
+
+    public void setBackground(int transparent) {
+        cv.setBackgroundColor(cv.getResources().getColor(R.color.transparent));
+    }
 }

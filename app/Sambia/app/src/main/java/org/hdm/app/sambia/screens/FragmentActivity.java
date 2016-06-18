@@ -70,6 +70,7 @@ public class FragmentActivity extends BaseFragemnt implements
 
     @Override
     public void onResume() {
+        if(DEBUGMODE) Log.d(TAG, "onResume");
         super.onResume();
             setMenuTitle("Activity");
             setMenuBackground(android.R.color.holo_green_dark);
@@ -83,7 +84,7 @@ public class FragmentActivity extends BaseFragemnt implements
 
     private void initActiveActivityList() {
 
-        activeData = new ArrayList<>();
+        activeData = new ArrayList<>(EventManager.getInstance().getActiveMap().values());
         activeAdapter = new ActiveRecycleViewAdapter(this, activeData);
         activeAdapter.setListener(this);
         recyclerView_activeData = (RecyclerView) view.findViewById(R.id.rv_active);
@@ -98,7 +99,7 @@ public class FragmentActivity extends BaseFragemnt implements
 
     private void initActivityList() {
 
-        data = fill_with_data();
+        data = new ArrayList<>(EventManager.getInstance().getActivityMap().values());
         adapter = new ListRecyclerViewAdapter(this, data);
         adapter.setListener(this);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_list);
@@ -241,9 +242,13 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
 
-    private List<Data> fill_with_data() {
+    private List<Data> fillWithData() {
+
         LinkedHashMap<String, Data> activityMap =  EventManager.getInstance().getActivityMap();
         List<Data> data = new ArrayList<>(activityMap.values());
+
+
+
 //        int size = activityMap.size();
 //
 //        for(int i = 0; i<size; i++) {
