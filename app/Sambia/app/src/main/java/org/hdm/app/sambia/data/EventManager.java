@@ -1,8 +1,10 @@
 package org.hdm.app.sambia.data;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -11,6 +13,7 @@ import java.util.LinkedHashMap;
  */
 public class EventManager {
 
+    private final String TAG = "EventManager";
     // Instance from DataManager
     private static EventManager instance = null;
 
@@ -30,6 +33,9 @@ public class EventManager {
     // which are current recorded
     private LinkedHashMap<String, Data> activeMap = new LinkedHashMap<>();
 
+
+    // In this map is stored the activitys for Calender list
+    private HashMap<Date, ArrayList<String>> calenderMap = new HashMap<>();
 
 
 
@@ -209,6 +215,50 @@ public class EventManager {
 
 
 
+
+
+
+
+
+
+
+
+    public boolean setCalenderMapEntry(Date key, String activity) {
+
+        ArrayList<String> list;
+
+        // check if key is not null
+        if (key != null) {
+
+
+            if(activity != null) {
+
+
+                // if paire is in map get otherwise create ney ArrayList
+                if (calenderMap.containsKey(key)) {
+                    list = calenderMap.get(key);
+                    list.add(activity);
+
+                } else {
+                    list = new ArrayList<>();
+                }
+                list.add(activity);
+                calenderMap.put(key, list);
+            } else {
+                calenderMap.put(key, new ArrayList<String>());
+            }
+
+            Log.d(TAG, " key:  " + key.toString() + " // value: " + calenderMap.get(key).toString());
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
+
     /***********
      * Singelton pattern
      ***********/
@@ -228,8 +278,4 @@ public class EventManager {
     }
 
 
-    public void setArrayMap(ArrayList<ActivityObject> arrayList) {
-
-
-    }
 }

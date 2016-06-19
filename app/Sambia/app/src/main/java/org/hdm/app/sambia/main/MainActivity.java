@@ -8,11 +8,15 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
+import org.apache.http.impl.cookie.DateUtils;
 import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.data.Data;
 import org.hdm.app.sambia.data.EventManager;
 import org.hdm.app.sambia.util.FileLoader;
 import org.hdm.app.sambia.util.MyJsonParser;
+
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class MainActivity extends Activity  {
@@ -25,6 +29,7 @@ public class MainActivity extends Activity  {
         super.onCreate(savedInstanceState);
 
         initConfiguration();
+        initCalenderMap();
         setFullScreen(true);
         setContentView(R.layout.activity_main);
     }
@@ -151,9 +156,53 @@ public class MainActivity extends Activity  {
 //        EventManager.getInstance().setActivityObject(data_04);
 
             i++;
-
         }
 
+
+
+
+    }
+
+    private void initCalenderMap() {
+
+        Calendar cal = Calendar.getInstance();
+
+        Date time = cal.getTime();
+
+        Log.d(TAG, "startTime " + time);
+
+        time.setHours(0);
+        time.setMinutes(0);
+        time.setSeconds(0);
+
+        cal.setTime(time);
+
+        time = cal.getTime();
+        Log.d(TAG, "startTime " + time);
+
+        int i = 0;
+
+        Calendar ende = Calendar.getInstance();
+        Date endTime = ende.getTime();
+        endTime.setHours(0);
+        endTime.setMinutes(0);
+        endTime.setSeconds(0);
+        ende.setTime(endTime);
+        ende.add(Calendar.DAY_OF_WEEK, 1);
+        ende.add(Calendar.MINUTE, -15);
+        endTime = ende.getTime();
+        Log.d(TAG, "endTime " + endTime);
+
+        while(time.before(endTime)) {
+
+            time = cal.getTime(); //now
+            Log.d(TAG, "startTime "+  time);
+            EventManager.getInstance().setCalenderMapEntry(time, null);
+            cal.add(Calendar.MINUTE, 15);
+            i++;
+
+        }
+            Log.d(TAG, "iiii " + i);
     }
 
 }

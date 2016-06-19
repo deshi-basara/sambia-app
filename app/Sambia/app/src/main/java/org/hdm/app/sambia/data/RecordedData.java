@@ -1,5 +1,7 @@
 package org.hdm.app.sambia.data;
 
+import org.joda.time.DateTime;
+
 import java.util.Date;
 
 /**
@@ -10,6 +12,7 @@ public class RecordedData {
     public Date startTime;
     public Date endTime;
     public String subCategoryName = null;
+
 
 
     public RecordedData(Date startTime, Date endTime, String subCategoryName) {

@@ -4,12 +4,11 @@ import android.graphics.Bitmap;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Hannes on 27.05.2016.
  */
-public class Data {
+public class Data extends Object{
 
     // General Parameter
     public String title = null;
@@ -34,6 +33,7 @@ public class Data {
     public Data() {
         recordedDataList = new ArrayList<>();
     }
+
 
 
     public Data(String name) {
@@ -62,4 +62,18 @@ public class Data {
         return activeState;
     }
 
+
+    public ArrayList<RecordedData> getRecordedData() {
+        return recordedDataList;
+    }
+
+
+
+    public void saveTimeStamp() {
+
+        this.recordedDataList.add(new RecordedData(this.startTime, this.endTime, this.subCategoryName));
+        this.startTime = null;
+        this.endTime = null;
+        this.subCategoryName = "";
+    }
 }

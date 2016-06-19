@@ -23,10 +23,15 @@ import org.hdm.app.sambia.util.ListRecyclerViewAdapter;
 import org.hdm.app.sambia.util.ActiveRecycleViewAdapter;
 import org.hdm.app.sambia.util.View_Holder;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -152,6 +157,7 @@ public class FragmentActivity extends BaseFragemnt implements
             // Set State to active
             data.activeState = true;
             // set temporary start time
+
             data.startTime = Calendar.getInstance().getTime();
 
             // Count how many activity are active
@@ -190,10 +196,9 @@ public class FragmentActivity extends BaseFragemnt implements
 //            ToDo: Test Activity TimeStamp
 
             // Save Time and subCategory in Data
-            data.recordedDataList.add(new RecordedData(data.startTime, data.endTime, data.subCategoryName));
-            data.startTime = null;
-            data.endTime = null;
-            data.subCategoryName = "";
+            data.saveTimeStamp();
+
+            saveActivtyForCalender(data);
         }
 
 
@@ -222,10 +227,11 @@ public class FragmentActivity extends BaseFragemnt implements
             Log.d(TAG, "position " + position);
             Log.d(TAG, "activeCount " + activeCount);
             Log.d(TAG, "activeCount " + activeCount);
-
-
         }
     }
+
+
+
 
 
 
@@ -233,7 +239,6 @@ public class FragmentActivity extends BaseFragemnt implements
     public void didOnClickActivityList(int position, String s, View_Holder holder) {
         Log.d(TAG, "didOnClickActivityList " + position);
         didOnClick(position, s, null);
-
     }
 
 
@@ -242,23 +247,94 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
 
-    private List<Data> fillWithData() {
-
-        LinkedHashMap<String, Data> activityMap =  EventManager.getInstance().getActivityMap();
-        List<Data> data = new ArrayList<>(activityMap.values());
-
-
-
-//        int size = activityMap.size();
+//    private List<Data> fillWithData() {
 //
-//        for(int i = 0; i<size; i++) {
-//            Data value = (new ArrayList<Data>(activityMap.values())).get(i);
-//            String name = value.getTitle();
-//            data.add(new Data(name, R.drawable.onfarmwork_bagging));
-//            Log.d(TAG, ""+i);
-//        }
-        return data;
-    }
+//        LinkedHashMap<String, Data> activityMap =  EventManager.getInstance().getActivityMap();
+//        List<Data> data = new ArrayList<>(activityMap.values());
+//
+//
+//
+////        int size = activityMap.size();
+////
+////        for(int i = 0; i<size; i++) {
+////            Data value = (new ArrayList<Data>(activityMap.values())).get(i);
+////            String name = value.getTitle();
+////            data.add(new Data(name, R.drawable.onfarmwork_bagging));
+////            Log.d(TAG, ""+i);
+////        }
+//        return data;
+//    }
 
+
+    private void saveActivtyForCalender(Data data) {
+
+
+
+            // Iterate trough the RecordArray from the activity
+            for (RecordedData timeStamp : data.getRecordedData()) {
+
+                Date startTime = timeStamp.startTime;
+                Date endTime = timeStamp.endTime;
+                long sume = endTime.getTime() - startTime.getTime();
+
+
+                long activeMinutes = TimeUnit.MILLISECONDS.toMinutes(sume);
+                long activeSec = TimeUnit.MILLISECONDS.toSeconds(sume);
+
+
+                // If Activity is recorded less than one Minute
+                // than do not list it in calender as recorded activity
+
+                Date currentDate = Calendar.getInstance().getTime();
+
+                Log.d(TAG, "startTime " + startTime.toString());
+                Log.d(TAG, "currentTime " + currentDate.toString());
+                Log.d(TAG, "currentTime " + currentDate.getTime());
+                Log.d(TAG, "currentTime " + currentDate.getDate());
+                Log.d(TAG, "currentTime " + currentDate.getDay());
+                Log.d(TAG, "currentTime " + currentDate.getMinutes());
+
+
+                if(activeMinutes < 1 ) return;
+
+
+
+                DateFormat formatter = new SimpleDateFormat("MM/dd/yy/");
+                Date date;
+
+                try {
+                    date = formatter.parse("01/29/02");
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+                int startMin = startTime.getMinutes();
+                int startHour = startTime.getHours();
+
+                int endMin = endTime.getMinutes();
+                int endHour = endTime.getHours();
+
+
+
+
+
+
+
+                if(startMin<15) {
+
+                    // save activity in calenderMap hour.0
+                } else if(startMin<30) {
+                    // save activity in calenderMap hour.15
+                } else if(startMin<45) {
+                    // save activity in calenderMap hour.30
+                } else {
+                    // save activity in calenderMap hour.45
+                }
+
+                Log.d(TAG, "" + startTime.toString() + " " + startTime.getHours() + " " + startTime.getMinutes());
+            }
+
+        }
 
 }

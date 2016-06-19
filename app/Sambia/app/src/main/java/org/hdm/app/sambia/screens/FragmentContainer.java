@@ -4,7 +4,6 @@ package org.hdm.app.sambia.screens;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,7 +22,7 @@ public class FragmentContainer extends Fragment  implements
 	private FragmentActivity activityFragemnt;
 	private View view;
 	private boolean mShowingBack = false;
-	private FragmentDayView dayViewFragemnt;
+	private FragmentCalender dayViewFragemnt;
 
 
 
@@ -50,7 +49,7 @@ public class FragmentContainer extends Fragment  implements
 
 
 	private void initFragments() {
-		dayViewFragemnt = new FragmentDayView();
+		dayViewFragemnt = new FragmentCalender();
 		activityFragemnt = new FragmentActivity();
 
 		dayViewFragemnt.setContext(this);

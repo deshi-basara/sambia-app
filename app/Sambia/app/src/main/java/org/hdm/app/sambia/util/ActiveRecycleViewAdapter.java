@@ -56,7 +56,7 @@ public class ActiveRecycleViewAdapter extends RecyclerView.Adapter<View_Holder> 
         holder.title.setText(list.get(position).title);
         holder.imageView.setImageResource(list.get(position).imageId);
         holder.position = position;
-        holder.setBackground(list.get(position).activeState);
+//        holder.setBackground(list.get(position).activeState);
     }
 
 
