@@ -1,8 +1,8 @@
 <!-- Side navigation -->
 <nav>
   <!-- Nav header -->
-  <div id="nav-header">
-    <span>Sambia</span> Admin
+  <div id="nav-header" class="z0">
+    <span>Sambia</span> App
   </div>
 
   <!-- Nav links -->
@@ -48,7 +48,7 @@
       <a href="#" class="nav-link-item">
         <span>
           <i class="zmdi zmdi-smartphone-android"></i>
-          Phones
+          SmartPhones
         </span>
       </a>
     </li>
@@ -61,5 +61,102 @@
     Thomas Daum
   </header>
   <section>
+
+    <!-- Table Bar -->
+    <div class="table-bar">
+
+      <!-- Search -->
+      <div class="table-bar-search">
+        <input type="text" name="searchFilter" placeholder="Suche" class="z0">
+        <button type="button" name="button" class="z0">
+          <i class="zmdi zmdi-search"></i>
+        </button>
+      </div>
+
+      <!-- Add -->
+      <div class="table-add">
+        <button type="button" name="button" class="button z0">
+          <i class="zmdi zmdi-plus"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Table Box -->
+    <table class="table z0">
+
+      <!-- Table Head -->
+      <tr class="table-header">
+        <td class="table-align-left">
+          <i class="zmdi zmdi-square-o"></i>
+        </td>
+        <td class="table-align-left">Name</td>
+        <td>Age</td>
+        <td>Gender</td>
+        <td>Household</td>
+        <td>Education</td>
+        <td>Tribe</td>
+        <td>
+          Land Owned
+          <span>(m2)</span>
+        </td>
+        <td>
+          Land Cultivated
+          (m2)
+        </td>
+        <!--<td>Crops</td>
+        <td>Work</td>-->
+        <td>
+          Size
+          (cm)
+        </td>
+        <td>
+          Weight
+          (kg)
+        </td>
+      </tr>
+
+      <!-- Table Entry -->
+      <tr class="table-entry" *ngFor="let person of [1,2]">
+        <td class="table-align-left">
+          <i class="zmdi zmdi-square-o"></i>
+        </td>
+        <td class="table-align-left">
+          Hannes Buchwald
+        </td>
+        <td>
+          30
+        </td>
+        <td>
+          <i class="zmdi zmdi-female" ng-hide="true"></i>
+          <i class="zmdi zmdi-male"></i>
+        </td>
+        <td>
+          4
+        </td>
+        <td>
+          Student
+        </td>
+        <td>
+          Vikinger
+        </td>
+        <td>
+          100
+        </td>
+        <td>
+          20
+        </td>
+        <!--<td>Crops</td>
+        <td>Work</td>-->
+        <td>
+          180
+        </td>
+        <td>
+          80
+        </td>
+      </tr>
+
+    </table>
+
+
   </section>
 </div>

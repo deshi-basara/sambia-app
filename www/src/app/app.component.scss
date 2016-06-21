@@ -1,36 +1,9 @@
 @import "shared/globals";
 
-.content-area {
-  position: fixed;
-  top: 0;
-  left: 220px;
-
-  width: 100%;
-  height: 100%;
-
-  header {
-    position: relative;
-    width: 100%;
-    height: 55px;
-
-    text-align: right;
-    line-height: 55px;
-    background-color: $light-white;
-    color: $grey;
-  }
-
-  section {
-    position: relative;
-    height: 100%;
-    width: 100%;
-
-    // background-color: $light-green;
-  }
-}
-
 nav {
-  position: fixed;
+  position: relative;
   width: 220px;
+  flex: 0 0 220px;
   height: 100%;
 
   background: rgba(81,192,53,1);
@@ -43,25 +16,26 @@ nav {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#51c035', endColorstr='#26af4d', GradientType=0 );
 
   #nav-header {
-    height: 55px;
+    height: 60px;
     // background-color: #444444;
     // margin-bottom: 25px;
+    padding-left: 56px;
 
-    text-align: center;
-    line-height: 55px;
-    font-size: 13px;
-    font-weight: 300;
+    line-height: 60px;
+    font-size: 18px;
+    font-weight: 400;
     color: $white;
+    font-family: $font-secondary;
 
     span {
-      font-weight: 400;
+      font-weight: 700;
     }
   }
 
   #nav-link {
     list-style-type: none;
     padding: 0;
-    margin: 0;
+    margin-top: 25px;
 
     li {
       border-left: 3px solid $green;
@@ -95,6 +69,122 @@ nav {
           text-align: center;
           color: $light-green;
         }
+      }
+    }
+  }
+}
+
+.content-area {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  header {
+    display: block;
+    width: 100%;
+    height: 60px;
+
+    text-align: right;
+    line-height: 60px;
+    background-color: $light-white;
+    color: $grey;
+  }
+
+  section {
+    display: block;
+    height: 100%;
+    width: 90%;
+
+    padding: 35px 50px 35px 50px;
+
+    // background-color: #ECF1F4;
+  }
+}
+
+.table-bar {
+
+  .table-bar-search {
+    float: left;
+
+    input {
+      height: 30px;
+      width: 300px;
+      padding: 5px 15px;
+
+      border-radius: 2px;
+      border: 0;
+      outline: none;
+    }
+
+    button {
+      height: 40px;
+      padding: 0px 20px;
+      margin-left: -5px;
+
+      background-color: $light-white;
+      cursor: pointer;
+
+      border: 0;
+      outline: none;
+
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        background-color: $green;
+        color: $white;
+      }
+    }
+  }
+
+  .table-add {
+    float: right;
+  }
+
+}
+
+.table {
+  position: relative;
+  width: 100%;
+  top: 25px;
+
+  padding: 15px;
+
+  border-spacing: 0px;
+  border-radius: 2px;
+
+  tr {
+    height: 50px;
+    line-height: 40px;
+
+    td {
+      text-align: right;
+      margin: 0;
+      padding: 0;
+      border-collapse: collapse;
+      border-bottom: 1px solid $light-white;
+
+      font-size: 14px;
+
+      &.table-align-left {
+        text-align: left;
+      }
+
+      &:first-child {
+        width: 20px;
+      }
+    }
+  }
+
+  .table-header {
+    font-weight: 400;
+
+    & td {
+      font-size: 13px;
+      font-weight: 700;
+      border-bottom: 1px solid $light-white;
+
+      span {
+
       }
     }
   }
