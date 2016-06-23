@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {MD_SIDENAV_DIRECTIVES} from '@angular2-material/sidenav';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -7,7 +7,7 @@ import {MD_SIDENAV_DIRECTIVES} from '@angular2-material/sidenav';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css'],
   directives: [
-    MD_SIDENAV_DIRECTIVES,
+    ROUTER_DIRECTIVES,
   ],
 })
 export class AppComponent {
