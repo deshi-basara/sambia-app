@@ -111,101 +111,11 @@ nav {
     }
   }
 
-  app-sections {
+  section {
     height: 100%;
 
     padding: 35px 50px 35px 50px;
 
     // background-color: #ECF1F4;
-  }
-}
-
-.table-bar {
-
-  .table-bar-search {
-    float: left;
-
-    input {
-      height: 30px;
-      width: 300px;
-      padding: 5px 15px;
-
-      border-radius: 2px;
-      border: 0;
-      outline: none;
-    }
-
-    button {
-      height: 40px;
-      padding: 0px 20px;
-      margin-left: -5px;
-
-      cursor: pointer;
-
-      border: 0;
-      outline: none;
-    }
-  }
-
-  .table-add {
-    float: right;
-  }
-
-  .table-remove {
-    float: right;
-    margin-right: 10px;
-
-    button {
-      background-color: $light-red;
-    }
-  }
-
-}
-
-.table {
-  position: relative;
-  width: 100%;
-  top: 25px;
-
-  padding: 15px;
-
-  border-spacing: 0px;
-  border-radius: 2px;
-
-  tr {
-    height: 50px;
-    line-height: 40px;
-
-    td {
-      text-align: right;
-      margin: 0;
-      padding: 0;
-      border-collapse: collapse;
-      border-bottom: 1px solid $light-white;
-
-      font-size: 14px;
-
-      &.table-align-left {
-        text-align: left;
-      }
-
-      &:first-child {
-        width: 20px;
-      }
-    }
-  }
-
-  .table-header {
-    font-weight: 400;
-
-    & td {
-      font-size: 13px;
-      font-weight: 700;
-      border-bottom: 1px solid $light-white;
-
-      span {
-
-      }
-    }
   }
 }

@@ -32,6 +32,12 @@
 
       font-family: 'Roboto', sans-serif;
     }
+
+    app-sections {
+      position: relative;
+      display: block;
+      width: 100%;
+    }
   </style>
 </head>
 <body>
@@ -39,18 +45,14 @@
     <h1>Loading...</h1>
   </app-root>
 
-
-
-    {{#each scripts.polyfills}}
-    <script src="{{.}}"></script>
-    {{/each}}
-    <script>
-      System.import('system-config.js').then(function () {
-        System.import('main');
-      }).catch(console.error.bind(console));
-    </script>
-
-
+  {{#each scripts.polyfills}}
+  <script src="{{.}}"></script>
+  {{/each}}
+  <script>
+    System.import('system-config.js').then(function () {
+      System.import('main');
+    }).catch(console.error.bind(console));
+  </script>
 
 </body>
 </html>
