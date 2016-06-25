@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 
+import { SubjectsService } from './subjects/subjects.service';
+
 @Component({
   moduleId: module.id,
   selector: 'app-root',
@@ -9,6 +11,9 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
   directives: [
     ROUTER_DIRECTIVES,
   ],
+  providers: [
+    SubjectsService,
+  ]
 })
 export class AppComponent {
   title = 'app works!';

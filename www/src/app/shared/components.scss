@@ -1,0 +1,78 @@
+@import 'globals';
+
+.form {
+  display: block;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+
+  .form-image {
+    float: left;
+    width: 20%;
+
+    .form-image-holder {
+      float: right;
+      display: block;
+      margin-right: 25px;
+
+      width: 185px;
+      height: 185px;
+
+      text-align: center;
+
+      border: 2px solid $green;
+      border-radius: 2px;
+      background-color: $green;
+
+      i {
+        padding: 20px;
+        margin-top: 60px;
+        color: $white;
+
+        cursor: pointer;
+      }
+    }
+  }
+
+  .form-person {
+    float: left;
+    width: 60%;
+
+    padding-left: 15px;
+    padding-right: 15px;
+
+    .form-controls {
+      float: right;
+      margin-right: 15px;
+    }
+  }
+}
+
+.form-group {
+  padding-right: 15px;
+  margin-bottom: 15px;
+
+  label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    // margin-left: 15px;
+    font-size: 14px;
+  }
+
+  input, select {
+    display: block;
+    height: 30px;
+    width: 100%;
+    padding: 5px 15px;
+    border-radius: 2px;
+    border: 0;
+    outline: none;
+  }
+
+  select {
+    /*background-color: $green;
+    color: $white;*/
+  }
+
+}
