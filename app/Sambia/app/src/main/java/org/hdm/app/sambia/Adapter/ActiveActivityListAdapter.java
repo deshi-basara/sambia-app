@@ -1,43 +1,46 @@
-package org.hdm.app.sambia.util;
+package org.hdm.app.sambia.Adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.data.Data;
-import org.hdm.app.sambia.listener.ListRecycleViewItemOnClickListener;
+import org.hdm.app.sambia.listener.ActiveActivityListOnClickListener;
 import org.hdm.app.sambia.listener.ViewHolderListener;
 import org.hdm.app.sambia.screens.FragmentActivity;
+import org.hdm.app.sambia.util.View_Holder;
 
 import java.util.List;
 
 /**
  * Created by Hannes on 27.05.2016.
  */
-public class ListRecyclerViewAdapter extends RecyclerView.Adapter<View_Holder> implements ViewHolderListener {
+public class ActiveActivityListAdapter extends RecyclerView.Adapter<View_Holder> implements
+        ViewHolderListener {
 
-    private final String TAG = "ListRecyclerViewAdapter";
+    private final String TAG = "ActiveActivityListAdapter";
 
 
     public List<Data> list = null;
     FragmentActivity fr;
-    private ListRecycleViewItemOnClickListener listener;
+    private ActiveActivityListOnClickListener listener;
 
 
 
-    public ListRecyclerViewAdapter(FragmentActivity fragmentActivity, List<Data> data) {
+    public ActiveActivityListAdapter(FragmentActivity fragmentActivity, List<Data> data) {
         fr = fragmentActivity;
         this.list = data;
     }
 
 
+
     @Override
     public View_Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         //Inflate the layout, initialize the View Holder
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_layout, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_layout_active, parent, false);
         View_Holder holder = new View_Holder(v);
         return holder;
     }
@@ -49,17 +52,11 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<View_Holder> i
 
     @Override
     public void onBindViewHolder(View_Holder holder, int position) {
-        //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
 
+        //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
         holder.setListener(this);
         holder.title.setText(list.get(position).title);
         holder.imageView.setImageResource(list.get(position).imageId);
-        holder.position = position;
-        holder.setBackground(list.get(position).activeState);
-
-        // Set the selected state of the row depending on the position
-
-        Log.d(TAG, "onBilnde ");
     }
 
 
@@ -106,26 +103,19 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<View_Holder> i
 
 
 
-    public void setListener (ListRecycleViewItemOnClickListener listener) {
-        this.listener = listener;
+    public void setListener(ActiveActivityListOnClickListener fragmentActivity) {
+        this.listener = fragmentActivity;
     }
 
 
     @Override
-    public void didClickOnView(View view, int position, String s, View_Holder holder) {
-        if(listener != null) listener.didOnClick(position, s, holder);
-    }
-
-
-
-
-    @Override
-    public void didClickOnView(View view, String title) {
+    public void didClickOnView(View view, String s, View_Holder holder) {
+        if(listener != null) listener.didOnClickActivityList(s, holder);
     }
 
 
     @Override
-    public void didLongClickOnView(View view, int position) {
+    public void didLongClickOnView(View view, String s, View_Holder holder) {
     }
 
 }

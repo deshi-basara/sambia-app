@@ -15,6 +15,7 @@ import org.hdm.app.sambia.data.EventManager;
 import org.hdm.app.sambia.util.FileLoader;
 import org.hdm.app.sambia.util.MyJsonParser;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -116,38 +117,6 @@ public class MainActivity extends Activity  {
         data_01.imageId = R.drawable.onfarmwork_bagging;
         data_01.sub_category = true;
 
-//        Data data_02 = new Data();
-//        data_02.title = "Bagging" + i;
-//        data_02.group_activity = "On Farm Work";
-//        data_02.sub_activity = "Harvesting";
-//        data_01.subCategoryName = "Animal";
-//        data_02.id = 2 + i;
-//        data_02.image = bitmap;
-//        data_02.imageId = R.drawable.onfarmwork_bagging;
-//        data_01.sub_category = true;
-//
-//
-//
-//        imgPath = fl.getEnvironment().toString() + "/" + "SambiaApp/Images/" + "onfarmwork_weeding.png";
-//        bitmap = BitmapFactory.decodeFile(imgPath, options);
-//
-//        Data data_03 = new Data();
-//        data_03.title = "Transport" + i;
-//        data_03.group_activity = "Off Farm Work";
-//        data_03.sub_activity = "Harvesting";
-//        data_01.subCategoryName = "Machine";
-//        data_03.id = 3 + i;
-//        data_03.image = bitmap;
-//        data_03.imageId = R.drawable.onfarmwork_weeding;
-//
-//
-//        Data data_04 = new Data();
-//        data_04.title = "Cooking" + i;
-//        data_04.group_activity = "Home";
-//        data_04.sub_activity = "Household";
-//        data_04.id = 4+i;
-//        data_04.image = bitmap;
-//        data_04.imageId = R.drawable.onfarmwork_weeding;
 
 
         EventManager.getInstance().setActivityObject(data_01);
@@ -166,43 +135,53 @@ public class MainActivity extends Activity  {
     private void initCalenderMap() {
 
         Calendar cal = Calendar.getInstance();
-
         Date time = cal.getTime();
-
-        Log.d(TAG, "startTime " + time);
-
-        time.setHours(0);
-        time.setMinutes(0);
-        time.setSeconds(0);
-
-        cal.setTime(time);
-
-        time = cal.getTime();
-        Log.d(TAG, "startTime " + time);
-
         int i = 0;
 
-        Calendar ende = Calendar.getInstance();
-        Date endTime = ende.getTime();
-        endTime.setHours(0);
-        endTime.setMinutes(0);
-        endTime.setSeconds(0);
-        ende.setTime(endTime);
-        ende.add(Calendar.DAY_OF_WEEK, 1);
-        ende.add(Calendar.MINUTE, -15);
-        endTime = ende.getTime();
-        Log.d(TAG, "endTime " + endTime);
+        // Reset Time to 00:00:00
+        time.setHours(i);
+        time.setMinutes(i);
+        time.setSeconds(i);
+
+
+        // Set Calendar with reseted time
+        cal.setTime(time);
+
+
+        Calendar calEndTime = Calendar.getInstance();
+        Date endTime = calEndTime.getTime();
+        endTime.setHours(i);
+        endTime.setMinutes(i);
+        endTime.setSeconds(i);
+        calEndTime.setTime(endTime);
+        calEndTime.add(Calendar.DAY_OF_WEEK, 1);
+        calEndTime.add(Calendar.MINUTE, -15);
+        endTime = calEndTime.getTime();
+
 
         while(time.before(endTime)) {
-
-            time = cal.getTime(); //now
+            time = cal.getTime();
             Log.d(TAG, "startTime "+  time);
             EventManager.getInstance().setCalenderMapEntry(time, null);
             cal.add(Calendar.MINUTE, 15);
             i++;
+            if(i== 5) {
+                EventManager.getInstance().setCalenderMapEntry(time, "1");
+                EventManager.getInstance().setCalenderMapEntry(time, "0");
+            }
 
+            if(i== 10) {
+                EventManager.getInstance().setCalenderMapEntry(time, "0");
+            }
+
+            if(i== 15) {
+                EventManager.getInstance().setCalenderMapEntry(time, "1");
+                EventManager.getInstance().setCalenderMapEntry(time, "0");
+            }
+            if(i== 20) {
+                EventManager.getInstance().setCalenderMapEntry(time, "0");
+            }
         }
-            Log.d(TAG, "iiii " + i);
     }
 
 }

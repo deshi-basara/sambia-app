@@ -70,7 +70,6 @@ public class Data extends Object{
 
 
     public void saveTimeStamp() {
-
         this.recordedDataList.add(new RecordedData(this.startTime, this.endTime, this.subCategoryName));
         this.startTime = null;
         this.endTime = null;

@@ -16,33 +16,26 @@ import android.view.ViewGroup;
 import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.data.Data;
 import org.hdm.app.sambia.data.EventManager;
-import org.hdm.app.sambia.data.RecordedData;
-import org.hdm.app.sambia.listener.ActiveRecycleViewItemOnClickListener;
-import org.hdm.app.sambia.listener.ListRecycleViewItemOnClickListener;
-import org.hdm.app.sambia.util.ListRecyclerViewAdapter;
-import org.hdm.app.sambia.util.ActiveRecycleViewAdapter;
+import org.hdm.app.sambia.listener.ActiveActivityListOnClickListener;
+import org.hdm.app.sambia.listener.ActivityListOnClickListener;
+import org.hdm.app.sambia.Adapter.ActivityListAdapter;
+import org.hdm.app.sambia.Adapter.ActiveActivityListAdapter;
 import org.hdm.app.sambia.util.View_Holder;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+import static org.hdm.app.sambia.util.Consts.*;
+
 
 
 /**
  * A fragment representing the front of the card.
  */
 public class FragmentActivity extends BaseFragemnt implements
-        ListRecycleViewItemOnClickListener,
-        ActiveRecycleViewItemOnClickListener {
-
-
-    private static final boolean DEBUGMODE = true;
+        ActivityListOnClickListener,
+        ActiveActivityListOnClickListener {
 
 
     private final String TAG = "FragmentActivity";
@@ -50,7 +43,7 @@ public class FragmentActivity extends BaseFragemnt implements
 
     private View view;
     private RecyclerView recyclerView;
-    private ListRecyclerViewAdapter adapter;
+    private ActivityListAdapter adapter;
 
 
 
@@ -59,19 +52,23 @@ public class FragmentActivity extends BaseFragemnt implements
     private List<Data> activeData;
     private int activeCount = 0;
     private RecyclerView recyclerView_activeData;
-    private ActiveRecycleViewAdapter activeAdapter;
+    private ActiveActivityListAdapter activeAdapter;
+
+
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_activitys, container, false);
-
         initMenu(view);
         initActiveActivityList();
         initActivityList();
         return view;
     }
+
+
+
 
     @Override
     public void onResume() {
@@ -89,8 +86,8 @@ public class FragmentActivity extends BaseFragemnt implements
 
     private void initActiveActivityList() {
 
-        activeData = new ArrayList<>(EventManager.getInstance().getActiveMap().values());
-        activeAdapter = new ActiveRecycleViewAdapter(this, activeData);
+        activeData = new ArrayList<>(event.getActiveMap().values());
+        activeAdapter = new ActiveActivityListAdapter(this, activeData);
         activeAdapter.setListener(this);
         recyclerView_activeData = (RecyclerView) view.findViewById(R.id.rv_active);
         recyclerView_activeData.setAdapter(activeAdapter);
@@ -104,8 +101,8 @@ public class FragmentActivity extends BaseFragemnt implements
 
     private void initActivityList() {
 
-        data = new ArrayList<>(EventManager.getInstance().getActivityMap().values());
-        adapter = new ListRecyclerViewAdapter(this, data);
+        data = new ArrayList<>(event.getActivityMap().values());
+        adapter = new ActivityListAdapter(this, data);
         adapter.setListener(this);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_list);
         recyclerView.setAdapter(adapter);
@@ -118,32 +115,23 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // Listener from the ActivitysList
     @Override
-    public void didOnClick(int position, String title, View_Holder holder) {
+    public void didClickOnActivityListItem(String title, View_Holder holder) {
 
 
-        Log.d(TAG, "title " + title);
         // Get the DataObject which was clicked
         // there are all information stored about the activity object
         // state, names image ect.
+        Data data = event.getActivityObject(title);
 
-        Data data = EventManager.getInstance().getActivityObject(title);
 
-        Log.d(TAG, "Data " + data);
+        if(DEBUGMODE) {
+            Log.d(TAG, "title " + title);
+            Log.d(TAG, "Data " + data);
+        }
+
+
 
         if(!data.activeState){
 
@@ -163,7 +151,7 @@ public class FragmentActivity extends BaseFragemnt implements
             // Count how many activity are active
             activeCount++;
 
-            EventManager.getInstance().setActiveObject(data);
+            event.setActiveObject(data);
         } else  {
             // Deactivate Activity
             data.activeState = false;
@@ -176,59 +164,43 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
             // Remove the active Data from the active dataList
-            EventManager.getInstance().removeActiveObject(data);
+            event.removeActiveObject(data);
 
 
-            // Calculation for Time messurement
-//            long difference = data.startTime.getTime() - data.endTime.getTime();
-//            int days = (int) (difference / (1000*60*60*24));
-//            int hours = (int) ((difference - (1000*60*60*24*days)) / (1000*60*60));
-//            int min = (int) (difference - (1000*60*60*24*days) - (1000*60*60*hours)) / (1000*60);
-//            hours = (hours < 0 ? -hours : hours);
-//            min = (min < 0 ? -min : min);
-//            days = (days < 0 ? -days : days);
-//
-//            Log.d(TAG, "======= Hours "+ hours);
-//            Log.d(TAG, "======= min "+ min);
-//            Log.d(TAG, "======= days "+ days);
-
-
-//            ToDo: Test Activity TimeStamp
+            saveActivtyForCalenderContent(data);
 
             // Save Time and subCategory in Data
             data.saveTimeStamp();
-
-            saveActivtyForCalender(data);
         }
 
 
 
         // Store edited Data back in EventManager
-        EventManager.getInstance().setActivityObject(data);
+        event.setActivityObject(data);
 
 
         // Set Background
         if(holder!= null){
         holder.setBackground(data.activeState);
         } else {
-            adapter.list = new ArrayList<>(EventManager.getInstance().getActivityMap().values());
+            adapter.list = new ArrayList<>(event.getActivityMap().values());
             adapter.notifyDataSetChanged();
          }
 
 
 
-        activeAdapter.list = new ArrayList<>(EventManager.getInstance().getActiveMap().values());
+        activeAdapter.list = new ArrayList<>(event.getActiveMap().values());
         activeAdapter.notifyDataSetChanged();
 
 
         // get activeMap look into and for every entry add to
 
         if(DEBUGMODE) {
-            Log.d(TAG, "position " + position);
             Log.d(TAG, "activeCount " + activeCount);
             Log.d(TAG, "activeCount " + activeCount);
         }
     }
+
 
 
 
@@ -236,105 +208,73 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
     @Override
-    public void didOnClickActivityList(int position, String s, View_Holder holder) {
-        Log.d(TAG, "didOnClickActivityList " + position);
-        didOnClick(position, s, null);
+    public void didOnClickActivityList(String title, View_Holder holder) {
+        didClickOnActivityListItem(title, null);
     }
 
 
 
 
 
-
-
-//    private List<Data> fillWithData() {
-//
-//        LinkedHashMap<String, Data> activityMap =  EventManager.getInstance().getActivityMap();
-//        List<Data> data = new ArrayList<>(activityMap.values());
-//
-//
-//
-////        int size = activityMap.size();
-////
-////        for(int i = 0; i<size; i++) {
-////            Data value = (new ArrayList<Data>(activityMap.values())).get(i);
-////            String name = value.getTitle();
-////            data.add(new Data(name, R.drawable.onfarmwork_bagging));
-////            Log.d(TAG, ""+i);
-////        }
-//        return data;
-//    }
-
-
-    private void saveActivtyForCalender(Data data) {
+    private void saveActivtyForCalenderContent(Data data) {
 
 
 
-            // Iterate trough the RecordArray from the activity
-            for (RecordedData timeStamp : data.getRecordedData()) {
-
-                Date startTime = timeStamp.startTime;
-                Date endTime = timeStamp.endTime;
-                long sume = endTime.getTime() - startTime.getTime();
+                int startHour   = data.startTime.getHours();
+                int startMin    = data.startTime.getMinutes();
 
 
-                long activeMinutes = TimeUnit.MILLISECONDS.toMinutes(sume);
-                long activeSec = TimeUnit.MILLISECONDS.toSeconds(sume);
+                Calendar cal    = Calendar.getInstance();
+                Date currentDate = cal.getTime();
+                int currentMin  = 0;
 
 
-                // If Activity is recorded less than one Minute
-                // than do not list it in calender as recorded activity
-
-                Date currentDate = Calendar.getInstance().getTime();
-
-                Log.d(TAG, "startTime " + startTime.toString());
-                Log.d(TAG, "currentTime " + currentDate.toString());
-                Log.d(TAG, "currentTime " + currentDate.getTime());
-                Log.d(TAG, "currentTime " + currentDate.getDate());
-                Log.d(TAG, "currentTime " + currentDate.getDay());
-                Log.d(TAG, "currentTime " + currentDate.getMinutes());
-
-
-                if(activeMinutes < 1 ) return;
-
-
-
-                DateFormat formatter = new SimpleDateFormat("MM/dd/yy/");
-                Date date;
-
-                try {
-                    date = formatter.parse("01/29/02");
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-
-                int startMin = startTime.getMinutes();
-                int startHour = startTime.getHours();
-
-                int endMin = endTime.getMinutes();
-                int endHour = endTime.getHours();
-
-
-
-
-
-
-
+                // find current TimeSlot
                 if(startMin<15) {
-
-                    // save activity in calenderMap hour.0
+                    currentMin  = 0;
                 } else if(startMin<30) {
-                    // save activity in calenderMap hour.15
+                    currentMin  = 15;
                 } else if(startMin<45) {
-                    // save activity in calenderMap hour.30
+                    currentMin  = 30;
                 } else {
-                    // save activity in calenderMap hour.45
+                    currentMin = 45;
                 }
 
-                Log.d(TAG, "" + startTime.toString() + " " + startTime.getHours() + " " + startTime.getMinutes());
+                // Set Current TimeSlot
+                currentDate.setSeconds(0);
+                currentDate.setHours(startHour);
+                currentDate.setMinutes(currentMin);
+                cal.setTime(currentDate);
+                currentDate = cal.getTime();
+
+                // save once current activityTitle in map
+                event.setCalenderMapEntry(currentDate, data.title);
+
+                // Debugging
+                if(DEBUGMODE) {
+                    ArrayList<String> list = event.getCalendarMap().get(currentDate.toString());
+                    Log.d(TAG, "List entrys " + list.toString());
+                    Log.d(TAG, "List size " + list.size());
+                }
+
+
+                // check if endTime is outside currentTime (15 min slot)
+                // if true than safe activityTitle to all correspond time slots
+                while(currentDate.after(data.endTime)) {
+                    cal.setTime(currentDate);
+                    cal.add(Calendar.MINUTE, 15);
+                    currentDate = cal.getTime();
+                    event.setCalenderMapEntry(currentDate, data.title);
+                    if(DEBUGMODE) {
+                        Log.d(TAG, "currentTime " + currentDate.toString() + "Title " + data.title);
+                    }
+                }
+
+
+                if(DEBUGMODE) {
+                    Log.d(TAG,  " " + data.startTime.toString()
+                                + " " + data.startTime.getHours()
+                                + " " + data.startTime.getMinutes());
+                }
             }
-
-        }
-
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.TreeMap;
 
 /**
  * Created by Hannes on 06.05.2016.
@@ -35,7 +36,7 @@ public class EventManager {
 
 
     // In this map is stored the activitys for Calender list
-    private HashMap<Date, ArrayList<String>> calenderMap = new HashMap<>();
+    private TreeMap<String, ArrayList<String>> calenderMap = new TreeMap<>();
 
 
 
@@ -223,33 +224,23 @@ public class EventManager {
 
 
 
-    public boolean setCalenderMapEntry(Date key, String activity) {
-
-        ArrayList<String> list;
+    public boolean setCalenderMapEntry(Date date, String activity) {
 
         // check if key is not null
-        if (key != null) {
+        if (date != null) {
+            ArrayList<String> list = null;
+            String key = date.toString();
 
-
-            if(activity != null) {
-
-
-                // if paire is in map get otherwise create ney ArrayList
-                if (calenderMap.containsKey(key)) {
-                    list = calenderMap.get(key);
-                    list.add(activity);
-
-                } else {
-                    list = new ArrayList<>();
-                }
+            if(activity != null && calenderMap.containsKey(key)) {
+                list = calenderMap.get(key);
+                // do not add enty if list contains already activitys
+                if(list.contains(activity)) return true;
                 list.add(activity);
-                calenderMap.put(key, list);
             } else {
-                calenderMap.put(key, new ArrayList<String>());
+               list = new ArrayList<String>();
             }
-
-            Log.d(TAG, " key:  " + key.toString() + " // value: " + calenderMap.get(key).toString());
-
+            calenderMap.put(key, list);
+          //  Log.d(TAG, "key " + key.toString() + " // value: " + calenderMap.get(key).toString());
             return true;
         } else {
             return false;
@@ -257,6 +248,10 @@ public class EventManager {
     }
 
 
+
+    public TreeMap<String, ArrayList<String>> getCalendarMap() {
+        return calenderMap;
+    }
 
 
     /***********
