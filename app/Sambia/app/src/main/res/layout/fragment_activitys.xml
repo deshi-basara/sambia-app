@@ -21,11 +21,10 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rv_active"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:elevation="5dp"
         android:layout_below="@+id/displayActivityView"
-        android:layout_gravity="bottom"
-        android:background="@android:color/holo_green_dark"
+        android:background="@android:color/holo_orange_light"
         />
 
     <android.support.v7.widget.RecyclerView

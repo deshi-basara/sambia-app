@@ -1,6 +1,7 @@
 package org.hdm.app.sambia.util;
 
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.hdm.app.sambia.Adapter.CalendarListAdapter;
@@ -38,8 +40,7 @@ public class View_Holder extends RecyclerView.ViewHolder implements
     private ImageView iv_play;
     public  TextView title;
     public  ImageView imageView;
-
-
+    private LinearLayout ll_layout;
 
 
     /************** Constructors ******************/
@@ -74,6 +75,7 @@ public class View_Holder extends RecyclerView.ViewHolder implements
         title = (TextView) itemView.findViewById(R.id.title);
         iv_play = (ImageView) itemView.findViewById(R.id.iv_play);
         iv_play.setVisibility(View.GONE);
+        ll_layout = (LinearLayout) imageView.findViewById(R.id.ll_cardView);
     }
 
 
@@ -167,5 +169,4 @@ public class View_Holder extends RecyclerView.ViewHolder implements
         if(listener != null) listener.didLongClickOnView(v, title.getText().toString(), this);
         return false;
     }
-
 }

@@ -165,22 +165,22 @@ public class MainActivity extends Activity  {
             EventManager.getInstance().setCalenderMapEntry(time, null);
             cal.add(Calendar.MINUTE, 15);
             i++;
-            if(i== 5) {
-                EventManager.getInstance().setCalenderMapEntry(time, "1");
-                EventManager.getInstance().setCalenderMapEntry(time, "0");
-            }
-
-            if(i== 10) {
-                EventManager.getInstance().setCalenderMapEntry(time, "0");
-            }
-
-            if(i== 15) {
-                EventManager.getInstance().setCalenderMapEntry(time, "1");
-                EventManager.getInstance().setCalenderMapEntry(time, "0");
-            }
-            if(i== 20) {
-                EventManager.getInstance().setCalenderMapEntry(time, "0");
-            }
+//            if(i== 5) {
+//                EventManager.getInstance().setCalenderMapEntry(time, "1");
+//                EventManager.getInstance().setCalenderMapEntry(time, "0");
+//            }
+//
+//            if(i== 10) {
+//                EventManager.getInstance().setCalenderMapEntry(time, "0");
+//            }
+//
+//            if(i== 15) {
+//                EventManager.getInstance().setCalenderMapEntry(time, "1");
+//                EventManager.getInstance().setCalenderMapEntry(time, "0");
+//            }
+//            if(i== 20) {
+//                EventManager.getInstance().setCalenderMapEntry(time, "0");
+//            }
         }
     }
 

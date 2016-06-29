@@ -1,6 +1,7 @@
 package org.hdm.app.sambia.Adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ import java.util.List;
 public class ActivityListAdapter extends RecyclerView.Adapter<View_Holder> implements
         ViewHolderListener {
 
-    private final String TAG = "dfListRecyclerViewAdapter";
+    private final String TAG = "ActivityListAdapter";
 
 
     public List<Data> list = null;
@@ -55,6 +56,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<View_Holder> imple
         holder.title.setText(list.get(position).title);
         holder.imageView.setImageResource(list.get(position).imageId);
         holder.setBackground(list.get(position).activeState);
+        Log.d(TAG, "position" + position);
     }
 
 
@@ -94,11 +96,6 @@ public class ActivityListAdapter extends RecyclerView.Adapter<View_Holder> imple
         list.remove(position);
         notifyItemRemoved(position);
     }
-
-
-
-
-
 
 
     public void setListener (ActivityListOnClickListener listener) {

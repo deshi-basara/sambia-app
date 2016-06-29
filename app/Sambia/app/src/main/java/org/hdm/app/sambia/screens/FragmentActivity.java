@@ -20,6 +20,7 @@ import org.hdm.app.sambia.listener.ActiveActivityListOnClickListener;
 import org.hdm.app.sambia.listener.ActivityListOnClickListener;
 import org.hdm.app.sambia.Adapter.ActivityListAdapter;
 import org.hdm.app.sambia.Adapter.ActiveActivityListAdapter;
+import org.hdm.app.sambia.util.SimpleDividerItemDecoration;
 import org.hdm.app.sambia.util.View_Holder;
 
 import java.util.ArrayList;
@@ -41,8 +42,8 @@ public class FragmentActivity extends BaseFragemnt implements
     private final String TAG = "FragmentActivity";
 
 
-    private View view;
-    private RecyclerView recyclerView;
+    public View view;
+    public RecyclerView recyclerView;
     private ActivityListAdapter adapter;
 
 
@@ -104,12 +105,17 @@ public class FragmentActivity extends BaseFragemnt implements
         data = new ArrayList<>(event.getActivityMap().values());
         adapter = new ActivityListAdapter(this, data);
         adapter.setListener(this);
+
+        SimpleDividerItemDecoration divider =  new SimpleDividerItemDecoration(
+                getActivity().getApplication());
+
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_list);
+//        recyclerView.addItemDecoration(divider);
+
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(
                 rows,StaggeredGridLayoutManager.VERTICAL));
-
     }
 
 
