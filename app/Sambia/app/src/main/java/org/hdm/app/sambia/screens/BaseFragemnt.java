@@ -8,7 +8,7 @@ import android.app.Fragment;
 import android.view.View;
 
 import org.hdm.app.sambia.R;
-import org.hdm.app.sambia.data.EventManager;
+import org.hdm.app.sambia.datastorage.ActivityManager;
 import org.hdm.app.sambia.listener.MainListener;
 import org.hdm.app.sambia.listener.MenuListener;
 import org.hdm.app.sambia.views.MenuView;
@@ -27,7 +27,7 @@ public class BaseFragemnt extends Fragment implements
 
     private MainListener listener;
     private MenuView menuView;
-    public EventManager event = EventManager.getInstance();
+    public ActivityManager event = ActivityManager.getInstance();
 
 
 

@@ -1,16 +1,13 @@
 package org.hdm.app.sambia.dialogs;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import org.hdm.app.sambia.R;
-import org.hdm.app.sambia.data.Data;
+import org.hdm.app.sambia.datastorage.ActivityObject;
 
 /**
  * Created by Hannes on 03.06.2016.
@@ -18,13 +15,13 @@ import org.hdm.app.sambia.data.Data;
 public class DFragment extends DialogFragment {
 
 
-    private Data data;
+    private ActivityObject activityObject;
 
     public DFragment(){}
 
 
-    public DFragment(Data data) {
-        this.data = data;
+    public DFragment(ActivityObject activityObject) {
+        this.activityObject = activityObject;
     }
 
 

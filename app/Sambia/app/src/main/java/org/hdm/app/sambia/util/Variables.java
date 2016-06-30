@@ -1,12 +1,4 @@
-package org.hdm.app.sambia.data;
-
-import android.graphics.Bitmap;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.TreeMap;
+package org.hdm.app.sambia.util;
 
 /**
  * Created by Hannes on 06.05.2016.
@@ -14,7 +6,7 @@ import java.util.TreeMap;
 public class Variables {
 
     private final String TAG = "Variables";
-    // Instance from DataManager
+    // Instance from DaataManager
     private static Variables instance = null;
 
 

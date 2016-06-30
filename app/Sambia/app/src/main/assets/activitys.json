@@ -3,233 +3,233 @@
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Land Preparation ",
-      "activity": "Ploughing",
+      "title": "Ploughing",
       "id": 1,
-      "image": "onfarmwork_bagging"
+      "imageName": "onfarmwork_bagging"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Land Preparation ",
-      "activity": "Harrowing",
+      "title": "Harrowing",
       "id": 2,
-      "image": "onfarmwork_bagging"
+      "imageName": "onfarmwork_bagging"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Land Preparation ",
-      "activity": "Ridging",
+      "title": "Ridging",
       "id": 3,
-      "image": "onfarmwork_bagging"
+      "imageName": "onfarmwork_bagging"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Land Preparation ",
-      "activity": "Others",
+      "title": "Others",
       "id": 4,
-      "image": "onfarmwork_bagging"
+      "imageName": "onfarmwork_bagging"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "",
-      "activity": "Planting",
+      "title": "Planting",
       "id": 5,
-      "image": "onfarmwork_bagging"
+      "imageName": "onfarmwork_bagging"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "",
-      "activity": "Weeding",
+      "title": "Weeding",
       "id": 6,
-      "image": "onfarmwork_bagging"
+      "imageName": "onfarmwork_bagging"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "",
-      "activity": "Pest Control",
+      "title": "Pest Control",
       "id": 7,
-      "image": "onfarmwork_bagging"
+      "imageName": "onfarmwork_bagging"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "",
-      "activity": "Fertilization",
+      "title": "Fertilization",
       "id": 8,
-      "image": "onfarmwork_bagging"
+      "imageName": "onfarmwork_bagging"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "",
-      "activity": "Protection of Crops",
+      "title": "Protection of Crops",
       "id": 9,
-      "image": "onfarmwork_bagging"
+      "imageName": "onfarmwork_bagging"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "",
-      "activity": "Irrigation ",
+      "title": "Irrigation ",
       "id": 10,
-      "image": "onfarmwork_bagging"
+      "imageName": "onfarmwork_bagging"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Harvesting",
-      "activity": "Bundling",
+      "title": "Bundling",
       "id": 11,
-      "image": "onfarmwork_bagging"
+      "imageName": "onfarmwork_bagging"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Harvesting",
-      "activity": "Drying",
+      "title": "Drying",
       "id": 12,
-      "image": "onfarmwork_bagging"
+      "imageName": "onfarmwork_bagging"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Harvesting",
-      "activity": "Storing",
+      "title": "Storing",
       "id": 13,
-      "image": "onfarmwork_bagging"
+      "imageName": "onfarmwork_bagging"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Harvesting",
-      "activity": "Bagging",
+      "title": "Bagging",
       "id": 14,
-      "image": "onfarmwork_bagging"
+      "imageName": "onfarmwork_bagging"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Harvesting",
-      "activity": "Others",
+      "title": "Others",
       "id": 15,
-      "image": "onfarmwork_bagging"
+      "imageName": "onfarmwork_bagging"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Processing",
-      "activity": "Treshing + Shelling",
+      "title": "Treshing + Shelling",
       "id": 16,
-      "image": "onfarmwork_weeding"
+      "imageName": "onfarmwork_weeding"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Processing",
-      "activity": "Grinding + Pounding",
+      "title": "Grinding + Pounding",
       "id": 17,
-      "image": "onfarmwork_weeding"
+      "imageName": "onfarmwork_weeding"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Processing",
-      "activity": "Winnowing",
+      "title": "Winnowing",
       "id": 18,
-      "image": "onfarmwork_weeding"
+      "imageName": "onfarmwork_weeding"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Processing",
-      "activity": "Beverage Preparation",
+      "title": "Beverage Preparation",
       "id": 19,
-      "image": "onfarmwork_weeding"
+      "imageName": "onfarmwork_weeding"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Processing",
-      "activity": "Others",
+      "title": "Others",
       "id": 20,
-      "image": "onfarmwork_weeding"
+      "imageName": "onfarmwork_weeding"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "",
-      "activity": "Marketing",
+      "title": "Marketing",
       "id": 21,
-      "image": "onfarmwork_weeding"
+      "imageName": "onfarmwork_weeding"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Animal Husbandry",
-      "activity": "Breading",
+      "title": "Breading",
       "id": 22,
-      "image": "onfarmwork_weeding"
+      "imageName": "onfarmwork_weeding"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Animal Husbandry",
-      "activity": "Care + Feeding",
+      "title": "Care + Feeding",
       "id": 23,
-      "image": "onfarmwork_weeding"
+      "imageName": "onfarmwork_weeding"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Animal Husbandry",
-      "activity": "Milking",
+      "title": "Milking",
       "id": 24,
-      "image": "onfarmwork_weeding"
+      "imageName": "onfarmwork_weeding"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Animal Husbandry",
-      "activity": "Butchering",
+      "title": "Butchering",
       "id": 25,
-      "image": "onfarmwork_weeding"
+      "imageName": "onfarmwork_weeding"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Animal Husbandry",
-      "activity": "Others",
+      "title": "Others",
       "id": 26,
-      "image": "onfarmwork_weeding"
+      "imageName": "onfarmwork_weeding"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "",
-      "activity": "Hunting + fishing",
+      "title": "Hunting + fishing",
       "id": 27,
-      "image": "onfarmwork_weeding"
+      "imageName": "onfarmwork_weeding"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "",
-      "activity": "Fitting + maintaining",
+      "title": "Fitting + maintaining",
       "id": 28,
-      "image": "onfarmwork_weeding"
+      "imageName": "onfarmwork_weeding"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "",
-      "activity": "Farm administration",
+      "title": "Farm administration",
       "id": 29,
-      "image": "onfarmwork_weeding"
+      "imageName": "onfarmwork_weeding"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "",
-      "activity": "Travel between fields",
+      "title": "Travel between fields",
       "id": 30,
-      "image": "onfarmwork_weeding"
+      "imageName": "onfarmwork_weeding"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "",
-      "activity": "Others",
+      "title": "Others",
       "id": 31,
-      "image": "onfarmwork_weeding"
+      "imageName": "onfarmwork_weeding"
     },
     {
       "group_activity": "Off-Farm-Work ",
       "sub_activity": "",
-      "activity": "Agricultural Work ",
+      "title": "Agricultural Work ",
       "id": 32,
-      "image": "onfarmwork_weeding"
+      "imageName": "onfarmwork_weeding"
     },
     {
       "group_activity": "Off-Farm-Work ",
       "sub_activity": "",
-      "activity": "Non-Agricultural Work",
+      "title": "Non-Agricultural Work",
       "id": 33,
-      "image": "onfarmwork_weeding"
+      "imageName": "onfarmwork_weeding"
     }
   ]
 }

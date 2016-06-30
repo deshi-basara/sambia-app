@@ -8,14 +8,12 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
-import org.apache.http.impl.cookie.DateUtils;
 import org.hdm.app.sambia.R;
-import org.hdm.app.sambia.data.Data;
-import org.hdm.app.sambia.data.EventManager;
+import org.hdm.app.sambia.datastorage.ActivityObject;
+import org.hdm.app.sambia.datastorage.ActivityManager;
 import org.hdm.app.sambia.util.FileLoader;
 import org.hdm.app.sambia.util.MyJsonParser;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -60,20 +58,17 @@ public class MainActivity extends Activity  {
 
     private void initConfiguration() {
 
-        EventManager.init();
-
-        EventManager.getInstance().createImageMap();
+        // One and only int of ActivityManager
+        ActivityManager.init();
 
 
         FileLoader fl = new FileLoader(this);
         fl.initPropertyReader();
         fl.initFolder();
+        fl.loadActivityObjects();
 
 
-        // Load Content
-        String jsonString = fl.readFromAssets(this, "activitys.json");
-        MyJsonParser mJasonParser = new MyJsonParser();
-        mJasonParser.createOjectFromJson("activitys", jsonString);
+
 
 
 
@@ -100,29 +95,21 @@ public class MainActivity extends Activity  {
         while(i<=40) {
 
 
+            String imgPath = fl.getEnvironment().toString() + "/" + "SambiaApp/Images/" + "onfarmwork_bagging.png";
+            Bitmap bitmap = BitmapFactory.decodeFile(imgPath, options);
+            //        ActivityManager.getInstance().putImage("onfarmwork_bagging", bitmap);
 
 
-        String imgPath = fl.getEnvironment().toString() + "/" + "SambiaApp/Images/" + "onfarmwork_bagging.png";
-        Bitmap bitmap = BitmapFactory.decodeFile(imgPath, options);
-        EventManager.getInstance().putImage("onfarmwork_bagging", bitmap);
-
-
-        Data data_01 = new Data();
-        data_01.title = ""+i;
-        data_01.group_activity = "On Farm Work";
-        data_01.sub_activity = "Harvesting";
-        data_01.subCategoryName = "Hand";
-        data_01.id = i;
-        data_01.image = bitmap;
-        data_01.imageId = R.drawable.onfarmwork_bagging;
-        data_01.sub_category = true;
-
-
-
-        EventManager.getInstance().setActivityObject(data_01);
-//        EventManager.getInstance().setActivityObject(data_02);
-//        EventManager.getInstance().setActivityObject(data_03);
-//        EventManager.getInstance().setActivityObject(data_04);
+            ActivityObject activityObject_01 = new ActivityObject();
+            activityObject_01.title = ""+i;
+            activityObject_01.group_activity = "On Farm Work";
+            activityObject_01.sub_activity = "Harvesting";
+            activityObject_01.subCategoryName = "Hand";
+            activityObject_01.id = i;
+            activityObject_01.image = bitmap;
+            activityObject_01.imageId = R.drawable.onfarmwork_bagging;
+            activityObject_01.sub_category = true;
+            ActivityManager.getInstance().setActivityObject(activityObject_01);
 
             i++;
         }
@@ -162,25 +149,9 @@ public class MainActivity extends Activity  {
         while(time.before(endTime)) {
             time = cal.getTime();
             Log.d(TAG, "startTime "+  time);
-            EventManager.getInstance().setCalenderMapEntry(time, null);
+            ActivityManager.getInstance().setCalenderMapEntry(time, null);
             cal.add(Calendar.MINUTE, 15);
             i++;
-//            if(i== 5) {
-//                EventManager.getInstance().setCalenderMapEntry(time, "1");
-//                EventManager.getInstance().setCalenderMapEntry(time, "0");
-//            }
-//
-//            if(i== 10) {
-//                EventManager.getInstance().setCalenderMapEntry(time, "0");
-//            }
-//
-//            if(i== 15) {
-//                EventManager.getInstance().setCalenderMapEntry(time, "1");
-//                EventManager.getInstance().setCalenderMapEntry(time, "0");
-//            }
-//            if(i== 20) {
-//                EventManager.getInstance().setCalenderMapEntry(time, "0");
-//            }
         }
     }
 

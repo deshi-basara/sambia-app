@@ -1,25 +1,18 @@
 package org.hdm.app.sambia.util;
 
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.hdm.app.sambia.Adapter.CalendarListAdapter;
-import org.hdm.app.sambia.Adapter.CalendarListItemAdapter;
+import org.hdm.app.sambia.adapter.CalendarListAdapter;
+import org.hdm.app.sambia.adapter.CalendarListItemAdapter;
 import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.listener.ViewHolderListener;
-import static org.hdm.app.sambia.util.Consts.*;
-
-
-import java.util.ArrayList;
 
 /**
  * Created by Hannes on 27.05.2016.

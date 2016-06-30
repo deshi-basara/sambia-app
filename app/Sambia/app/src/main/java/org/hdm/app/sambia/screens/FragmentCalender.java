@@ -8,15 +8,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import org.hdm.app.sambia.R;
-import org.hdm.app.sambia.data.EventManager;
 import org.hdm.app.sambia.listener.CalendarItemOnClickListener;
-import org.hdm.app.sambia.Adapter.CalendarListAdapter;
+import org.hdm.app.sambia.adapter.CalendarListAdapter;
 import org.hdm.app.sambia.util.View_Holder;
 
 

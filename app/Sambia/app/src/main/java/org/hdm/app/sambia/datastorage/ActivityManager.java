@@ -1,7 +1,6 @@
-package org.hdm.app.sambia.data;
+package org.hdm.app.sambia.datastorage;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,27 +11,23 @@ import java.util.TreeMap;
 /**
  * Created by Hannes on 06.05.2016.
  */
-public class EventManager {
+public class ActivityManager {
 
-    private final String TAG = "EventManager";
-    // Instance from DataManager
-    private static EventManager instance = null;
+    private final String TAG = "eEventManager";
+    // Instance from DaataManager
+    private static ActivityManager instance = null;
 
 
-    private ActivityObjectMap mObjectMap = null;
     private ArrayList<ActivityObject> mActivityObject = null;
-
-
-    private HashMap<String, Bitmap> imageMap;
 
     // In this Map are all the Activity Objects stored
     // It is used as DataBase from every Screen
-    private LinkedHashMap<String, Data> activityMap = new LinkedHashMap<>();
+    private LinkedHashMap<String, ActivityObject> activityMap = new LinkedHashMap<>();
 
     // In this map are all the active ActivityObjects stored
     // It is used from the FragmentActivity RecycleView to display all the Activitys
     // which are current recorded
-    private LinkedHashMap<String, Data> activeMap = new LinkedHashMap<>();
+    private LinkedHashMap<String, ActivityObject> activeMap = new LinkedHashMap<>();
 
 
     // In this map is stored the activitys for Calender list
@@ -42,23 +37,17 @@ public class EventManager {
 
 
 
-    public boolean createActivityMap() {
-        if(activityMap != null) {
-            activityMap = new LinkedHashMap<>();
-            return true;
-        }
-        return false;
-    }
 
 
-    public boolean createActivityObject(String name, Data data) {
+
+    public boolean createActivityObject(String name, ActivityObject activityObject) {
         if(name != null) {
             if(!activityMap.containsKey(name)) {
 
-                if(data != null) {
-                    activityMap.put(name, data);
+                if(activityObject != null) {
+                    activityMap.put(name, activityObject);
                 } else {
-                    activityMap.put(name, new Data(name));
+                    activityMap.put(name, new ActivityObject(name));
                 }
                 return true;
             }
@@ -69,15 +58,15 @@ public class EventManager {
 
 
 
-    public boolean setActivityObject(Data data) {
+    public boolean setActivityObject(ActivityObject activityObject) {
 
-        String title = data.title;
+        String title = activityObject.title;
         if (title != null && activityMap != null) {
 
             if(!activityMap.containsKey(title)) {
-                createActivityObject(title, data);
+                createActivityObject(title, activityObject);
             }
-            activityMap.put(title, data);
+            activityMap.put(title, activityObject);
             return true;
             }
         return false;
@@ -85,7 +74,7 @@ public class EventManager {
 
 
 
-    public Data getActivityObject(String name) {
+    public ActivityObject getActivityObject(String name) {
         if(name != null && activityMap.containsKey(name)) {
             return activityMap.get(name);
         }
@@ -107,31 +96,6 @@ public class EventManager {
 
 
 
-
-
-
-
-
-
-
-
-    public void createImageMap() {
-
-        imageMap = new HashMap<String, Bitmap>();
-    }
-
-    public Bitmap putImage(String keyName, Bitmap image) {
-
-        if (keyName != null) {
-            imageMap.put(keyName, image);
-            return imageMap.get(keyName);
-        }
-
-        return null;
-    }
-
-
-
     /************
      * create new event
      ************/
@@ -141,19 +105,13 @@ public class EventManager {
         return mActivityObject;
     }
 
+
+
     public void setActivityObjectArrayList(ArrayList<ActivityObject> activityObject) {
         this.mActivityObject = activityObject;
     }
 
 
-    public ActivityObjectMap getObjectMap() {
-        return mObjectMap;
-    }
-
-
-    public void setActivityObjectMap(ActivityObjectMap mObjectMap) {
-        this.mObjectMap = mObjectMap;
-    }
 
 
 
@@ -179,9 +137,9 @@ public class EventManager {
 
 
 
-    public boolean setActiveObject(Data data) {
-        if (data != null && activeMap != null) {
-            activeMap.put(data.title, data);
+    public boolean setActiveObject(ActivityObject activityObject) {
+        if (activityObject != null && activeMap != null) {
+            activeMap.put(activityObject.title, activityObject);
             return true;
         }
         return false;
@@ -200,9 +158,9 @@ public class EventManager {
 
 
 
-    public boolean removeActiveObject(Data data) {
-        if (data != null && activeMap != null) {
-            activeMap.remove(data.title);
+    public boolean removeActiveObject(ActivityObject activityObject) {
+        if (activityObject != null && activeMap != null) {
+            activeMap.remove(activityObject.title);
             return true;
         }
         return false;
@@ -260,14 +218,14 @@ public class EventManager {
 
     public static void init() {
         if (instance == null) {
-            instance = new EventManager();
+            instance = new ActivityManager();
 
         }
     }
 
-    public static EventManager getInstance() {
+    public static ActivityManager getInstance() {
         if (instance == null) {
-            instance = new EventManager();
+            instance = new ActivityManager();
         }
         return instance;
     }

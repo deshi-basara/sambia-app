@@ -33,11 +33,11 @@ public class FileLoader {
     private Context context;
     private Properties properties;
 
+
+
     /**************************
      * Constructor
      *************************/
-
-
     public FileLoader(MainActivity mainActivity) {
         context = mainActivity;
     }
@@ -75,7 +75,13 @@ public class FileLoader {
     }
 
 
+
+
+
+
+
     public boolean CopyImagesFromResourceToStorage(int[] resources) {
+
         if (resources.length != 0) {
             String imageFolder = getPropertiesFromAssets("configuration.properties")
                     .getProperty("imageFolder");
@@ -99,6 +105,8 @@ public class FileLoader {
     }
 
 
+
+
     public Drawable getDrawableFromPath(String filePath) {
         Bitmap bitmap = BitmapFactory.decodeFile(filePath);
         //Here you can make logic for decode bitmap for ignore oom error.
@@ -106,26 +114,7 @@ public class FileLoader {
     }
 
 
-    /**************************
-     * File Permission Check
-     *************************/
 
-    public boolean isExternalStorageReadable() {
-        return (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state));
-    }
-
-    public boolean isExternalStorageWritable() {
-        return (Environment.MEDIA_MOUNTED.equals(state));
-    }
-
-
-    public boolean isExternalFileExists(String filePath) {
-        File f = new File(filePath);
-        if (f.exists()) {
-            return true;
-        }
-        return false;
-    }
 
 
 
@@ -160,6 +149,7 @@ public class FileLoader {
 
 
     public Properties getPropertiesFromAssets(String file) {
+
         try {
             AssetManager assetManager = context.getAssets();
             InputStream inputStream = assetManager.open(file);
@@ -196,5 +186,40 @@ public class FileLoader {
     public File getEnvironment() {
         return enviroment;
     }
+
+
+
+
+    // Load Content
+    public void loadActivityObjects() {
+        String jsonString = readFromAssets(context, "activitys.json");
+        Log.d(TAG, "jasonString " + jsonString);
+        MyJsonParser jParser = new MyJsonParser();
+        jParser.createOjectFromJson("activitys", jsonString);
+
+    }
+
+
+
+    /**************************
+     * File Permission Check
+     *************************/
+
+
+    public boolean isExternalStorageWritable() {
+        return (Environment.MEDIA_MOUNTED.equals(state));
+    }
+
+
+    public boolean isExternalFileExists(String filePath) {
+        File f = new File(filePath);
+        if (f.exists()) {
+            return true;
+        }
+        return false;
+    }
+
+
+
 
 }

@@ -14,12 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.hdm.app.sambia.R;
-import org.hdm.app.sambia.data.Data;
-import org.hdm.app.sambia.data.EventManager;
+import org.hdm.app.sambia.datastorage.ActivityObject;
 import org.hdm.app.sambia.listener.ActiveActivityListOnClickListener;
 import org.hdm.app.sambia.listener.ActivityListOnClickListener;
-import org.hdm.app.sambia.Adapter.ActivityListAdapter;
-import org.hdm.app.sambia.Adapter.ActiveActivityListAdapter;
+import org.hdm.app.sambia.adapter.ActivityListAdapter;
+import org.hdm.app.sambia.adapter.ActiveActivityListAdapter;
 import org.hdm.app.sambia.util.SimpleDividerItemDecoration;
 import org.hdm.app.sambia.util.View_Holder;
 
@@ -49,8 +48,8 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
     private int rows =2;
-    private List<Data> data;
-    private List<Data> activeData;
+    private List<ActivityObject> activityObject;
+    private List<ActivityObject> activeActivityObject;
     private int activeCount = 0;
     private RecyclerView recyclerView_activeData;
     private ActiveActivityListAdapter activeAdapter;
@@ -87,8 +86,8 @@ public class FragmentActivity extends BaseFragemnt implements
 
     private void initActiveActivityList() {
 
-        activeData = new ArrayList<>(event.getActiveMap().values());
-        activeAdapter = new ActiveActivityListAdapter(this, activeData);
+        activeActivityObject = new ArrayList<>(event.getActiveMap().values());
+        activeAdapter = new ActiveActivityListAdapter(this, activeActivityObject);
         activeAdapter.setListener(this);
         recyclerView_activeData = (RecyclerView) view.findViewById(R.id.rv_active);
         recyclerView_activeData.setAdapter(activeAdapter);
@@ -102,8 +101,8 @@ public class FragmentActivity extends BaseFragemnt implements
 
     private void initActivityList() {
 
-        data = new ArrayList<>(event.getActivityMap().values());
-        adapter = new ActivityListAdapter(this, data);
+        activityObject = new ArrayList<>(event.getActivityMap().values());
+        adapter = new ActivityListAdapter(this, activityObject);
         adapter.setListener(this);
 
         SimpleDividerItemDecoration divider =  new SimpleDividerItemDecoration(
@@ -129,65 +128,65 @@ public class FragmentActivity extends BaseFragemnt implements
         // Get the DataObject which was clicked
         // there are all information stored about the activity object
         // state, names image ect.
-        Data data = event.getActivityObject(title);
+        ActivityObject activityObject = event.getActivityObject(title);
 
 
         if(DEBUGMODE) {
             Log.d(TAG, "title " + title);
-            Log.d(TAG, "Data " + data);
+            Log.d(TAG, "Daata " + activityObject);
         }
 
 
 
-        if(!data.activeState){
+        if(!activityObject.activeState){
 
             // Show DialogFragment
 //            if(list.get(position).sub_category && list.get(position).activeState) {
-//                DFragment dFragment = new DFragment(data);
+//                DFragment dFragment = new DFragment(dsata);
 //                FragmentManager fm = fr.getFragmentManager();
 //                dFragment.show(fm, "Dialog Fragment");
 //            }
 
             // Set State to active
-            data.activeState = true;
+            activityObject.activeState = true;
             // set temporary start time
 
-            data.startTime = Calendar.getInstance().getTime();
+            activityObject.startTime = Calendar.getInstance().getTime();
 
             // Count how many activity are active
             activeCount++;
 
-            event.setActiveObject(data);
+            event.setActiveObject(activityObject);
         } else  {
             // Deactivate Activity
-            data.activeState = false;
+            activityObject.activeState = false;
 
             // set temporary end time
-            data.endTime = Calendar.getInstance().getTime();
+            activityObject.endTime = Calendar.getInstance().getTime();
 
             //Count how many activitys are active
             activeCount--;
 
 
-            // Remove the active Data from the active dataList
-            event.removeActiveObject(data);
+            // Remove the active Daata from the active dataList
+            event.removeActiveObject(activityObject);
 
 
-            saveActivtyForCalenderContent(data);
+            saveActivtyForCalenderContent(activityObject);
 
-            // Save Time and subCategory in Data
-            data.saveTimeStamp();
+            // Save Time and subCategory in Dsata
+            activityObject.saveTimeStamp();
         }
 
 
 
-        // Store edited Data back in EventManager
-        event.setActivityObject(data);
+        // Store edited Daata back in DaataManager
+        event.setActivityObject(activityObject);
 
 
         // Set Background
         if(holder!= null){
-        holder.setBackground(data.activeState);
+        holder.setBackground(activityObject.activeState);
         } else {
             adapter.list = new ArrayList<>(event.getActivityMap().values());
             adapter.notifyDataSetChanged();
@@ -222,12 +221,12 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
 
-    private void saveActivtyForCalenderContent(Data data) {
+    private void saveActivtyForCalenderContent(ActivityObject activityObject) {
 
 
 
-                int startHour   = data.startTime.getHours();
-                int startMin    = data.startTime.getMinutes();
+                int startHour   = activityObject.startTime.getHours();
+                int startMin    = activityObject.startTime.getMinutes();
 
 
                 Calendar cal    = Calendar.getInstance();
@@ -254,7 +253,7 @@ public class FragmentActivity extends BaseFragemnt implements
                 currentDate = cal.getTime();
 
                 // save once current activityTitle in map
-                event.setCalenderMapEntry(currentDate, data.title);
+                event.setCalenderMapEntry(currentDate, activityObject.title);
 
                 // Debugging
                 if(DEBUGMODE) {
@@ -266,21 +265,21 @@ public class FragmentActivity extends BaseFragemnt implements
 
                 // check if endTime is outside currentTime (15 min slot)
                 // if true than safe activityTitle to all correspond time slots
-                while(currentDate.after(data.endTime)) {
+                while(currentDate.after(activityObject.endTime)) {
                     cal.setTime(currentDate);
                     cal.add(Calendar.MINUTE, 15);
                     currentDate = cal.getTime();
-                    event.setCalenderMapEntry(currentDate, data.title);
+                    event.setCalenderMapEntry(currentDate, activityObject.title);
                     if(DEBUGMODE) {
-                        Log.d(TAG, "currentTime " + currentDate.toString() + "Title " + data.title);
+                        Log.d(TAG, "currentTime " + currentDate.toString() + "Title " + activityObject.title);
                     }
                 }
 
 
                 if(DEBUGMODE) {
-                    Log.d(TAG,  " " + data.startTime.toString()
-                                + " " + data.startTime.getHours()
-                                + " " + data.startTime.getMinutes());
+                    Log.d(TAG,  " " + activityObject.startTime.toString()
+                                + " " + activityObject.startTime.getHours()
+                                + " " + activityObject.startTime.getMinutes());
                 }
             }
 }

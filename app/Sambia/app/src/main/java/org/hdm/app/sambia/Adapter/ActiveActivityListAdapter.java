@@ -1,4 +1,4 @@
-package org.hdm.app.sambia.Adapter;
+package org.hdm.app.sambia.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.hdm.app.sambia.R;
-import org.hdm.app.sambia.data.Data;
+import org.hdm.app.sambia.datastorage.ActivityObject;
 import org.hdm.app.sambia.listener.ActiveActivityListOnClickListener;
 import org.hdm.app.sambia.listener.ViewHolderListener;
 import org.hdm.app.sambia.screens.FragmentActivity;
@@ -23,15 +23,15 @@ public class ActiveActivityListAdapter extends RecyclerView.Adapter<View_Holder>
     private final String TAG = "ActiveActivityListAdapter";
 
 
-    public List<Data> list = null;
+    public List<ActivityObject> list = null;
     FragmentActivity fr;
     private ActiveActivityListOnClickListener listener;
 
 
 
-    public ActiveActivityListAdapter(FragmentActivity fragmentActivity, List<Data> data) {
+    public ActiveActivityListAdapter(FragmentActivity fragmentActivity, List<ActivityObject> activityObject) {
         fr = fragmentActivity;
-        this.list = data;
+        this.list = activityObject;
     }
 
 
@@ -83,16 +83,16 @@ public class ActiveActivityListAdapter extends RecyclerView.Adapter<View_Holder>
 
 
     // Insert a new item to the RecyclerView on a predefined position
-    public void insert(int position, Data data) {
-        list.add(position, data);
+    public void insert(int position, ActivityObject activityObject) {
+        list.add(position, activityObject);
         notifyItemInserted(position);
     }
 
 
 
-    // Remove a RecyclerView item containing a specified Data object
-    public void remove(Data data) {
-        int position = list.indexOf(data);
+    // Remove a RecyclerView item containing a specified Daata object
+    public void remove(ActivityObject activityObject) {
+        int position = list.indexOf(activityObject);
         list.remove(position);
         notifyItemRemoved(position);
     }

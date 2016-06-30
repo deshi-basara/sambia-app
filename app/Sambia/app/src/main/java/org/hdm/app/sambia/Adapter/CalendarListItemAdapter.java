@@ -1,26 +1,20 @@
-package org.hdm.app.sambia.Adapter;
+package org.hdm.app.sambia.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import org.hdm.app.sambia.R;
-import org.hdm.app.sambia.data.Data;
+import org.hdm.app.sambia.datastorage.ActivityObject;
 import org.hdm.app.sambia.listener.CalendarItemOnClickListener;
 import org.hdm.app.sambia.listener.ViewHolderListener;
 import org.hdm.app.sambia.util.View_Holder;
-import org.hdm.app.sambia.views.CustomerList;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.TreeMap;
 
 /**
  * Created by Hannes on 27.05.2016.
@@ -68,7 +62,7 @@ public class CalendarListItemAdapter extends RecyclerView.Adapter<View_Holder> i
         holder.setListener(this);
         if(holder.imageView != null) {
 
-            Data dataa =(Data) data.get(list.get(position));
+            ActivityObject dataa =(ActivityObject) data.get(list.get(position));
             Log.d(TAG, "dataa " + dataa.title);
             holder.imageView.setImageResource(dataa.imageId);
             holder.title.setText(dataa.title);
@@ -97,16 +91,16 @@ public class CalendarListItemAdapter extends RecyclerView.Adapter<View_Holder> i
 
 
     // Insert a new item to the RecyclerView on a predefined position
-    public void insert(int position, Data data) {
-        list.add(position, data);
+    public void insert(int position, ActivityObject activityObject) {
+        list.add(position, activityObject);
         notifyItemInserted(position);
     }
 
 
 
-    // Remove a RecyclerView item containing a specified Data object
-    public void remove(Data data) {
-        int position = list.indexOf(data);
+    // Remove a RecyclerView item containing a specified Daata object
+    public void remove(ActivityObject activityObject) {
+        int position = list.indexOf(activityObject);
         list.remove(position);
         notifyItemRemoved(position);
     }
