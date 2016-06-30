@@ -64,7 +64,7 @@ public class CalendarListItemAdapter extends RecyclerView.Adapter<View_Holder> i
 
             ActivityObject dataa =(ActivityObject) data.get(list.get(position));
             Log.d(TAG, "dataa " + dataa.title);
-            holder.imageView.setImageResource(dataa.imageId);
+            holder.imageView.setImageBitmap(dataa.image);
             holder.title.setText(dataa.title);
         }
     }

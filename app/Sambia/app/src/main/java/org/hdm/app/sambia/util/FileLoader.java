@@ -1,5 +1,6 @@
 package org.hdm.app.sambia.util;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -10,6 +11,8 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.hdm.app.sambia.datastorage.ActivityManager;
+import org.hdm.app.sambia.datastorage.ActivityObject;
 import org.hdm.app.sambia.main.MainActivity;
 
 import java.io.BufferedReader;
@@ -18,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Properties;
 
 /**
@@ -41,8 +45,6 @@ public class FileLoader {
     public FileLoader(MainActivity mainActivity) {
         context = mainActivity;
     }
-
-
 
 
 
@@ -192,11 +194,24 @@ public class FileLoader {
 
     // Load Content
     public void loadActivityObjects() {
+
+
         String jsonString = readFromAssets(context, "activitys.json");
         Log.d(TAG, "jasonString " + jsonString);
         MyJsonParser jParser = new MyJsonParser();
-        jParser.createOjectFromJson("activitys", jsonString);
+        ArrayList<ActivityObject> list = jParser.createOjectFromJson("activitys", jsonString);
 
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ALPHA_8;
+        options.inSampleSize = 4; //reduce quality
+
+        for(int i=0; i<list.size(); i++) {
+            ActivityObject activityObject = list.get(i);
+            String imgPath = getEnvironment().toString() + "/" + "SambiaApp/Images/" + activityObject.imageName;
+            activityObject.image = BitmapFactory.decodeFile(imgPath, options);
+            ActivityManager.getInstance().setActivityObject(activityObject);
+        }
     }
 
 

@@ -54,7 +54,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<View_Holder> imple
         //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
         holder.setListener(this);
         holder.title.setText(list.get(position).title);
-        holder.imageView.setImageResource(list.get(position).imageId);
+        holder.imageView.setImageBitmap(list.get(position).image);
         holder.setBackground(list.get(position).activeState);
         Log.d(TAG, "position" + position);
     }

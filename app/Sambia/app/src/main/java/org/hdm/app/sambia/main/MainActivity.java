@@ -75,47 +75,11 @@ public class MainActivity extends Activity  {
 
 
 
-        // Copy Images to Image Folder For Testing
-        int a = R.drawable.onfarmwork_bagging;
-        int b = R.drawable.onfarmwork_weeding;
-        int[] resources = new int[] {a, b};
-        fl.CopyImagesFromResourceToStorage(resources);
-
-
-
-
-
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inPreferredConfig = Bitmap.Config.ALPHA_8;
-        options.inSampleSize = 4; //reduce quality
-
-
-        int i= 0;
-
-        while(i<=40) {
-
-
-            String imgPath = fl.getEnvironment().toString() + "/" + "SambiaApp/Images/" + "onfarmwork_bagging.png";
-            Bitmap bitmap = BitmapFactory.decodeFile(imgPath, options);
-            //        ActivityManager.getInstance().putImage("onfarmwork_bagging", bitmap);
-
-
-            ActivityObject activityObject_01 = new ActivityObject();
-            activityObject_01.title = ""+i;
-            activityObject_01.group_activity = "On Farm Work";
-            activityObject_01.sub_activity = "Harvesting";
-            activityObject_01.subCategoryName = "Hand";
-            activityObject_01.id = i;
-            activityObject_01.image = bitmap;
-            activityObject_01.imageId = R.drawable.onfarmwork_bagging;
-            activityObject_01.sub_category = true;
-            ActivityManager.getInstance().setActivityObject(activityObject_01);
-
-            i++;
-        }
-
-
-
+//        // Copy Images to Image Folder For Testing
+//        int a = R.drawable.onfarmwork_bagging;
+//        int b = R.drawable.onfarmwork_weeding;
+//        int[] resources = new int[] {a, b};
+//        fl.CopyImagesFromResourceToStorage(resources);
 
     }
 
