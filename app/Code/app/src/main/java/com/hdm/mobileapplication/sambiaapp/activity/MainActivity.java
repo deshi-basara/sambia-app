@@ -252,8 +252,4 @@ public class MainActivity extends AppCompatActivity implements
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
     }
 
-
-
-
-
 }

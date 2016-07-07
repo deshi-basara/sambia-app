@@ -59,6 +59,7 @@ public class ChooseActivityFragment extends ListFragment{
 //            if (i % 4 == 0) {
 //                mAdapter.addSeparatorItem("separator " + i);
 //            } else {
+
             mAdapter.addItem(name, image, id);
         }
 
