@@ -35,6 +35,9 @@ materialPkgs.forEach((pkg) => {
   packages[`@angular2-material/${pkg}`] = {main: `${pkg}.js`};
 });
 
+// Forms not on rc yet
+packages['@angular/forms'] = { main: 'index.js', defaultExtension: 'js' };
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************
  * Everything underneath this line is managed by the CLI.
@@ -58,9 +61,10 @@ const barrels: string[] = [
   'app/test',
   'app/dashboard',
   'app/subjects',
-  'app/subjects/subject',
   'app/subjects/subject-detail',
   'app/subjects/subject-add',
+  'app/activities',
+  'app/activity-add',
   /** @cli-barrel */
 ];
 

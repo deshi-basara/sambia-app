@@ -1,4 +1,4 @@
-<form class="form">
+<form class="form" (ngSubmit)="onSubmit()">
 
   <!-- Image -->
   <div class="form-image">
@@ -8,23 +8,23 @@
   </div>
 
   <!-- Person -->
-  <div class="form-person">
+  <div class="form-data">
 
     <div class="row">
       <div class="form-group col-10">
           <label for="name">Name</label>
-          <input type="text" class="form-control z0" name="name" required>
+          <input type="text" class="form-control z0" name="name" [(ngModel)]="subjectModel.name" required>
       </div>
       <div class="form-group col-2">
           <label for="age">Age</label>
-          <input type="number" class="form-control z0" name="age" required>
+          <input type="number" class="form-control z0" name="age" [(ngModel)]="subjectModel.age" required>
       </div>
     </div>
 
     <div class="row">
       <div class="form-group col-12">
           <label for="gender">Gender</label>
-          <select class="" name="gender" required>
+          <select class="" name="gender" [(ngModel)]="subjectModel.gender" required>
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
@@ -34,9 +34,8 @@
     <div class="row">
       <div class="form-group col-12">
           <label for="education">Education</label>
-          <select class="" name="education" required>
-            <option value="student">Student</option>
-            <option value="farmer">Farmer</option>
+          <select class="" name="education" [(ngModel)]="subjectModel.education" required>
+            <option *ngFor="let education of educationArray" [value]="education">{{ education }}</option>
           </select>
       </div>
     </div>
@@ -45,33 +44,33 @@
     <div class="row">
       <div class="form-group col-8">
           <label for="tribe">Tribe</label>
-          <input type="text" class="form-control z0" name="tribe" required>
+          <input type="text" class="form-control z0" name="tribe" [(ngModel)]="subjectModel.tribe" required>
       </div>
       <div class="form-group col-4">
           <label for="household">Household</label>
-          <input type="number" class="form-control z0" name="household" required>
+          <input type="number" class="form-control z0" name="household" [(ngModel)]="subjectModel.household" required>
       </div>
     </div>
 
     <div class="row">
       <div class="form-group col-6">
           <label for="size">Size</label>
-          <input type="number" class="form-control z0" name="size" required>
+          <input type="number" class="form-control z0" name="size" [(ngModel)]="subjectModel.size" required>
       </div>
       <div class="form-group col-6">
           <label for="weight">Weight</label>
-          <input type="number" class="form-control z0" name="weight" required>
+          <input type="number" class="form-control z0" name="weight" [(ngModel)]="subjectModel.weight" required>
       </div>
     </div>
 
     <!-- Farm -->
-    <div class="row">
-
+    <div class="row form-divider">
+      {{ subjectModel.name }}
     </div>
 
     <!-- Buttons -->
     <div class="row form-controls">
-      <button type="button" name="button" class="button">Submit</button>
+      <button type="button" name="button" class="button" (click)="onSubmit()">Submit</button>
     </div>
 
   </div>

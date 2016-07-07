@@ -5,6 +5,7 @@ $red: #7F002C;
 
 $light-green: #8CEF5D;
 $light-white: #F5F5F5;
+$light-grey: #EBEAEA;
 $light-red: #E42D6B;
 
 /**
@@ -44,7 +45,7 @@ $font-secondary: 'Roboto Slab', serif;
   background-color: $green;
   cursor: pointer;
   padding: 0px 20px;
-  border-radius: 2px;
+  border-radius: 0;
 
   border: 0;
   outline: none;
