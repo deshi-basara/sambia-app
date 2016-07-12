@@ -19,5 +19,12 @@
   "files": [
     "main.ts",
     "typings.d.ts"
+  ],
+
+  "filesGlob": [
+    "main.ts",
+    "typings.d.ts",
+    "app/**/*.ts",
+    "!app/**/*.spec.ts"
   ]
 }
