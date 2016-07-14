@@ -30,7 +30,7 @@ public class ActivityObject extends Object{
     public String subCategoryName = "";
     public Date startTime;
     public Date endTime;
-
+    public int count = 0;
 
     public ActivityObject() {
         timeFrameList = new ArrayList<>();

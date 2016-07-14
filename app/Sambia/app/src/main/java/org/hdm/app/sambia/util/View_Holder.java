@@ -8,14 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.hdm.app.sambia.adapter.CalendarListAdapter;
 import org.hdm.app.sambia.adapter.CalendarListItemAdapter;
 import org.hdm.app.sambia.R;
+import org.hdm.app.sambia.datastorage.ActivityManager;
+import org.hdm.app.sambia.datastorage.ActivityObject;
 import org.hdm.app.sambia.listener.ViewHolderListener;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -40,10 +43,12 @@ public class View_Holder extends RecyclerView.ViewHolder implements
     public  TextView title;
     public  TextView time;
     public  ImageView imageView;
-    private LinearLayout ll_layout;
     private Timer timer;
-    
+    private Handler handler = new Handler();
 
+    public int count = 0;
+    private String titleText;
+    private long countt;
 
     /************** Constructors ******************/
 
@@ -78,8 +83,9 @@ public class View_Holder extends RecyclerView.ViewHolder implements
         time = (TextView)itemView.findViewById(R.id.tv_time);
         iv_play = (ImageView) itemView.findViewById(R.id.iv_play);
         iv_play.setVisibility(View.GONE);
-        ll_layout = (LinearLayout) imageView.findViewById(R.id.ll_cardView);
-        if(time!= null) time.setText("Hello");
+
+        titleText = title.getText().toString();
+
     }
 
 
@@ -148,31 +154,37 @@ public class View_Holder extends RecyclerView.ViewHolder implements
     }
 
     private void stopCount() {
+
         if(timer != null) timer.cancel();
     }
 
-    private int count = 0;
-    private Handler handler = new Handler();
+    Date startDate;
 
     private void runCount() {
+        ActivityObject object = ActivityManager.getInstance().getActivityObject(title.getText().toString());
+        startDate = object.startTime;
+
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
 
             @Override
             public void run() {
-
-                Log.d(TAG, "count = "+ count);
+                Date currentDate = Calendar.getInstance().getTime();
+                countt = (currentDate.getTime() - startDate.getTime())/1000;
+                        Log.d(TAG, "countt"  + countt);
                 handler.post(new Runnable() {
                     public void run() {
 
-                        int seconds = count % 60;
-                        int minutes = count / 60;
+
+                        int seconds = (int) countt % 60;
+                        int minutes = (int) countt / 60;
                         int houres = minutes / 60;
                         String stringTime = String.format("%02d:%02d:%02d", houres, minutes, seconds);
                         time.setText(stringTime);
-                        count++;
+                        //count++;
                     }
                 });
+
             }
         },
         //Set how long before to start calling the TimerTask (in milliseconds)
@@ -207,4 +219,5 @@ public class View_Holder extends RecyclerView.ViewHolder implements
         if(listener != null) listener.didLongClickOnView(v, title.getText().toString(), this);
         return false;
     }
+
 }
