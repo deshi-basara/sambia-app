@@ -17,7 +17,6 @@ import org.hdm.app.sambia.views.MenuView;
  * A fragment representing the front of the card.
  */
 public class BaseFragemnt extends Fragment implements
-        View.OnClickListener,
         MenuListener
 {
 
@@ -55,16 +54,6 @@ public class BaseFragemnt extends Fragment implements
             menuView.setImage(d);}
     }
 
-
-
-
-
-
-
-    @Override
-    public void onClick(View v) {
-
-    }
 
 
     @Override
