@@ -2,8 +2,10 @@ package org.hdm.app.sambia.util;
 
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Handler;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,6 +15,10 @@ import org.hdm.app.sambia.adapter.CalendarListAdapter;
 import org.hdm.app.sambia.adapter.CalendarListItemAdapter;
 import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.listener.ViewHolderListener;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 /**
  * Created by Hannes on 27.05.2016.
@@ -32,8 +38,11 @@ public class View_Holder extends RecyclerView.ViewHolder implements
     public  CardView cv;
     private ImageView iv_play;
     public  TextView title;
+    public  TextView time;
     public  ImageView imageView;
     private LinearLayout ll_layout;
+    private Timer timer;
+    
 
 
     /************** Constructors ******************/
@@ -66,9 +75,11 @@ public class View_Holder extends RecyclerView.ViewHolder implements
         cv = (CardView) itemView.findViewById(R.id.cardView);
         imageView = (ImageView) itemView.findViewById(R.id.imageView);
         title = (TextView) itemView.findViewById(R.id.title);
+        time = (TextView)itemView.findViewById(R.id.tv_time);
         iv_play = (ImageView) itemView.findViewById(R.id.iv_play);
         iv_play.setVisibility(View.GONE);
         ll_layout = (LinearLayout) imageView.findViewById(R.id.ll_cardView);
+        if(time!= null) time.setText("Hello");
     }
 
 
@@ -118,6 +129,8 @@ public class View_Holder extends RecyclerView.ViewHolder implements
                 cv.setBackgroundColor(cv.getResources().getColor(R.color.green));
             }
             iv_play.setVisibility(View.VISIBLE);
+            time.setVisibility(View.VISIBLE);
+            runCount();
 
         } else {
 
@@ -129,15 +142,47 @@ public class View_Holder extends RecyclerView.ViewHolder implements
                 cv.setBackgroundColor(cv.getResources().getColor(R.color.white));
             }
             iv_play.setVisibility(View.GONE);
+            time.setVisibility(View.GONE);
+            stopCount();
         }
     }
 
+    private void stopCount() {
+        if(timer != null) timer.cancel();
+    }
 
+    private int count = 0;
+    private Handler handler = new Handler();
 
+    private void runCount() {
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
 
+            @Override
+            public void run() {
 
+                Log.d(TAG, "count = "+ count);
+                handler.post(new Runnable() {
+                    public void run() {
 
+                        int seconds = count % 60;
+                        int minutes = count / 60;
+                        int houres = minutes / 60;
+                        String stringTime = String.format("%02d:%02d:%02d", houres, minutes, seconds);
+                        time.setText(stringTime);
+                        count++;
+                    }
+                });
+            }
+        },
+        //Set how long before to start calling the TimerTask (in milliseconds)
+        0,
+        //Set the amount of time between each execution (in milliseconds)
+        1000);
+    }
 
+    
+    
 
     /******************* Listener **************************/
 
