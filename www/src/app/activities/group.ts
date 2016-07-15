@@ -9,14 +9,19 @@ export class Group {
   public enabled: any = true; // html-select converts bool into string
 
   constructor(
-    id: string,
-    name: string,
-    translation: string,
-    image: string,
+    _id: string,
+    _name: string,
+    _translation: string,
+    _image: string,
     _activities: Activity[],
-    enabled: any
+    _enabled: any
   ) {
+    this.id = _id;
+    this.name = _name;
+    this.translation = _translation;
+    this.image = _image;
     this.activities = _activities;
+    this.enabled = _enabled;
   }
 
 }

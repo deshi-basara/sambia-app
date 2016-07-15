@@ -18,10 +18,11 @@ const GroupSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    required: true,
+    required: false,
+    default: '',
   },
   activities: {
-    type: [Number],
+    type: String,
     required: true,
   },
   enabled: {

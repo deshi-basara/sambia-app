@@ -1,20 +1,22 @@
 import { Item } from './item';
 
 export class Activity {
-  public items: Item[];
+  public name: string;
+  public items: Item[] = [];
   public image: any;
   public enabled: boolean;
 
   constructor(
     id: string,
-    name: string,
+    _name: string,
     translation: string,
     image: string,
-    items: Item[],
-    enabled: boolean
+    _items: Item[],
+    _enabled: boolean
   ) {
-    this.items = [];
-    this.enabled = enabled;
+    this.name = _name;
+    this.items = _items;
+    this.enabled = _enabled;
   }
 
 }

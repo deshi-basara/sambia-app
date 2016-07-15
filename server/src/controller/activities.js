@@ -3,19 +3,28 @@
 import Activity from '../model/activity.js';
 import Group from '../model/group.js';
 
+/**
+ * Controller for managing activities.
+ */
 class ActivitiesController {
 
   static mount(app): void {
     // [GET] /api/activities
     app.get(
       '/api/activities',
-      this.returnAllActivities,
+      this.returnAllActivityGroups,
     );
 
     // [POST] /api/activity
     app.post(
       '/api/activities',
       this.saveActivityGroup,
+    );
+
+    // [PUT] /api/activity
+    app.put(
+      '/api/activities',
+      this.updateActivityGroup,
     );
   }
 
@@ -24,15 +33,23 @@ class ActivitiesController {
    *
    * @return {JSON}      [All available activity objects]
    */
-  static returnAllActivities(req: any, res: any): void {
-    return Activity.find({})
-      .then((activities) =>
+  static returnAllActivityGroups(req: any, res: any): void {
+    return Group.find({})
+      .then((group) =>
         // send all available activities
-        res.send({ activities })
+        res
+          .status(200)
+          .send({ data: group })
       )
       .error((error) =>
         // send error
-        res.send(500, error)
+        res
+          .status(500)
+          .send({
+            error: {
+              msg: error,
+            },
+          })
       );
   }
 
@@ -42,17 +59,49 @@ class ActivitiesController {
    * @return {JSON}      [Status of database transaction]
    */
   static saveActivityGroup(req: any, res: any): void {
-    console.log(req.body);
+    //  parse upload
+    const group = req.body;
+    group.activities = JSON.stringify(group.activities);
 
-    const data = req.body;
-
-    return Group.create(data)
+    return Group.create(group)
       .then(() => {
-        res.send({ ok: 200 });
+        res.send({ data: 'Insert successfull.' });
       })
       .error((error) =>
         // send error
-        res.send(500, error)
+        res
+          .status(500)
+          .send({
+            error: {
+              msg: error,
+            },
+          })
+      );
+  }
+
+  /**
+   * Update an activity group identified by the handed id.
+   *
+   * @return {JSON}      [Status of database transaction]
+   */
+  static updateActivityGroup(req: any, res: any): void {
+    //  parse upload
+    const group = req.body;
+    group.activities = JSON.stringify(group.activities);
+
+    return Group.update({ _id: group._id }, { $set: group })
+      .then(() => {
+        res.send({ data: 'Update successfull.' });
+      })
+      .error((error) =>
+        // send error
+        res
+          .status(500)
+          .send({
+            error: {
+              msg: error,
+            },
+          })
       );
   }
 }

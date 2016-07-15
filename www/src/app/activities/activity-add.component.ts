@@ -77,8 +77,6 @@ export class ActivityAddComponent implements OnInit {
   }
 
   onAddItem() {
-    console.log(this.activityModel);
-
     // cerate new item-object and add it to selected activity
     let item = new Item(
       null,
@@ -89,8 +87,6 @@ export class ActivityAddComponent implements OnInit {
     );
 
     this.activityModel.items.push(item);
-
-    console.log(this.activityModel.items);
   }
 
   /**
