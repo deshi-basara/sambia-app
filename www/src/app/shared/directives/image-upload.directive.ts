@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 
 @Directive({
   selector: '[image-upload]'
@@ -9,6 +9,8 @@ export class ImageUpload {
   constructor(_el: ElementRef) {
     this.el = _el.nativeElement;
   }
+
+  @Input('image-upload') targetModel: any;
 
   /**
    * Opens a file-select-dialog on 'click'-event.
@@ -41,12 +43,11 @@ export class ImageUpload {
       let image: HTMLImageElement = this.el.getElementsByTagName('img')[0];
       let content: any = file.target;
 
-      console.log(file);
-      console.log(this.el);
-      console.log(image);
-
       // set preview
       image.src = content.result;
+
+      // set file-content as image in model
+      this.targetModel.image = content.result;
     }
 
     // parse image into fileReader
