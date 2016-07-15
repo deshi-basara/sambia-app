@@ -1,34 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/common';
 
+import { SubjectService } from '../shared/services/subject.service';
+
 import { Subject } from './subject';
 
 @Component({
   moduleId: module.id,
   selector: 'app-subject-add',
   templateUrl: 'subject-add.component.html',
-  styleUrls: ['subject-add.component.css']
+  styleUrls: ['subject-add.component.css'],
+  providers: [SubjectService]
 })
 export class SubjectAddComponent implements OnInit {
-  subjectModel = new Subject(
-    null,
-    '',
-    null,
-    '',
-    null,
-    '',
-    '',
-    null,
-    null,
-    null,
-    null
-  );
+  subjectModel = new Subject();
   educationArray = ['Student', 'Farmer'];
 
-  constructor() {}
+  constructor(private subjectService: SubjectService) {}
 
   onSubmit() {
-    console.log(this.subjectModel);
+    this.subjectService.postSubject(this.subjectModel)
+      .subscribe(
+        result => {
+          console.log(result);
+        },
+        error => {
+          console.log(error);
+        }
+      )
   }
 
   /**

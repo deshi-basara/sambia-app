@@ -1,7 +1,7 @@
 export class Subject {
 
   constructor(
-    id: number,
+  /*  id: number,
     name: string,
     age: number,
     gender: string,
@@ -11,7 +11,7 @@ export class Subject {
     landOwned: number,
     landCultivated: number,
     size: number,
-    weight: number
+    weight: number*/
   ) { }
 
 }

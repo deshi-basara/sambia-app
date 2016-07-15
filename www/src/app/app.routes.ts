@@ -12,8 +12,8 @@ export const routes:RouterConfig = [
 
     // subjects
     { path: 'subjects', component: SubjectsComponent },
-    { path: 'subjects/add', component: SubjectAddComponent },
-    { path: 'subjects/:id', component: SubjectDetailComponent },
+    { path: 'subject/add', component: SubjectAddComponent },
+    { path: 'subject/:id', component: SubjectDetailComponent },
 ];
 
 export const APP_ROUTER_PROVIDERS = [

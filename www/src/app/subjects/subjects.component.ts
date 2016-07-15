@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
+import { Router, ROUTER_DIRECTIVES } from '@angular/router';
+
+import { SubjectService } from '../shared/services/subject.service';
 
 import { Subject } from './subject';
-import { SubjectsService } from './subjects.service';
 
 @Component({
   moduleId: module.id,
@@ -12,23 +13,33 @@ import { SubjectsService } from './subjects.service';
   directives: [
     ROUTER_DIRECTIVES,
   ],
+  providers: [
+    SubjectService
+  ]
 })
 export class SubjectsComponent implements OnInit {
   subjects: Subject[];
 
   constructor(
-    private _subjectsService: SubjectsService
-  ) {}
-
-  getSubjects() {
-    this._subjectsService.fetchSubjects().then((subjects) => {
-      this.subjects = subjects;
-      console.log(this.subjects);
-    });
-  }
+    private router: Router,
+    private subjectService: SubjectService) {}
 
   ngOnInit() {
-    this.getSubjects();
+    // get all subjects
+    this.subjectService.getAllSubjects().subscribe(
+      result => {
+        this.subjects = result;
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
+
+  openSubject(_id: string) {
+    this.router.navigate(['/subject', _id]);
+  }
+
+
 
 }

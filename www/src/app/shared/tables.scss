@@ -71,6 +71,12 @@
 
       &:first-child {
         width: 20px;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+
+      &:last-child {
+        padding-right: 15px;
       }
     }
   }
@@ -86,6 +92,17 @@
       span {
 
       }
+    }
+  }
+
+  .table-entry {
+    cursor: pointer;
+    background-color: $white;
+
+    transition: background-color 0.3s ease-in-out;
+
+    &:hover {
+      background-color: $light-grey;
     }
   }
 }
