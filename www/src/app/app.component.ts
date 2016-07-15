@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 
+import './rxjs-operators';
+
 import { SubjectsService } from './subjects/subjects.service';
 
 @Component({
