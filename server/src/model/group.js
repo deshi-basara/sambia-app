@@ -14,13 +14,13 @@ const GroupSchema = new mongoose.Schema({
   translation: {
     type: String,
     required: true,
-    default: {},
+    default: '',
   },
   image: {
     type: String,
     required: true,
   },
-  activity: {
+  activities: {
     type: [Number],
     required: true,
   },

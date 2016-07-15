@@ -1,6 +1,7 @@
 // @flow
 
 import Activity from '../model/activity.js';
+import Group from '../model/group.js';
 
 class ActivitiesController {
 
@@ -12,10 +13,10 @@ class ActivitiesController {
     );
 
     // [POST] /api/activity
-    /* app.post(
-      '/api/activity',
-      this.saveActivity,
-    );*/
+    app.post(
+      '/api/activities',
+      this.saveActivityGroup,
+    );
   }
 
   /**
@@ -35,6 +36,25 @@ class ActivitiesController {
       );
   }
 
+  /**
+   * Saves a new activity group into our database.
+   *
+   * @return {JSON}      [Status of database transaction]
+   */
+  static saveActivityGroup(req: any, res: any): void {
+    console.log(req.body);
+
+    const data = req.body;
+
+    return Group.create(data)
+      .then(() => {
+        res.send({ ok: 200 });
+      })
+      .error((error) =>
+        // send error
+        res.send(500, error)
+      );
+  }
 }
 
 export default ActivitiesController;

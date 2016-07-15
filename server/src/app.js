@@ -1,5 +1,6 @@
 import http from 'http';
 import express from 'express';
+import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import winston from 'winston';
 import mongoose from 'mongoose';
@@ -24,6 +25,7 @@ app.server = http.createServer(app);
  * Middleware
  */
 app.use(morgan('combined'));
+app.use(bodyParser.json({ limit: '5mb' }));
 
 /**
  * Controller
