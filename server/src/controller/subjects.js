@@ -50,7 +50,11 @@ class SubjectsController {
         // send error
         res
           .status(500)
-          .send({ data: error })
+          .send({
+            error: {
+              msg: error,
+            },
+          })
       );
   }
 
@@ -86,7 +90,9 @@ class SubjectsController {
         res
           .status(500)
           .send({
-            error,
+            error: {
+              msg: error,
+            },
           })
       );
   }
@@ -115,7 +121,9 @@ class SubjectsController {
         res
           .status(500)
           .send({
-            data: error,
+            error: {
+              msg: error,
+            },
           })
       );
   }
@@ -137,7 +145,9 @@ class SubjectsController {
         res
           .status(500)
           .send({
-            data: error,
+            error: {
+              msg: error,
+            },
           })
       );
   }
