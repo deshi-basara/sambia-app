@@ -1,4 +1,5 @@
 import ActivitiesController from '../controller/activities.js';
+import SubjectsController from '../controller/subjects.js';
 
 /**
  * Development configuration
@@ -10,6 +11,7 @@ export default {
 
   controller: [
     ActivitiesController,
+    SubjectsController,
   ],
 
   models: [],
