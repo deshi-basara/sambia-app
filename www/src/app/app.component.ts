@@ -3,8 +3,6 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
 
 import './rxjs-operators';
 
-import { SubjectsService } from './subjects/subjects.service';
-
 @Component({
   moduleId: module.id,
   selector: 'app-root',
@@ -14,7 +12,6 @@ import { SubjectsService } from './subjects/subjects.service';
     ROUTER_DIRECTIVES,
   ],
   providers: [
-    SubjectsService,
   ]
 })
 export class AppComponent {
