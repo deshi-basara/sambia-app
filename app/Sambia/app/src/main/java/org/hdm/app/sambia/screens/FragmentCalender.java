@@ -5,6 +5,7 @@ package org.hdm.app.sambia.screens;
  */
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -28,7 +29,8 @@ import java.util.TreeMap;
  * A fragment representing the front of the card.
  */
 public class FragmentCalender extends BaseFragemnt implements
-        CalendarItemOnClickListener {
+        CalendarItemOnClickListener,
+        View.OnClickListener{
 
 
     private String TAG = "DayView";
@@ -38,6 +40,7 @@ public class FragmentCalender extends BaseFragemnt implements
     private int rows = 1;
     private LinkedHashMap data;
     private TreeMap calendar;
+    private FloatingActionButton fab_calendar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,7 +49,13 @@ public class FragmentCalender extends BaseFragemnt implements
 
         initMenu(view);
         initCalenderList();
+        initFloatingButton();
         return view;
+    }
+
+    private void initFloatingButton() {
+        fab_calendar = (FloatingActionButton) view.findViewById(R.id.fab_calendar);
+        fab_calendar.setOnClickListener(this);
     }
 
 
@@ -67,7 +76,6 @@ public class FragmentCalender extends BaseFragemnt implements
 
 
     private void initCalenderList() {
-
         data = event.getActivityMap();
         calendar = event.getCalendarMap();
         adapter = new CalendarListAdapter(getActivity(),data, calendar);
@@ -86,5 +94,14 @@ public class FragmentCalender extends BaseFragemnt implements
     @Override
     public void didOnClick(int position, String s, View_Holder holder) {
 
+    }
+
+
+    // FloatingActionButton Listener
+
+    @Override
+    public void onClick(View v) {
+
+        fab_calendar.setImageResource(R.drawable.onfarmwork_bagging);
     }
 }

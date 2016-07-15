@@ -74,9 +74,9 @@ public class FragmentActivity extends BaseFragemnt implements
     public void onResume() {
         if(DEBUGMODE) Log.d(TAG, "onResume");
         super.onResume();
-            setMenuTitle("Activity");
-            setMenuBackground(android.R.color.holo_green_dark);
-            setMenuBtn(R.drawable.ic_forward);
+        setMenuTitle("Activity");
+        setMenuBackground(android.R.color.holo_green_dark);
+        setMenuBtn(R.drawable.ic_forward);
     }
 
 
@@ -160,6 +160,7 @@ public class FragmentActivity extends BaseFragemnt implements
         } else  {
             // Deactivate Activity
             activityObject.activeState = false;
+            activityObject.count = 0;
 
             // set temporary end time
             activityObject.endTime = Calendar.getInstance().getTime();
@@ -186,11 +187,12 @@ public class FragmentActivity extends BaseFragemnt implements
 
         // Set Background
         if(holder!= null){
-        holder.setBackground(activityObject.activeState);
-        } else {
-            adapter.list = new ArrayList<>(event.getActivityMap().values());
-            adapter.notifyDataSetChanged();
-         }
+            holder.count = activityObject.count;
+            holder.setBackground(activityObject.activeState);
+            } else {
+                adapter.list = new ArrayList<>(event.getActivityMap().values());
+                adapter.notifyDataSetChanged();
+        }
 
 
 
