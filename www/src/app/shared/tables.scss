@@ -78,6 +78,12 @@
       &:last-child {
         padding-right: 15px;
       }
+
+      span {
+        display: block;
+        line-height: 30px;
+        font-size: 12px;
+      }
     }
   }
 
@@ -88,10 +94,6 @@
       font-size: 13px;
       font-weight: 700;
       border-bottom: 1px solid $light-white;
-
-      span {
-
-      }
     }
   }
 

@@ -11,7 +11,7 @@
 
   <!-- Add -->
   <div class="table-add">
-    <a [routerLink]="['/activities/add']">
+    <a [routerLink]="['/activity/add']">
       <button type="button" name="button" class="button z0">
         <i class="zmdi zmdi-plus"></i>
       </button>
@@ -34,60 +34,31 @@
     <td class="table-align-left">
       <i class="zmdi zmdi-square-o"></i>
     </td>
-    <td class="table-align-left">Name</td>
-    <td>Age</td>
-    <td>Gender</td>
-    <td>Household</td>
-    <td>Education</td>
-    <td>Tribe</td>
-    <td>
-      Land Owned
-      <span>(m2)</span>
-    </td>
-    <td>
-      Land Cultivated
-      (m2)
-    </td>
-    <!--<td>Crops</td>
-    <td>Work</td>-->
-    <td>
-      Size
-      (cm)
-    </td>
-    <td>
-      Weight
-      (kg)
-    </td>
+    <td class="table-align-left">Group</td>
+    <td>Activities</td>
+    <td>Sub-Activities</td>
+    <td>Enabled</td>
   </tr>
 
   <!-- Table Entry -->
-  <tr class="table-entry" *ngFor="let subject of subjects">
+  <tr class="table-entry"
+    *ngFor="let group of groupArray; let i = index"
+    (click)="openGroup(group.id)">
     <td class="table-align-left">
       <i class="zmdi zmdi-square-o"></i>
     </td>
     <td class="table-align-left">
+      {{ group.name }}
     </td>
     <td>
+      <span *ngFor="let activity of group.activities">{{ activity.name }}</span>
     </td>
     <td>
-      <i class="zmdi zmdi-female" *ngIf="subject.gender === 'female'"></i>
-      <i class="zmdi zmdi-male" *ngIf="subject.gender === 'male'"></i>
+      <span *ngFor="let item of group.activities[i].items">{{ item.name }}</span>
     </td>
     <td>
-    </td>
-    <td>
-    </td>
-    <td>
-    </td>
-    <td>
-    </td>
-    <td>
-    </td>
-    <!--<td>Crops</td>
-    <td>Work</td>-->
-    <td>
-    </td>
-    <td>
+      <i class="zmdi zmdi-check-circle" *ngIf="group.enabled"></i>
+      <i class="zmdi zmdi-minus-circle" *ngIf="!group.enabled"></i>
     </td>
   </tr>
 
