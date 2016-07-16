@@ -28,10 +28,16 @@ export class ActivityService {
       .catch(this.handleError);
   }
 
-  getActivityGroup(): Observable<Group> {
+  /**
+   * Fetch an activity-group identified by its id from server.
+   *
+   * @param  {_id}                _groupModel [description]
+   * @return {Observable<Group>}              [Observable of type group-array]
+   */
+  getActivityGroup(_id: string): Observable<Group> {
     return this.http
-      .get(environment.api + this.activityBaseUrl)
-      .map(this.extractData)
+      .get(environment.api + this.activityBaseUrl + '/' + _id)
+      .map(this.extractGroups)
       .catch(this.handleError);
   }
 
@@ -43,8 +49,6 @@ export class ActivityService {
    * @return {[type]}             [description]
    */
   postActivityGroup(_groupModel: Group) {
-    console.log(_groupModel);
-
     let body = _groupModel;
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
@@ -55,6 +59,29 @@ export class ActivityService {
       .catch(this.handleError);
   }
 
+  /**
+   * Makes an update-request for a groupModel to the server.
+   *
+   * @param  {Group}  _groupModel [Updated group model]
+   * @return {[type]}             [description]
+   */
+  putActivityGroup(_groupModel: Group) {
+    let body = _groupModel;
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http
+      .put(environment.api + this.activityBaseUrl, body, options)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  /**
+   * Helper-method for extracting simple response-data.
+   *
+   * @param  {Response} res [Angular-http response]
+   * @return {Object}       [Response-body as object]
+   */
   private extractData(res: Response) {
     let body = res.json();
     return body.data || { };

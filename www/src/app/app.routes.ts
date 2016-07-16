@@ -1,14 +1,15 @@
 import { provideRouter, RouterConfig } from '@angular/router';
 import { DashboardComponent } from './dashboard';
 import { SubjectsComponent, SubjectDetailComponent, SubjectAddComponent } from './subjects';
-import { ActivitiesComponent, ActivityAddComponent } from './activities';
+import { ActivitiesComponent, ActivityDetailComponent, ActivityAddComponent } from './activities';
 
 export const routes:RouterConfig = [
     { path: 'dash', component: DashboardComponent },
 
     // activities
     { path: 'activities', component: ActivitiesComponent },
-    { path: 'activities/add', component: ActivityAddComponent },
+    { path: 'activity/add', component: ActivityAddComponent },
+    { path: 'activity/:id', component: ActivityDetailComponent },
 
     // subjects
     { path: 'subjects', component: SubjectsComponent },

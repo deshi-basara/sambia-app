@@ -1,6 +1,5 @@
 // @flow
 
-import Activity from '../model/activity.js';
 import Group from '../model/group.js';
 
 /**
@@ -15,13 +14,19 @@ class ActivitiesController {
       this.returnAllActivityGroups,
     );
 
-    // [POST] /api/activity
+    // [GET] /api/activities/:id
+    app.get(
+      '/api/activities/:id',
+      this.returnActivityGroup,
+    );
+
+    // [POST] /api/activities
     app.post(
       '/api/activities',
       this.saveActivityGroup,
     );
 
-    // [PUT] /api/activity
+    // [PUT] /api/activitties
     app.put(
       '/api/activities',
       this.updateActivityGroup,
@@ -35,8 +40,46 @@ class ActivitiesController {
    */
   static returnAllActivityGroups(req: any, res: any): void {
     return Group.find({})
-      .then((group) =>
+      .then((groups) =>
         // send all available activities
+        res
+          .status(200)
+          .send({ data: groups })
+      )
+      .error((error) =>
+        // send error
+        res
+          .status(500)
+          .send({
+            error: {
+              msg: error,
+            },
+          })
+      );
+  }
+
+  /**
+   * Returns a certain activity identified by id from our database.
+   *
+   * @return {JSON}      [An activity objects]
+   */
+  static returnActivityGroup(req: any, res: any): void {
+    const id = req.params.id;
+
+    // valid request?
+    if (!id) {
+      return res
+        .status(400)
+        .send({
+          error: {
+            msg: 'Requested group ID not available.',
+          },
+        });
+    }
+
+    return Group.find({ _id: id })
+      .then((group) =>
+        // send available activity
         res
           .status(200)
           .send({ data: group })
@@ -89,7 +132,7 @@ class ActivitiesController {
     const group = req.body;
     group.activities = JSON.stringify(group.activities);
 
-    return Group.update({ _id: group._id }, { $set: group })
+    return Group.update({ _id: group.id }, { $set: group })
       .then(() => {
         res.send({ data: 'Update successfull.' });
       })
