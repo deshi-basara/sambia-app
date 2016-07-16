@@ -39,7 +39,15 @@ export class ActivityAddComponent implements OnInit {
     false
   );
 
-  constructor(private activityService: ActivityService) {
+  constructor(
+    private activityService: ActivityService
+  ) { }
+
+  /**
+   * Initialize component after Angular initializes the data-bound input
+   * properties.
+   */
+  ngOnInit() {
   }
 
   onSubmit() {
@@ -118,22 +126,6 @@ export class ActivityAddComponent implements OnInit {
     }
 
     this.showModal = this.showModal ? false : true;
-  }
-
-  /**
-   * Initialize component after Angular initializes the data-bound input
-   * properties.
-   */
-  ngOnInit() {
-    this.activityService.getActivityGroup()
-      .subscribe(
-        activityGroup => {
-          console.log(activityGroup);
-        },
-        error => {
-          console.log(error);
-        }
-      );
   }
 
 }

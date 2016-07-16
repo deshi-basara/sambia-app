@@ -10,7 +10,7 @@ export class ImageUpload {
     this.el = _el.nativeElement;
   }
 
-  @Input('image-upload') targetModel: any;
+  @Input('image-upload') targetModel: any; // can be Group, Activity, Item
 
   /**
    * Opens a file-select-dialog on 'click'-event.
