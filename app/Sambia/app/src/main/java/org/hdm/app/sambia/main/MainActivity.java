@@ -1,6 +1,7 @@
 package org.hdm.app.sambia.main;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
+import org.hdm.app.sambia.IntroActivity;
 import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.datastorage.ActivityObject;
 import org.hdm.app.sambia.datastorage.ActivityManager;
@@ -23,11 +25,17 @@ public class MainActivity extends Activity  {
 
     private final String TAG = "MainActivity";
 
+    /**
+     * Attributes
+     */
+    private boolean firstStart = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initConfiguration();
+        initFirstStart();
+        // initConfiguration();
         initCalenderMap();
         setFullScreen(true);
         setContentView(R.layout.activity_main);
@@ -54,6 +62,20 @@ public class MainActivity extends Activity  {
     /*****************************
      * Init
      *******************************************/
+
+    /**
+     * Checks if the user started the app for the first time. If true he is redirected to
+     * the IntroActivity.
+     */
+    private void initFirstStart() {
+        // did the user start the app for the first time?
+        if(firstStart) {
+            // true, show intro
+            Intent intentIntro = new Intent(this, IntroActivity.class);
+            startActivity(intentIntro);
+        }
+    }
+
 
 
     private void initConfiguration() {
