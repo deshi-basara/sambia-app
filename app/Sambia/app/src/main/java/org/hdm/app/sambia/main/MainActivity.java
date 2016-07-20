@@ -15,6 +15,7 @@ import org.hdm.app.sambia.datastorage.ActivityObject;
 import org.hdm.app.sambia.datastorage.ActivityManager;
 import org.hdm.app.sambia.util.FileLoader;
 import org.hdm.app.sambia.util.MyJsonParser;
+import org.hdm.app.sambia.util.Settings;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -28,14 +29,13 @@ public class MainActivity extends Activity  {
     /**
      * Attributes
      */
-    private boolean firstStart = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         initFirstStart();
-        // initConfiguration();
+        initConfiguration();
         initCalenderMap();
         setFullScreen(true);
         setContentView(R.layout.activity_main);
@@ -68,6 +68,8 @@ public class MainActivity extends Activity  {
      * the IntroActivity.
      */
     private void initFirstStart() {
+        boolean firstStart = Settings.isFirstRun(getBaseContext());
+
         // did the user start the app for the first time?
         if(firstStart) {
             // true, show intro

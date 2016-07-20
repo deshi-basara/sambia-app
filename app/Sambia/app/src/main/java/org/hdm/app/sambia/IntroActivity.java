@@ -4,20 +4,16 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -25,15 +21,15 @@ import org.hdm.app.sambia.adapter.IntroPageAdapter;
 import org.hdm.app.sambia.main.MainActivity;
 import org.hdm.app.sambia.models.SubjectModel;
 import org.hdm.app.sambia.tasks.InitDeviceTask;
+import org.hdm.app.sambia.util.Settings;
 import org.json.JSONObject;
-
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.util.ArrayList;
-import java.util.Random;
 
 import me.relex.circleindicator.CircleIndicator;
 
+/**
+ * Present a walkthrough-interface where a new subject can be created and all needed files
+ * are pushed/pulled from our server.
+ */
 public class IntroActivity extends FragmentActivity {
 
     final private String LOG_INDICATOR = "IntroActivity";
@@ -50,7 +46,7 @@ public class IntroActivity extends FragmentActivity {
     private PagerAdapter introPagerAdapter;
 
     /**
-     * Other global attributes
+     * Attributes
      */
     private int slidePos = 0;
     private Button buttonPrev;
@@ -63,9 +59,6 @@ public class IntroActivity extends FragmentActivity {
      * Data
      */
     private SubjectModel subjectData;
-
-    private String userPassword;
-    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -262,7 +255,7 @@ public class IntroActivity extends FragmentActivity {
      * and redirects the user to the MainActivity.
      */
     private void finishIntro() {
-
+        // TODO: Remove debugging data
         this.subjectData = new SubjectModel(
                 null,
                 "Name",
@@ -286,23 +279,6 @@ public class IntroActivity extends FragmentActivity {
 
         // upload subject data to server, listener-callback after task execution
         new InitDeviceTask(this.listener, this.finishDialog).execute(this.subjectData);
-
-        // create public/private-Key for the user
-        /*ArrayList keys = Crypto.generateKeys();
-        String privateKeyString = Crypto.keyToString((PrivateKey) keys.get(0));
-        String publicKeyString = Crypto.keyToString((PublicKey) keys.get(1));
-
-        // save all needed data in a new settings files
-        Settings.setupSettings(this, _password, _username, publicKeyString, privateKeyString);
-        Settings.disableFirstRun(this);
-
-        // redirect to the MainActivity
-        Intent mainIntent = new Intent(this, MainActivity.class);
-        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        finishDialog.dismiss();
-        startActivity(mainIntent);*/
-
     }
 
     /**
@@ -316,6 +292,12 @@ public class IntroActivity extends FragmentActivity {
             // redirect to the MainActivity
             Intent mainIntent = new Intent(IntroActivity.this, MainActivity.class);
             mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            // insert data into persistent settings
+            Settings.initSettings(getBaseContext(), "defaultPassword", subjectId, "0.0.1");
+
+            // disable introActivity on next start
+            Settings.disableFirstRun(getBaseContext());
 
             finishDialog.dismiss();
             startActivity(mainIntent);
