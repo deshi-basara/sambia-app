@@ -3,7 +3,7 @@
     xmlns:float="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.hdm.app.sambia.screens.FragmentIntroThree"
+    tools:context="org.hdm.app.sambia.screens.FragmentIntroThird"
     android:rowCount="3"
     android:columnCount="3"
     android:padding="30dp"
@@ -14,7 +14,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Farm"
+        android:text="Farming"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
@@ -24,19 +24,17 @@
         />
 
     <ImageView
-        android:layout_width="180dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:src="@drawable/forest"
-        android:layout_above="@+id/input_cultivated"
         android:layout_centerHorizontal="true" />
 
     <!-- Land Wrapper -->
     <LinearLayout
         android:id="@+id/owned_wrapper"
-        android:layout_marginTop="35dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/intro_three_headline"
+        android:layout_above="@+id/cultivated_wrapper"
         >
 
         <!-- Land Owned -->
@@ -48,6 +46,15 @@
             android:layout_weight="1"
             >
 
+            <EditText
+                android:id="@+id/input_owned"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="Land Owned"
+                android:textColor="@color/white"
+                />
+
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
@@ -58,7 +65,10 @@
         android:layout_marginTop="35dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/owned_wrapper"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="55dp"
         >
 
         <!-- Land Owned -->
@@ -70,33 +80,18 @@
             android:layout_weight="1"
             >
 
+            <EditText
+                android:id="@+id/input_cultivated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="Land Cultivated"
+                android:textColor="@color/white"
+                />
+
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/input_cultivated"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="Land Cultivated"
-        android:textColor="@color/white"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="55dp"/>
-
-    <EditText
-        android:id="@+id/input_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="Land Owned"
-        android:textColor="@color/white"
-        android:layout_above="@+id/input_cultivated"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="27dp" />
 
 
 </RelativeLayout>

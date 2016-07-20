@@ -16,11 +16,16 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import org.hdm.app.sambia.adapter.IntroPageAdapter;
+import org.hdm.app.sambia.main.MainActivity;
+import org.hdm.app.sambia.models.SubjectModel;
+import org.hdm.app.sambia.tasks.InitDeviceTask;
+import org.json.JSONObject;
 
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -31,7 +36,7 @@ import me.relex.circleindicator.CircleIndicator;
 
 public class IntroActivity extends FragmentActivity {
 
-    final private String logIndicator = "IntroActivity";
+    final private String LOG_INDICATOR = "IntroActivity";
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -52,10 +57,13 @@ public class IntroActivity extends FragmentActivity {
     private Button buttonNext;
     private CircleIndicator introIndicator;
     private RadioGroup radioIndicators;
+    private MaterialDialog finishDialog;
 
     /**
      * Data
      */
+    private SubjectModel subjectData;
+
     private String userPassword;
     private String userName;
 
@@ -128,30 +136,29 @@ public class IntroActivity extends FragmentActivity {
      * Sets the viewPager page to the current slidePos.
      */
     private void onControlButton() {
-        Log.d(logIndicator, "onControlButton(): " + slidePos);
 
         if(slidePos != 4) {
             introPager.setCurrentItem(slidePos, true);
         }
         else {
             // last step, start uploading data
-            Log.d(logIndicator, "case 4");
+            Log.d(LOG_INDICATOR, "Last Step");
 
-            String username = checkUsername();
-            String password = checkPassword();
+            boolean subjectCreated = checkSubjectData();
 
-            if(password == null) {
-                Log.e(logIndicator, "return");
-                return;
+            if(!subjectCreated) {
+                Log.e(LOG_INDICATOR, "Missing form data");
+                // TODO: give visual feedback
+                // return;
             }
 
-            finishIntro(password, username);
+            finishIntro();
         }
     }
 
     /**
      * Is called whenever the viewPager's page changes.
-     * Is used for changing the position indicatators.
+     * Is used for changing the position indicators.
      * @param currentPos
      */
     private void onPositionChanged(int currentPos) {
@@ -189,65 +196,96 @@ public class IntroActivity extends FragmentActivity {
     }
 
     /**
-     * Fetches and validates the entered passwords inside fragment four.
-     * @return Entered password-string or "null" if both entered passwords do not match.
+     * Fetches the input-data from all intro-screens and builds a SubjectModel with it.
+     * If needed input-data is missing, false is returned
+     *
+     * @return boolean False, if needed form-fields were empty
      */
-    private String checkPassword() {
-        // get the entered passwords
-        /*EditText passwordInputOne = (EditText) introPager
-                .findViewById(R.id.intro_four_passwort_one);
-        EditText passwordInputTwo = (EditText) introPager
-                .findViewById(R.id.intro_four_passwort_two);
+    private boolean checkSubjectData() {
 
-        // do the passwords match?
-        String passwordValueOne = passwordInputOne.getText().toString().trim();
-        String passwordValueTwo = passwordInputTwo.getText().toString().trim();
-        if(passwordValueOne.equals(passwordValueTwo) && !passwordValueOne.isEmpty()) {
-            return passwordValueOne;
+        try {
+            // get the input views
+            EditText nameInput = (EditText) introPager.findViewById(R.id.input_name);
+            EditText ageInput = (EditText) introPager.findViewById(R.id.input_age);
+            Spinner genderSpinner = (Spinner) introPager.findViewById(R.id.input_gender_spinner);
+            Spinner educationSpinner = (Spinner) introPager.findViewById(R.id.input_education_spinner);
+
+            EditText tribeInput = (EditText) introPager.findViewById(R.id.input_tribe);
+            EditText householdInput = (EditText) introPager.findViewById(R.id.input_household);
+            EditText sizeInput = (EditText) introPager.findViewById(R.id.input_size);
+            EditText weightInput = (EditText) introPager.findViewById(R.id.input_weight);
+
+            EditText landOwnedInput = (EditText) introPager.findViewById(R.id.input_owned);
+            EditText landCultivatedInput = (EditText) introPager.findViewById(R.id.input_cultivated);
+
+            // get the input data
+            String nameValue = nameInput.getText().toString().trim();
+            int ageValue = Integer.parseInt(ageInput.getText().toString());
+            String genderValue = genderSpinner.getSelectedItem().toString();
+            String educationValue = educationSpinner.getSelectedItem().toString();
+
+            String tribeValue = tribeInput.getText().toString().trim();
+            int householdValue = Integer.parseInt(householdInput.getText().toString());
+            int sizeValue = Integer.parseInt(sizeInput.getText().toString());
+            int weightValue = Integer.parseInt(weightInput.getText().toString());
+
+            int landOwnedValue = Integer.parseInt(landOwnedInput.getText().toString());
+            int landCultivatedValue = Integer.parseInt(landCultivatedInput.getText().toString());
+
+            // build model from input
+            this.subjectData = new SubjectModel(
+                    null,
+                    nameValue,
+                    ageValue,
+                    genderValue,
+                    educationValue,
+                    tribeValue,
+                    householdValue,
+                    sizeValue,
+                    weightValue,
+                    landOwnedValue,
+                    landCultivatedValue
+            );
+
+            return true;
+
+        } catch(Exception error) {
+            error.printStackTrace();
+
+            return false;
         }
-        else {
-            return null;
-        }*/
 
-        return "";
-    }
-
-    /**
-     * Fetches and validates the entered username inside fragment three.
-     * @return Entered username-string.
-     */
-    private String checkUsername() {
-        // get the entered username
-        /*EditText usernameInput = (EditText) introPager
-                .findViewById(R.id.username_input_name);
-
-        // do the passwords match?
-        String usernameInputValue = usernameInput.getText().toString().trim();
-        if(!usernameInputValue.isEmpty()) {
-            return usernameInputValue;
-        }
-        else {
-            // no valid username entered, generate a new random name
-            return new RandomName(this).generate();
-        }*/
-
-        return "";
     }
 
     /**
      * Generates all needed setting-values, inserts them inside the user's encrypted settings
      * and redirects the user to the MainActivity.
-     * @param _password Application password string.
-     * @param _username Username string.
      */
-    private void finishIntro(String _password, String _username) {
+    private void finishIntro() {
+
+        this.subjectData = new SubjectModel(
+                null,
+                "Name",
+                25,
+                "Male",
+                "Student",
+                "Tribe",
+                3,
+                180,
+                80,
+                80,
+                7
+        );
 
         // give feedback
-        MaterialDialog finishDialog = new MaterialDialog.Builder(this)
+        this.finishDialog = new MaterialDialog.Builder(this)
                 .title(R.string.intro_finish_dialog_title)
-                .content(R.string.intro_finish_dialog_content)
+                .content(R.string.intro_finish_dialog_content_one)
                 .progress(false, 100, true)
                 .show();
+
+        // upload subject data to server, listener-callback after task execution
+        new InitDeviceTask(this.listener, this.finishDialog).execute(this.subjectData);
 
         // create public/private-Key for the user
         /*ArrayList keys = Crypto.generateKeys();
@@ -266,4 +304,21 @@ public class IntroActivity extends FragmentActivity {
         startActivity(mainIntent);*/
 
     }
+
+    /**
+     * Callback for AsyncTask "initDeviceTask"
+     */
+    InitDeviceTask.InitListener listener = new InitDeviceTask.InitListener() {
+        @Override
+        public void onFinished(String subjectId, JSONObject activities) {
+            finishDialog.setContent(R.string.intro_finish_dialog_content_three);
+
+            // redirect to the MainActivity
+            Intent mainIntent = new Intent(IntroActivity.this, MainActivity.class);
+            mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            finishDialog.dismiss();
+            startActivity(mainIntent);
+        }
+    };
 }
