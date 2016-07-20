@@ -14,8 +14,8 @@ import config from './helper/config.js';
 Promise.promisifyAll(mongoose);
 mongoose.connect(`mongodb://${config.db.host}:${config.db.port}/${config.db.name}${config.db.options}`);
 mongoose.Promise = Promise;
-mongoose.connection.on('error', () => {
-  throw new Error(`Can not connect to database: ${config.database.db}`);
+mongoose.connection.on('error', (error) => {
+  throw new Error(`MongoDB: ${error.message}`);
 });
 
 const app = express();
@@ -25,7 +25,7 @@ app.server = http.createServer(app);
  * Middleware
  */
 app.use(morgan('combined'));
-app.use(bodyParser.json({ limit: '5mb' }));
+app.use(bodyParser.json({ limit: '25mb' }));
 
 /**
  * Controller
