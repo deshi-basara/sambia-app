@@ -13,6 +13,11 @@ import android.widget.Spinner;
 
 import org.hdm.app.sambia.R;
 
+/**
+ * Walktrough Fragment 2 of 4.
+ *
+ * Holds the Subject-Form.
+ */
 public class FragmentIntroTwo extends Fragment {
 
     private final String logIndictaor = "FragmentIntroTwo";

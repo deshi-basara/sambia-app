@@ -1,14 +1,11 @@
 package org.hdm.app.sambia.tasks;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 
-import org.hdm.app.sambia.IntroActivity;
-import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.models.SubjectModel;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,7 +19,10 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
- * Created by simon on 19.07.16.
+ * AsyncTask that is called when the IntroActivity was completed.
+ *
+ * Uploads the newly created subject to the server.
+ * Downloads all available activities from the server to the current device.
  */
 public class InitDeviceTask extends AsyncTask<SubjectModel, Integer, Boolean> {
     private final String LOG_INDICATOR = "InitDeviceTask";
@@ -85,6 +85,7 @@ public class InitDeviceTask extends AsyncTask<SubjectModel, Integer, Boolean> {
         // create HTTP-client and build request
         RequestBody body = RequestBody.create(JSON, subjectJson);
         Request request = new Request.Builder()
+                // TODO: Use real IP
                 .url("http://192.168.1.158:8080/api/subjects")
                 .post(body)
                 .build();
@@ -120,6 +121,7 @@ public class InitDeviceTask extends AsyncTask<SubjectModel, Integer, Boolean> {
      */
     private JSONObject downloadActivities() {
         Request request = new Request.Builder()
+                // TODO: Use real IP
                 .url("http://192.168.1.158:8080/api/activities")
                 .build();
 

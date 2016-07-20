@@ -9,6 +9,9 @@ import org.hdm.app.sambia.screens.FragmentIntroOne;
 import org.hdm.app.sambia.screens.FragmentIntroThird;
 import org.hdm.app.sambia.screens.FragmentIntroTwo;
 
+/**
+ * Page-Adapter for all Walkthrough-fragments of IntroActivity.
+ */
 public class IntroPageAdapter extends FragmentStatePagerAdapter {
 
     /**

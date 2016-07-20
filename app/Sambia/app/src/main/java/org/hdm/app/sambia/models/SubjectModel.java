@@ -3,7 +3,7 @@ package org.hdm.app.sambia.models;
 import android.media.Image;
 
 /**
- * Data representation of a Subject
+ * Data representation of a Subject.
  */
 public class SubjectModel {
 

@@ -5,17 +5,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import org.hdm.app.sambia.R;
 
+/**
+ * Walkthrough Fragment 4 of 4.
+ *
+ * Holds the "take subject picture"-page.
+ */
 public class FragmentIntroFour extends Fragment {
 
-    private final String logIndictaor = "FragmentIntroFour";
-
     private View rootView;
-    private ViewGroup upperContainer;
-    private ImageView logo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,19 +29,6 @@ public class FragmentIntroFour extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        setLayout(view);
-        //startAnimation();
-    }
-
-
-    private void setLayout(View view) {
-        //upperContainer = (ViewGroup) view.findViewById(R.id.upper_container);
-        //logo = (ImageView) view.findViewById(R.id.logo);
-    }
-
-    private void startAnimation() {
-        logo.setVisibility(View.INVISIBLE);
     }
 
 }

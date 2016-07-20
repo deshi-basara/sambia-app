@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import org.hdm.app.sambia.R;
 
 /**
- * Created by simon on 19.07.16.
+ * Walktrough Fragment 3 of 4.
+ *
+ * Holds the Farm-Form.
  */
 public class FragmentIntroThird extends Fragment {
 
