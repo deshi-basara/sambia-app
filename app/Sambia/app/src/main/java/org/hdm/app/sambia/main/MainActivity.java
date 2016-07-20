@@ -1,6 +1,8 @@
 package org.hdm.app.sambia.main;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +15,7 @@ import org.hdm.app.sambia.IntroActivity;
 import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.datastorage.ActivityObject;
 import org.hdm.app.sambia.datastorage.ActivityManager;
+import org.hdm.app.sambia.tasks.PullUpdatesTask;
 import org.hdm.app.sambia.util.FileLoader;
 import org.hdm.app.sambia.util.MyJsonParser;
 import org.hdm.app.sambia.util.Settings;
@@ -22,13 +25,17 @@ import java.util.Date;
 
 
 public class MainActivity extends Activity  {
-
-
     private final String TAG = "MainActivity";
+
+    /**
+     * Constants
+     */
+    public static final int NOTIFICATION_ID = 100;
 
     /**
      * Attributes
      */
+    private boolean hasIcon = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +46,8 @@ public class MainActivity extends Activity  {
         initCalenderMap();
         setFullScreen(true);
         setContentView(R.layout.activity_main);
+
+        checkForUpdates();
     }
 
 
@@ -77,8 +86,6 @@ public class MainActivity extends Activity  {
             startActivity(intentIntro);
         }
     }
-
-
 
     private void initConfiguration() {
 
@@ -141,6 +148,10 @@ public class MainActivity extends Activity  {
             cal.add(Calendar.MINUTE, 15);
             i++;
         }
+    }
+
+    private void checkForUpdates() {
+        new PullUpdatesTask(this).execute();
     }
 
 }

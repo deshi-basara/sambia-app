@@ -30,4 +30,11 @@
     <string name="intro_finish_dialog_content_two">2/3 Downloading activities</string>
     <string name="intro_finish_dialog_content_three">3/3 Setup data</string>
 
+    <!--
+        Notifications
+    -->
+    <string name="notify_running_title">Sambia App</string>
+    <string name="notify_running_content">Checking for Updates</string>
+    <string name="notify_running_stop">Cancel check</string>
+
 </resources>
