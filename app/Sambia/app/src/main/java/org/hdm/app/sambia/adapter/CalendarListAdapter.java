@@ -17,6 +17,8 @@ import org.hdm.app.sambia.listener.ViewHolderListener;
 import org.hdm.app.sambia.util.View_Holder;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.TreeMap;
 
@@ -38,6 +40,7 @@ public class CalendarListAdapter extends RecyclerView.Adapter<View_Holder> imple
     public ArrayList list;
     private CalendarItemOnClickListener listener;
     private View v;
+    int lastPosition = 0;
 
 
 
@@ -68,14 +71,11 @@ public class CalendarListAdapter extends RecyclerView.Adapter<View_Holder> imple
 
 
 
-
     @Override
     public void onBindViewHolder(View_Holder holder, int position) {
         //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
 
         String title = list.get(position).toString();
-
-
         holder.setListener(this);
 
         // Display only Hours and Minutes
@@ -88,6 +88,31 @@ public class CalendarListAdapter extends RecyclerView.Adapter<View_Holder> imple
         holder.rv_content.setLayoutManager(new LinearLayoutManager(context));
         holder.rv_content.setLayoutManager(new StaggeredGridLayoutManager(
                 CALENDARITEMROW,StaggeredGridLayoutManager.HORIZONTAL));
+
+
+
+
+        // Set
+        Date currentTime = Calendar.getInstance().getTime();
+        Date givenTime = Calendar.getInstance().getTime();
+        int houre =  Integer.parseInt(title.substring(11, title.length()-16));
+        int min =  Integer.parseInt(title.substring(14, title.length()-13));
+        givenTime.setHours(houre);
+        givenTime.setMinutes(min);
+
+        if(givenTime.before(currentTime)) {
+            holder.iv_background_bottom.setVisibility(View.VISIBLE);
+            holder.iv_background_top.setVisibility(View.VISIBLE);
+            lastPosition = position+1;
+        } else {
+            holder.iv_background_bottom.setVisibility(View.INVISIBLE);
+            holder.iv_background_top.setVisibility(View.INVISIBLE);
+
+            // make iv_background_top for in currentTime CalendarItem visible
+            givenTime.setMinutes(min-15);
+            if(givenTime.before(currentTime))holder.iv_background_top.setVisibility(View.VISIBLE);
+        }
+
 
     }
 

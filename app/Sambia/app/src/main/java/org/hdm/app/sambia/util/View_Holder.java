@@ -49,6 +49,8 @@ public class View_Holder extends RecyclerView.ViewHolder implements
     public int count = 0;
     private String titleText;
     private long countt;
+    public ImageView iv_background_bottom;
+    public ImageView iv_background_top;
 
     /************** Constructors ******************/
 
@@ -104,6 +106,8 @@ public class View_Holder extends RecyclerView.ViewHolder implements
     private void initCalendarLayout(CalendarListAdapter calendarListAdapter) {
         title = (TextView) itemView.findViewById(R.id.title);
         rv_content = (RecyclerView) itemView.findViewById(R.id.rv_calender_item_content);
+        iv_background_bottom = (ImageView) itemView.findViewById(R.id.iv_background_bottom);
+        iv_background_top = (ImageView) itemView.findViewById(R.id.iv_background_top);
     }
 
 

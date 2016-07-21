@@ -37,6 +37,9 @@ public class MainActivity extends Activity  {
      */
     private boolean hasIcon = false;
 
+    int startMin = 0;
+    int startHour = 6;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,12 +121,12 @@ public class MainActivity extends Activity  {
 
         Calendar cal = Calendar.getInstance();
         Date time = cal.getTime();
-        int i = 0;
+
 
         // Reset Time to 00:00:00
-        time.setHours(i);
-        time.setMinutes(i);
-        time.setSeconds(i);
+        time.setHours(startHour);
+        time.setMinutes(startMin);
+        time.setSeconds(startMin);
 
 
         // Set Calendar with reseted time
@@ -132,9 +135,9 @@ public class MainActivity extends Activity  {
 
         Calendar calEndTime = Calendar.getInstance();
         Date endTime = calEndTime.getTime();
-        endTime.setHours(i);
-        endTime.setMinutes(i);
-        endTime.setSeconds(i);
+        endTime.setHours(startMin);
+        endTime.setMinutes(startMin);
+        endTime.setSeconds(startMin);
         calEndTime.setTime(endTime);
         calEndTime.add(Calendar.DAY_OF_WEEK, 1);
         calEndTime.add(Calendar.MINUTE, -15);
@@ -145,8 +148,9 @@ public class MainActivity extends Activity  {
             time = cal.getTime();
             Log.d(TAG, "startTime "+  time);
             ActivityManager.getInstance().setCalenderMapEntry(time, null);
+            // add 15 minutes to setTime
             cal.add(Calendar.MINUTE, 15);
-            i++;
+            startMin++;
         }
     }
 
