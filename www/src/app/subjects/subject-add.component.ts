@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgForm } from '@angular/common';
 
 import { SubjectService } from '../shared/services/subject.service';
@@ -16,13 +17,16 @@ export class SubjectAddComponent implements OnInit {
   subjectModel = new Subject();
   educationArray = ['Student', 'Farmer'];
 
-  constructor(private subjectService: SubjectService) {}
+  constructor(
+    private router: Router,
+    private subjectService: SubjectService
+  ) {}
 
   onSubmit() {
     this.subjectService.postSubject(this.subjectModel)
       .subscribe(
         result => {
-          console.log(result);
+          this.router.navigate(['/subjects']);
         },
         error => {
           console.log(error);

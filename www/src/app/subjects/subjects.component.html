@@ -3,7 +3,9 @@
 
   <!-- Search -->
   <div class="table-bar-search">
-    <input type="text" name="searchFilter" placeholder="Suche" class="z0">
+    <input type="text" name="searchFilter" placeholder="Suche" class="z0"
+      (keypress)="searchFilter()"
+      [(ngModel)]="searchTerm">
     <button type="button" name="button" class="z0">
       <i class="zmdi zmdi-search"></i>
     </button>
@@ -40,14 +42,14 @@
     <td>Household</td>
     <td>Education</td>
     <td>Tribe</td>
-    <td>
+    <!--<td>
       Land Owned
       <span>(m2)</span>
     </td>
     <td>
       Land Cultivated
       (m2)
-    </td>
+    </td>-->
     <!--<td>Crops</td>
     <td>Work</td>-->
     <td>
@@ -84,12 +86,12 @@
     <td>
       {{ subject.tribe }}
     </td>
-    <td>
+    <!--<td>
       {{ subject.landOwned }}
     </td>
     <td>
       {{ subject.landCultivated }}
-    </td>
+    </td>-->
     <!--<td>Crops</td>
     <td>Work</td>-->
     <td>
