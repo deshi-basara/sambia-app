@@ -1,2 +1,103 @@
 @import "../shared/globals";
 @import "../shared/tables";
+
+.status-indicator {
+
+  .status-indicator-item {
+    height: 140px;
+    padding: 25px;
+    cursor: pointer;
+
+    transition: all 0.5s ease-in-out;
+
+    &:hover {
+      box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18),0 4px 15px 0 rgba(0,0,0,0.15);
+    }
+
+    &.status-green {
+      .status-indicator-item-headline-count {
+        color: $green;
+      }
+      .status-indicator-item-progress-count {
+        background-color: $green;
+      }
+    }
+
+    &.status-blue {
+      .status-indicator-item-headline-count {
+        color: $blue;
+      }
+      .status-indicator-item-progress-count {
+        background-color: $blue;
+      }
+    }
+
+    &.status-yellow {
+      .status-indicator-item-headline-count {
+        color: $yellow;
+      }
+      .status-indicator-item-progress-count {
+        background-color: $yellow;
+      }
+    }
+
+    &.status-red {
+      .status-indicator-item-headline-count {
+        color: $red;
+      }
+      .status-indicator-item-progress-count {
+        background-color: $red;
+      }
+    }
+
+    .status-indicator-item-headline-name {
+      display: block;
+      font-family: $font-secondary;
+
+      i {
+        color: $grey;
+      }
+
+      div {
+        font-size: 19px;
+      }
+    }
+
+    .status-indicator-item-headline-count {
+      text-align: right;
+      font-size: 57px;
+      font-weight: 300;
+    }
+  }
+
+  .status-indicator-item-progress {
+    margin-top: 10px;
+    height: 10px;
+    width: 100%;
+    border-radius: 3px;
+    overflow: hidden;
+
+    .status-indicator-item-progress-count {
+      width: 0%;
+      height: 100%;
+
+      transition: all 1s ease-in-out;
+
+      span {
+        visibility: hidden;
+      }
+    }
+  }
+}
+
+.status-data {
+  margin-top: 25px;
+  padding: 25px;
+
+  h4 {
+    margin-top: 0px;
+    font-family: $font-secondary;
+    font-weight: 500;
+    font-size: 19px;
+  }
+}
