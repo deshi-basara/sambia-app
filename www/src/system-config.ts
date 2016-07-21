@@ -7,11 +7,19 @@
  **********************************************************************************************/
 /** Map relative paths to URLs. */
 const map: any = {
-  '@angular2-material': 'vendor/@angular2-material'
+  '@angular2-material': 'vendor/@angular2-material',
+  'chartist': 'vendor/chartist/dist/chartist.js',
+  'angular2-chartist': 'vendor/angular2-chartist/dist/angular2-chartist.js'
 };
 
 /** User packages configuration. */
 const packages: any = {
+  'chartist': {
+    format: 'cjs'
+  },
+  'angular2-chartist': {
+    format: 'cjs'
+  }
 };
 
 // material packages
