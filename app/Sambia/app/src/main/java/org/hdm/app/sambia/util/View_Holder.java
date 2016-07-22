@@ -15,6 +15,7 @@ import org.hdm.app.sambia.adapter.CalendarListItemAdapter;
 import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.datastorage.ActivityManager;
 import org.hdm.app.sambia.datastorage.ActivityObject;
+import org.hdm.app.sambia.listener.EditableListener;
 import org.hdm.app.sambia.listener.ViewHolderListener;
 
 import java.util.Calendar;
@@ -35,9 +36,9 @@ public class View_Holder extends RecyclerView.ViewHolder implements
 
 
     private ViewHolderListener listener;
+    private EditableListener editListener;
+
     public RecyclerView rv_content;
-
-
     public  CardView cv;
     private ImageView iv_play;
     public  TextView title;
@@ -108,6 +109,7 @@ public class View_Holder extends RecyclerView.ViewHolder implements
         rv_content = (RecyclerView) itemView.findViewById(R.id.rv_calender_item_content);
         iv_background_bottom = (ImageView) itemView.findViewById(R.id.iv_background_bottom);
         iv_background_top = (ImageView) itemView.findViewById(R.id.iv_background_top);
+        cv = (CardView) itemView.findViewById(R.id.cardView);
     }
 
 
@@ -157,6 +159,36 @@ public class View_Holder extends RecyclerView.ViewHolder implements
         }
     }
 
+
+
+
+    public void setCalendarItemBackground(boolean editable) {
+
+        if(editable) {
+
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+                // below lollipop
+                cv.setCardBackgroundColor(Color.RED);
+            } else {
+                // lollipop and above
+                cv.setCardBackgroundColor(cv.getResources().getColor(R.color.red));
+            }
+        } else {
+
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+                // below lillipop
+                cv.setCardBackgroundColor(Color.GRAY);
+            } else {
+                // lollipop and above
+                cv.setCardBackgroundColor(cv.getResources().getColor(R.color.gray));
+            }
+        }
+
+    }
+
+
+
+
     private void stopCount() {
 
         if(timer != null) timer.cancel();
@@ -201,9 +233,6 @@ public class View_Holder extends RecyclerView.ViewHolder implements
     
 
     /******************* Listener **************************/
-
-
-
     // reference parent listener
     public void setListener(ViewHolderListener listener) {
         this.listener = listener;
@@ -214,6 +243,8 @@ public class View_Holder extends RecyclerView.ViewHolder implements
     // Listener Interface with parent class
     @Override
     public void onClick(View v) {
+        Log.d(TAG, "ttt " + title.getText());
+
         if(listener!= null) listener.didClickOnView(v, title.getText().toString(), this);
     }
 
@@ -223,5 +254,6 @@ public class View_Holder extends RecyclerView.ViewHolder implements
         if(listener != null) listener.didLongClickOnView(v, title.getText().toString(), this);
         return false;
     }
+
 
 }

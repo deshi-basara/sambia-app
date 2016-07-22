@@ -10,9 +10,6 @@ public class TimeFrame {
     public Date startTime;
     public Date endTime;
     public String workingStyle = null;
-    public float[] gpsPosition;
-
-
 
     public TimeFrame(Date startTime, Date endTime, String workingStyle) {
         this.startTime = startTime;

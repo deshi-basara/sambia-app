@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
 
     setTimeout(() => {
-      this.userCount = 22;
+      this.userCount = 4;
       this.apiCount = 42;
       this.dataCount = 50;
       this.requestCount = 10;

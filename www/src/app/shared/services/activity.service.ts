@@ -110,7 +110,7 @@ export class ActivityService {
         // parse activity items and extract items
         let itemArray: Item[] = [];
         for (let i = 0; i < currentActivityData.items.length; i++) {
-          let currentItemData = currentActivityData.items[0];
+          let currentItemData = currentActivityData.items[i];
 
           let currentItem = new Item(
             '',

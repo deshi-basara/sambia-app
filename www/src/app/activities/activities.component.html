@@ -54,7 +54,11 @@
       <span *ngFor="let activity of group.activities">{{ activity.name }}</span>
     </td>
     <td>
-      <span *ngFor="let item of group.activities[i].items">{{ item.name }}</span>
+      <span *ngFor="let activity of group.activities">
+        <span *ngFor="let item of activity.items">
+          {{ item.name }}
+        </span>
+      </span>
     </td>
     <td>
       <i class="zmdi zmdi-check-circle" *ngIf="group.enabled"></i>

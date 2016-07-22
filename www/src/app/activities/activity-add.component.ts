@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { ActivityService } from '../shared/services/activity.service';
 import { ImageUpload } from '../shared/directives/image-upload.directive';
@@ -40,6 +41,7 @@ export class ActivityAddComponent implements OnInit {
   );
 
   constructor(
+    private router: Router,
     private activityService: ActivityService
   ) { }
 
@@ -58,7 +60,7 @@ export class ActivityAddComponent implements OnInit {
     this.activityService.postActivityGroup(this.groupModel)
       .subscribe(
         activityGroup => {
-          console.log(activityGroup);
+          this.router.navigate(['/activities']);
         },
         error => {
           console.log(error);

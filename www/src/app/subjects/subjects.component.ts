@@ -18,6 +18,7 @@ import { Subject } from './subject';
   ]
 })
 export class SubjectsComponent implements OnInit {
+  searchTerm: string;
   subjects: Subject[];
 
   constructor(
@@ -36,8 +37,18 @@ export class SubjectsComponent implements OnInit {
     );
   }
 
+  /**
+   * Is called when a subject in the table is clicked.
+   * Routes to the subject-detail view.
+   *
+   * @param  {string} _id [MongoDB-subject-id]
+   */
   openSubject(_id: string) {
     this.router.navigate(['/subject', _id]);
+  }
+
+  searchFilter() {
+    console.log(this.searchTerm);
   }
 
 

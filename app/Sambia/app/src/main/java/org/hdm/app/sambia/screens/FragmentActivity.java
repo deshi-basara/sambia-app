@@ -158,6 +158,8 @@ public class FragmentActivity extends BaseFragemnt implements
 
             event.setActiveObject(activityObject);
         } else  {
+
+
             // Deactivate Activity
             activityObject.activeState = false;
             activityObject.count = 0;
@@ -181,7 +183,7 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
 
-        // Store edited Daata back in DaataManager
+        // Store edited Data back in DataManager
         event.setActivityObject(activityObject);
 
 
@@ -253,6 +255,8 @@ public class FragmentActivity extends BaseFragemnt implements
                 currentDate.setMinutes(currentMin);
                 cal.setTime(currentDate);
                 currentDate = cal.getTime();
+
+                if(DEBUGMODE) Log.d(TAG, "currentDate " + currentDate);
 
                 // save once current activityTitle in map
                 event.setCalenderMapEntry(currentDate, activityObject.title);

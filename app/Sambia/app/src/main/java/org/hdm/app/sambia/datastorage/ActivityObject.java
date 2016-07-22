@@ -32,6 +32,9 @@ public class ActivityObject extends Object{
     public Date endTime;
     public int count = 0;
 
+
+
+
     public ActivityObject() {
         timeFrameList = new ArrayList<>();
     }
@@ -54,9 +57,4 @@ public class ActivityObject extends Object{
         this.subCategoryName = "";
     }
 
-
-    //ToDo make this nice
-    public ArrayList get(String objects) {
-        return new ArrayList();
-    }
 }

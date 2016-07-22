@@ -1,12 +1,16 @@
 package org.hdm.app.sambia.datastorage;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.TreeMap;
+
+import static org.hdm.app.sambia.util.Consts.CALENDARITEMROW;
+import static org.hdm.app.sambia.util.Consts.DEBUGMODE;
 
 /**
  * Created by Hannes on 06.05.2016.
@@ -33,7 +37,8 @@ public class ActivityManager {
     // In this map is stored the activitys for Calender list
     private TreeMap<String, ArrayList<String>> calenderMap = new TreeMap<>();
 
-
+    // Editable Flag in Calendar Screen
+    public boolean editable = false;
 
 
 
@@ -206,6 +211,25 @@ public class ActivityManager {
     }
 
 
+
+    public boolean deleteCalenderMapEntry(String key, String activity){
+
+        if(key != null && activity != null) {
+
+            if(calenderMap.containsKey(key)) {
+                ArrayList<String> list = calenderMap.get(key);
+                if(DEBUGMODE) Log.d(TAG, "listSize before: " + list.size() + " " + list.toString());
+
+
+                if(list.remove(activity)){
+                    if(DEBUGMODE) Log.d(TAG, "listSize after: " + list.size() + " " + list.toString());
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 
     public TreeMap<String, ArrayList<String>> getCalendarMap() {
         return calenderMap;

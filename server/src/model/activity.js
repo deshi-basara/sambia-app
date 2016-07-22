@@ -14,7 +14,7 @@ const ActivitySchema = new mongoose.Schema({
   },
   translation: {
     type: String,
-    required: true,
+    required: false,
     default: '',
   },
   image: {

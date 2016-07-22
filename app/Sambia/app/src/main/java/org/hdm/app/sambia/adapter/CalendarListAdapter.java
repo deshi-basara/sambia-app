@@ -48,7 +48,6 @@ public class CalendarListAdapter extends RecyclerView.Adapter<View_Holder> imple
     private CalendarListItemAdapter resAdapter;
 
 
-
     public CalendarListAdapter(Activity activity, LinkedHashMap data, TreeMap calendar) {
         this.context = activity;
         this.data = data;
@@ -79,17 +78,23 @@ public class CalendarListAdapter extends RecyclerView.Adapter<View_Holder> imple
         holder.setListener(this);
 
         // Display only Hours and Minutes
+        String titleText = title.substring(14, title.length()-13);
+
+        if(!titleText.contains("00")){
+            holder.title.setText("   " + title.substring(14, title.length()-13));
+        } else {
+
         holder.title.setText(title.substring(11, title.length()-13));
+        }
 
         // Init RowItemContent
         resAdapter = new CalendarListItemAdapter(context, data, (ArrayList) calendarMap.get(title));
         resAdapter.setListener(this);
+        resAdapter.time = list.get(position).toString();
         holder.rv_content.setAdapter(resAdapter);
         holder.rv_content.setLayoutManager(new LinearLayoutManager(context));
         holder.rv_content.setLayoutManager(new StaggeredGridLayoutManager(
                 CALENDARITEMROW,StaggeredGridLayoutManager.HORIZONTAL));
-
-
 
 
         // Set
@@ -165,7 +170,6 @@ public class CalendarListAdapter extends RecyclerView.Adapter<View_Holder> imple
 
     @Override
     public void didClickOnView(View view, String s, View_Holder view_holder) {
-
     }
 
 
@@ -187,7 +191,8 @@ public class CalendarListAdapter extends RecyclerView.Adapter<View_Holder> imple
 
 
     @Override
-    public void didOnClick(int position, String s, View_Holder holder) {
-            Log.d(TAG, "didONCLICK " + position + " " + s);
+    public void didOnClick(String time, String s, View_Holder holder) {
+        if(listener!= null) listener.didOnClick(time, s, holder);
     }
+
 }

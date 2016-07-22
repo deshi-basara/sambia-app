@@ -33,6 +33,8 @@
         android:paddingLeft="10dp"
         android:text="Title"
         android:textSize="18sp"
+        android:gravity="right"
+        android:paddingRight="10dp"
         />
 
 
