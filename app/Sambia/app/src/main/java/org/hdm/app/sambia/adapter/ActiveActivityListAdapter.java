@@ -24,13 +24,11 @@ public class ActiveActivityListAdapter extends RecyclerView.Adapter<View_Holder>
 
 
     public List<ActivityObject> list = null;
-    FragmentActivity fr;
     private ActiveActivityListOnClickListener listener;
 
 
 
     public ActiveActivityListAdapter(FragmentActivity fragmentActivity, List<ActivityObject> activityObject) {
-        fr = fragmentActivity;
         this.list = activityObject;
     }
 
