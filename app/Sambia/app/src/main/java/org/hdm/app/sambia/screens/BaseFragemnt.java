@@ -24,8 +24,8 @@ public class BaseFragemnt extends Fragment implements
     private String TAG = "BaseFragment";
 
 
-    private MainListener listener;
-    private MenuView menuView;
+    public MainListener listener;
+    public MenuView menuView;
     public ActivityManager event = ActivityManager.getInstance();
 
 
@@ -58,6 +58,7 @@ public class BaseFragemnt extends Fragment implements
 
     @Override
     public void mClickInteraction(View v) {
+        if(event.editable) event.editable = false;
         this.listener.flip();
     }
 

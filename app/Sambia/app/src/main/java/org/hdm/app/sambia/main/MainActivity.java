@@ -147,7 +147,7 @@ public class MainActivity extends Activity  {
         while(time.before(endTime)) {
             time = cal.getTime();
             Log.d(TAG, "startTime "+  time);
-            ActivityManager.getInstance().setCalenderMapEntry(time, null);
+            ActivityManager.getInstance().setCalenderMapEntry(time.toString(), null);
             // add 15 minutes to setTime
             cal.add(Calendar.MINUTE, 15);
             startMin++;

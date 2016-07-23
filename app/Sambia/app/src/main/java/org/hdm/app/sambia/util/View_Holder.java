@@ -7,6 +7,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -52,6 +53,10 @@ public class View_Holder extends RecyclerView.ViewHolder implements
     private long countt;
     public ImageView iv_background_bottom;
     public ImageView iv_background_top;
+    public Button btn_add;
+
+    Date startDate;
+    public String id ="";
 
     /************** Constructors ******************/
 
@@ -110,6 +115,8 @@ public class View_Holder extends RecyclerView.ViewHolder implements
         iv_background_bottom = (ImageView) itemView.findViewById(R.id.iv_background_bottom);
         iv_background_top = (ImageView) itemView.findViewById(R.id.iv_background_top);
         cv = (CardView) itemView.findViewById(R.id.cardView);
+        btn_add = (Button) itemView.findViewById((R.id.btn_calendar_row_add));
+        btn_add.setOnClickListener(this);
     }
 
 
@@ -190,11 +197,10 @@ public class View_Holder extends RecyclerView.ViewHolder implements
 
 
     private void stopCount() {
-
         if(timer != null) timer.cancel();
     }
 
-    Date startDate;
+
 
     private void runCount() {
         ActivityObject object = ActivityManager.getInstance().getActivityObject(title.getText().toString());
@@ -243,9 +249,9 @@ public class View_Holder extends RecyclerView.ViewHolder implements
     // Listener Interface with parent class
     @Override
     public void onClick(View v) {
-        Log.d(TAG, "ttt " + title.getText());
-
+        Log.d(TAG, "ttt " + title.getText()+ " " + v.getId() + " " + listener);
         if(listener!= null) listener.didClickOnView(v, title.getText().toString(), this);
+
     }
 
 
@@ -254,6 +260,7 @@ public class View_Holder extends RecyclerView.ViewHolder implements
         if(listener != null) listener.didLongClickOnView(v, title.getText().toString(), this);
         return false;
     }
+
 
 
 }

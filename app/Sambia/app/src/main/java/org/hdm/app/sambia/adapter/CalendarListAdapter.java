@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.hdm.app.sambia.R;
+import org.hdm.app.sambia.datastorage.ActivityManager;
 import org.hdm.app.sambia.datastorage.ActivityObject;
 import org.hdm.app.sambia.listener.CalendarItemOnClickListener;
 import org.hdm.app.sambia.listener.ViewHolderListener;
@@ -42,6 +43,7 @@ public class CalendarListAdapter extends RecyclerView.Adapter<View_Holder> imple
     private View v;
     int lastPosition = 0;
 
+    private ActivityManager manager = ActivityManager.getInstance();
 
 
 
@@ -75,6 +77,7 @@ public class CalendarListAdapter extends RecyclerView.Adapter<View_Holder> imple
         //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
 
         String title = list.get(position).toString();
+        holder.id = title;
         holder.setListener(this);
 
         // Display only Hours and Minutes
@@ -95,6 +98,12 @@ public class CalendarListAdapter extends RecyclerView.Adapter<View_Holder> imple
         holder.rv_content.setLayoutManager(new LinearLayoutManager(context));
         holder.rv_content.setLayoutManager(new StaggeredGridLayoutManager(
                 CALENDARITEMROW,StaggeredGridLayoutManager.HORIZONTAL));
+
+        if(manager.editable) {
+            if (holder.btn_add != null) holder.btn_add.setVisibility(View.VISIBLE);
+        } else {
+            if (holder.btn_add != null) holder.btn_add.setVisibility(View.GONE);
+        }
 
 
         // Set
@@ -117,8 +126,6 @@ public class CalendarListAdapter extends RecyclerView.Adapter<View_Holder> imple
             givenTime.setMinutes(min-15);
             if(givenTime.before(currentTime))holder.iv_background_top.setVisibility(View.VISIBLE);
         }
-
-
     }
 
 
@@ -169,7 +176,9 @@ public class CalendarListAdapter extends RecyclerView.Adapter<View_Holder> imple
 
 
     @Override
-    public void didClickOnView(View view, String s, View_Holder view_holder) {
+    public void didClickOnView(View view, String s, View_Holder holder) {
+        Log.d(TAG, "holder " + holder.id);
+        if(listener!= null) listener.didOnClickAddBtn(holder);
     }
 
 
@@ -192,7 +201,14 @@ public class CalendarListAdapter extends RecyclerView.Adapter<View_Holder> imple
 
     @Override
     public void didOnClick(String time, String s, View_Holder holder) {
+        Log.d(TAG, "holder " + holder.id);
         if(listener!= null) listener.didOnClick(time, s, holder);
     }
 
+
+
+    @Override
+    public void didOnClickAddBtn(View_Holder holder) {
+
+    }
 }

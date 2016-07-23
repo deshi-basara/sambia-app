@@ -39,10 +39,7 @@ public class ActivityManager {
 
     // Editable Flag in Calendar Screen
     public boolean editable = false;
-
-
-
-
+    public String selectedTime = "";
 
 
     public boolean createActivityObject(String name, ActivityObject activityObject) {
@@ -187,12 +184,13 @@ public class ActivityManager {
 
 
 
-    public boolean setCalenderMapEntry(Date date, String activity) {
+
+
+    public boolean setCalenderMapEntry(String key, String activity) {
 
         // check if key is not null
-        if (date != null) {
+        if (key != null) {
             ArrayList<String> list = null;
-            String key = date.toString();
 
             if(activity != null && calenderMap.containsKey(key)) {
                 list = calenderMap.get(key);
@@ -200,15 +198,16 @@ public class ActivityManager {
                 if(list.contains(activity)) return true;
                 list.add(activity);
             } else {
-               list = new ArrayList<String>();
+                list = new ArrayList<String>();
             }
             calenderMap.put(key, list);
-          //  Log.d(TAG, "key " + key.toString() + " // value: " + calenderMap.get(key).toString());
+            //  Log.d(TAG, "key " + key.toString() + " // value: " + calenderMap.get(key).toString());
             return true;
         } else {
             return false;
         }
     }
+
 
 
 

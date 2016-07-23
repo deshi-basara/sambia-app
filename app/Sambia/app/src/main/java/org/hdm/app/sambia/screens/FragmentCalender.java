@@ -75,7 +75,6 @@ public class FragmentCalender extends BaseFragemnt implements
            @Override
            public void onPause() {
                super.onPause();
-               lastFirstVisiblePosition = ((LinearLayoutManager)rv_calender.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
            }
 
 
@@ -86,10 +85,7 @@ public class FragmentCalender extends BaseFragemnt implements
         setMenuTitle(TAG);
         setMenuBackground(android.R.color.holo_blue_light);
         setMenuBtn(R.drawable.ic_back);
-
-        scrollListToCurrentTime();
-//      ((LinearLayoutManager) rv_calender.getLayoutManager()).scrollToPosition(lastFirstVisiblePosition);
-
+        if(!manager.editable) scrollListToCurrentTime();
     }
 
 
@@ -104,8 +100,7 @@ public class FragmentCalender extends BaseFragemnt implements
         rv_calender = (RecyclerView) view.findViewById(R.id.rv_calender);
         rv_calender.setAdapter(adapter);
         rv_calender.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-//        rv_calender.getLayoutManager().scrollToPosition(lastFirstVisiblePosition);
+        scrollListToCurrentTime();
     }
 
 
@@ -114,25 +109,36 @@ public class FragmentCalender extends BaseFragemnt implements
 
     @Override
     public void didOnClick(String time, String s, View_Holder holder) {
+
+        if(DEBUGMODE) Log.d(TAG, "holder " + time + " // String " + s  + " " + holder.id);
+
         if(manager.editable){
-            if(DEBUGMODE) Log.d(TAG, "time " + time + " // String " + s );
-
-
-
             // Delete Entry in CalendarMap
             event.deleteCalenderMapEntry(time, s);
-
 
             // Delete Entry in ActivityObject TimeFrame
             // ToDo Discuss if the TimeFrameList is realy helpful - better way CalendarMap?
             ArrayList<TimeFrame> list = event.getActivityObject(s).timeFrameList;
             if(DEBUGMODE) Log.d(TAG, "activity " + list.size());
-
         }
     }
 
 
-    // FloatingActionButton Listener
+
+
+
+           @Override
+           public void didOnClickAddBtn(View_Holder holder) {
+               if(DEBUGMODE) Log.d(TAG, "holder " + holder.id);
+               manager.selectedTime = holder.id;
+               listener.flip();
+           }
+
+
+
+
+
+           // FloatingActionButton Listener
     @Override
     public void onClick(View v) {
         lastFirstVisiblePosition = ((LinearLayoutManager)rv_calender.getLayoutManager()).findFirstVisibleItemPosition();
@@ -158,10 +164,6 @@ public class FragmentCalender extends BaseFragemnt implements
         int hour = currentTime.getHours();
         if(hour>=7) hour = hour*3-8;
         rv_calender.scrollToPosition(hour);
-
-
-//        lastFirstVisiblePosition = ((LinearLayoutManager)rv_calender.getLayoutManager()).findFirstVisibleItemPosition();
-//        rv_calender.getLayoutManager().scrollToPosition(lastFirstVisiblePosition);
     }
 
 }

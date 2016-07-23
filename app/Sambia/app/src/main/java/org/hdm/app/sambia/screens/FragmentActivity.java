@@ -19,7 +19,6 @@ import org.hdm.app.sambia.listener.ActiveActivityListOnClickListener;
 import org.hdm.app.sambia.listener.ActivityListOnClickListener;
 import org.hdm.app.sambia.adapter.ActivityListAdapter;
 import org.hdm.app.sambia.adapter.ActiveActivityListAdapter;
-import org.hdm.app.sambia.util.SimpleDividerItemDecoration;
 import org.hdm.app.sambia.util.View_Holder;
 
 import java.util.ArrayList;
@@ -69,16 +68,19 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
 
-
     @Override
     public void onResume() {
-        if(DEBUGMODE) Log.d(TAG, "onResume");
         super.onResume();
-        setMenuTitle("Activity");
-        setMenuBackground(android.R.color.holo_green_dark);
-        setMenuBtn(R.drawable.ic_forward);
+        editableMode();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+
+    /******************* Life Cycle Ende ***********************/
 
 
 
@@ -97,20 +99,12 @@ public class FragmentActivity extends BaseFragemnt implements
     }
 
 
-
-
     private void initActivityList() {
 
         activityObject = new ArrayList<>(event.getActivityMap().values());
         adapter = new ActivityListAdapter(this, activityObject);
         adapter.setListener(this);
-
-        SimpleDividerItemDecoration divider =  new SimpleDividerItemDecoration(
-                getActivity().getApplication());
-
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_list);
-//        recyclerView.addItemDecoration(divider);
-
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(
@@ -118,9 +112,12 @@ public class FragmentActivity extends BaseFragemnt implements
     }
 
 
+    /******************* Init Ende ***********************/
 
 
-    // Listener from the ActivitysList
+
+
+    // Listener from the ActivityList
     @Override
     public void didClickOnActivityListItem(String title, View_Holder holder) {
 
@@ -131,16 +128,20 @@ public class FragmentActivity extends BaseFragemnt implements
         ActivityObject activityObject = event.getActivityObject(title);
 
 
-        if(DEBUGMODE) {
-            Log.d(TAG, "title " + title);
-            Log.d(TAG, "Daata " + activityObject);
-        }
+        if(DEBUGMODE) Log.d(TAG, "title " + title +  "Daata " + activityObject);
+
+
+        if(event.editable){
+            event.setCalenderMapEntry(event.selectedTime, activityObject.title);
+            listener.flip();
+        } else {
+
 
 
 
         if(!activityObject.activeState){
 
-            // Show DialogFragment
+            // ToDo Show DialogFragment
 //            if(list.get(position).sub_category && list.get(position).activeState) {
 //                DFragment dFragment = new DFragment(dsata);
 //                FragmentManager fm = fr.getFragmentManager();
@@ -179,6 +180,8 @@ public class FragmentActivity extends BaseFragemnt implements
 
             // Save Time and subCategory in Dsata
             activityObject.saveTimeStamp();
+
+        }
         }
 
 
@@ -208,6 +211,7 @@ public class FragmentActivity extends BaseFragemnt implements
             Log.d(TAG, "activeCount " + activeCount);
             Log.d(TAG, "activeCount " + activeCount);
         }
+//       displayActiveActivityList();
     }
 
 
@@ -226,6 +230,12 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
     private void saveActivtyForCalenderContent(ActivityObject activityObject) {
+
+
+                if(event.editable) {
+                    event.setCalenderMapEntry(event.selectedTime, activityObject.title);
+                } else {
+
 
 
 
@@ -259,7 +269,7 @@ public class FragmentActivity extends BaseFragemnt implements
                 if(DEBUGMODE) Log.d(TAG, "currentDate " + currentDate);
 
                 // save once current activityTitle in map
-                event.setCalenderMapEntry(currentDate, activityObject.title);
+                event.setCalenderMapEntry(currentDate.toString(), activityObject.title);
 
                 // Debugging
                 if(DEBUGMODE) {
@@ -275,7 +285,7 @@ public class FragmentActivity extends BaseFragemnt implements
                     cal.setTime(currentDate);
                     cal.add(Calendar.MINUTE, 15);
                     currentDate = cal.getTime();
-                    event.setCalenderMapEntry(currentDate, activityObject.title);
+                    event.setCalenderMapEntry(currentDate.toString(), activityObject.title);
                     if(DEBUGMODE) {
                         Log.d(TAG, "currentTime " + currentDate.toString() + "Title " + activityObject.title);
                     }
@@ -287,5 +297,56 @@ public class FragmentActivity extends BaseFragemnt implements
                                 + " " + activityObject.startTime.getHours()
                                 + " " + activityObject.startTime.getMinutes());
                 }
+                }
             }
+
+
+
+    // In this mode the user only sees a list of activitys
+    // when he selects one than screens flip back to calendar screen
+    private void editableMode() {
+
+//        displayActiveActivityList();
+        displayMenuView();
+    }
+
+
+
+
+
+
+
+    private void displayActiveActivityList() {
+        if(event.editable || activeCount<1) {
+            recyclerView_activeData.animate()
+                    .translationY(-200)
+                    .setDuration(3000);
+            recyclerView_activeData.setVisibility(View.GONE);
+
+        } else {
+
+            recyclerView_activeData.setVisibility(View.VISIBLE);
+            recyclerView_activeData.animate()
+                    .translationY(0)
+                    .setDuration(300);
+
+        }
+    }
+
+
+    private void displayMenuView() {
+
+        if(event.editable) {
+            menuView.setVisibility(View.GONE);
+            recyclerView_activeData.setVisibility(View.GONE);
+        } else {
+            menuView.setVisibility(View.VISIBLE);
+            recyclerView_activeData.setVisibility(View.VISIBLE);
+
+            setMenuTitle("Activity");
+            setMenuBackground(android.R.color.holo_green_dark);
+            setMenuBtn(R.drawable.ic_forward);
+        }
+    }
+
 }
