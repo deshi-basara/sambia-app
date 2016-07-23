@@ -4,24 +4,21 @@ package org.hdm.app.sambia.screens;
  * Created by Hannes on 13.05.2016.
  */
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.OnScrollListener;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import org.hdm.app.sambia.R;
-import org.hdm.app.sambia.datastorage.ActivityManager;
+import org.hdm.app.sambia.datastorage.DataManager;
 import org.hdm.app.sambia.datastorage.TimeFrame;
 import org.hdm.app.sambia.listener.CalendarItemOnClickListener;
 import org.hdm.app.sambia.adapter.CalendarListAdapter;
+import org.hdm.app.sambia.util.Variables;
 import org.hdm.app.sambia.util.View_Holder;
 
 import static org.hdm.app.sambia.util.Consts.DEBUGMODE;
@@ -53,7 +50,9 @@ public class FragmentCalender extends BaseFragemnt implements
     private FloatingActionButton fab_calendar;
     private int overallXScroll;
     private int lastFirstVisiblePosition = 0;
-    private ActivityManager manager = ActivityManager.getInstance();
+
+    private DataManager manager = DataManager.getInstance();
+    public Variables var = Variables.getInstance();
 
 
     @Override
@@ -85,7 +84,7 @@ public class FragmentCalender extends BaseFragemnt implements
         setMenuTitle(TAG);
         setMenuBackground(android.R.color.holo_blue_light);
         setMenuBtn(R.drawable.ic_back);
-        if(!manager.editable) scrollListToCurrentTime();
+        if(!var.editable) scrollListToCurrentTime();
     }
 
 
@@ -93,8 +92,8 @@ public class FragmentCalender extends BaseFragemnt implements
 
 
     private void initCalenderList() {
-        data = event.getActivityMap();
-        calendar = event.getCalendarMap();
+        data = dataManager.getActivityMap();
+        calendar = dataManager.getCalendarMap();
         adapter = new CalendarListAdapter(getActivity(),data, calendar);
         adapter.setListener(this);
         rv_calender = (RecyclerView) view.findViewById(R.id.rv_calender);
@@ -112,13 +111,13 @@ public class FragmentCalender extends BaseFragemnt implements
 
         if(DEBUGMODE) Log.d(TAG, "holder " + time + " // String " + s  + " " + holder.id);
 
-        if(manager.editable){
+        if(var.editable){
             // Delete Entry in CalendarMap
-            event.deleteCalenderMapEntry(time, s);
+            dataManager.deleteCalenderMapEntry(time, s);
 
             // Delete Entry in ActivityObject TimeFrame
             // ToDo Discuss if the TimeFrameList is realy helpful - better way CalendarMap?
-            ArrayList<TimeFrame> list = event.getActivityObject(s).timeFrameList;
+            ArrayList<TimeFrame> list = dataManager.getActivityObject(s).timeFrameList;
             if(DEBUGMODE) Log.d(TAG, "activity " + list.size());
         }
     }
@@ -130,7 +129,7 @@ public class FragmentCalender extends BaseFragemnt implements
            @Override
            public void didOnClickAddBtn(View_Holder holder) {
                if(DEBUGMODE) Log.d(TAG, "holder " + holder.id);
-               manager.selectedTime = holder.id;
+               var.selectedTime = holder.id;
                listener.flip();
            }
 
@@ -143,12 +142,12 @@ public class FragmentCalender extends BaseFragemnt implements
     public void onClick(View v) {
         lastFirstVisiblePosition = ((LinearLayoutManager)rv_calender.getLayoutManager()).findFirstVisibleItemPosition();
 
-        if(manager.editable) {
-            manager.editable = false;
+        if(var.editable) {
+            var.editable = false;
             fab_calendar.setImageResource(android.R.drawable.ic_menu_edit);
 
         } else  {
-            manager.editable = true;
+            var.editable = true;
             fab_calendar.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
         }
         // Invalidate new

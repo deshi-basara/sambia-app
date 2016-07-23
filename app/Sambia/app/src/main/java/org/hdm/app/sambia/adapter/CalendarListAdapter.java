@@ -11,10 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.hdm.app.sambia.R;
-import org.hdm.app.sambia.datastorage.ActivityManager;
+import org.hdm.app.sambia.datastorage.DataManager;
 import org.hdm.app.sambia.datastorage.ActivityObject;
 import org.hdm.app.sambia.listener.CalendarItemOnClickListener;
 import org.hdm.app.sambia.listener.ViewHolderListener;
+import org.hdm.app.sambia.util.Variables;
 import org.hdm.app.sambia.util.View_Holder;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class CalendarListAdapter extends RecyclerView.Adapter<View_Holder> imple
     private View v;
     int lastPosition = 0;
 
-    private ActivityManager manager = ActivityManager.getInstance();
+    public Variables var = Variables.getInstance();
 
 
 
@@ -99,7 +100,7 @@ public class CalendarListAdapter extends RecyclerView.Adapter<View_Holder> imple
         holder.rv_content.setLayoutManager(new StaggeredGridLayoutManager(
                 CALENDARITEMROW,StaggeredGridLayoutManager.HORIZONTAL));
 
-        if(manager.editable) {
+        if(var.editable) {
             if (holder.btn_add != null) holder.btn_add.setVisibility(View.VISIBLE);
         } else {
             if (holder.btn_add != null) holder.btn_add.setVisibility(View.GONE);

@@ -14,9 +14,8 @@ import android.widget.TextView;
 import org.hdm.app.sambia.adapter.CalendarListAdapter;
 import org.hdm.app.sambia.adapter.CalendarListItemAdapter;
 import org.hdm.app.sambia.R;
-import org.hdm.app.sambia.datastorage.ActivityManager;
+import org.hdm.app.sambia.datastorage.DataManager;
 import org.hdm.app.sambia.datastorage.ActivityObject;
-import org.hdm.app.sambia.listener.EditableListener;
 import org.hdm.app.sambia.listener.ViewHolderListener;
 
 import java.util.Calendar;
@@ -37,7 +36,6 @@ public class View_Holder extends RecyclerView.ViewHolder implements
 
 
     private ViewHolderListener listener;
-    private EditableListener editListener;
 
     public RecyclerView rv_content;
     public  CardView cv;
@@ -61,77 +59,65 @@ public class View_Holder extends RecyclerView.ViewHolder implements
     /************** Constructors ******************/
 
 
+
+    // Called from the Adapter for the ActivityObjectList in Activity Screen
     public View_Holder(View v) {
         super(v);
         initActivityItemLayout();
-        initActivityItemListener();
     }
 
 
     public View_Holder(View v, CalendarListAdapter calendarListAdapter) {
         super(v);
-        initCalendarLayout(calendarListAdapter);
+        initCalendarLayout();
     }
+
 
     public View_Holder(View v, CalendarListItemAdapter calendarListItemAdapter) {
         super(v);
         initActivityItemLayout();
-        initActivityItemListener();
     }
 
 
+    /************** Constructors  End ******************/
 
 
 
 
     private void initActivityItemLayout() {
         cv = (CardView) itemView.findViewById(R.id.cardView);
-        imageView = (ImageView) itemView.findViewById(R.id.imageView);
         title = (TextView) itemView.findViewById(R.id.title);
+
+        imageView = (ImageView) itemView.findViewById(R.id.imageView);
         time = (TextView)itemView.findViewById(R.id.tv_time);
         iv_play = (ImageView) itemView.findViewById(R.id.iv_play);
         iv_play.setVisibility(View.GONE);
-
         titleText = title.getText().toString();
 
-    }
-
-
-
-    private void initActivityItemListener() {
         cv.setOnClickListener(this);
     }
 
-
-
-
-
-
-
-
-    private void initCalendarLayout(CalendarListAdapter calendarListAdapter) {
+    private void initCalendarLayout() {
+        cv = (CardView) itemView.findViewById(R.id.cardView);
         title = (TextView) itemView.findViewById(R.id.title);
+
         rv_content = (RecyclerView) itemView.findViewById(R.id.rv_calender_item_content);
         iv_background_bottom = (ImageView) itemView.findViewById(R.id.iv_background_bottom);
         iv_background_top = (ImageView) itemView.findViewById(R.id.iv_background_top);
-        cv = (CardView) itemView.findViewById(R.id.cardView);
         btn_add = (Button) itemView.findViewById((R.id.btn_calendar_row_add));
+
         btn_add.setOnClickListener(this);
     }
 
 
-
-
-    /**************** change view content ************************/
-
+    /************** Init  End ******************/
 
 
 
-    //Change CardView Background to transparent
-    public void setBackground(int value) {
-        if(cv!= null) cv.setBackgroundColor(cv.getResources().getColor(R.color.transparent));
-    }
 
+
+
+    // called from the Activity Screen Interaction
 
     // Change CardView Style of Activitys
     // Activity == active - green background / PlayIcon visible
@@ -139,7 +125,6 @@ public class View_Holder extends RecyclerView.ViewHolder implements
     public void setBackground(boolean state) {
 
         if(state) {
-
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
                 // below lollipop
                 cv.setCardBackgroundColor(Color.GREEN);
@@ -152,7 +137,6 @@ public class View_Holder extends RecyclerView.ViewHolder implements
             runCount();
 
         } else {
-
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
                 // below lillipop
                 cv.setCardBackgroundColor(Color.WHITE);
@@ -196,14 +180,15 @@ public class View_Holder extends RecyclerView.ViewHolder implements
 
 
 
-    private void stopCount() {
+    public void stopCount() {
         if(timer != null) timer.cancel();
     }
 
 
 
-    private void runCount() {
-        ActivityObject object = ActivityManager.getInstance().getActivityObject(title.getText().toString());
+    public void runCount() {
+
+        ActivityObject object = DataManager.getInstance().getActivityObject(title.getText().toString());
         startDate = object.startTime;
 
         timer = new Timer();
@@ -213,7 +198,9 @@ public class View_Holder extends RecyclerView.ViewHolder implements
             public void run() {
                 Date currentDate = Calendar.getInstance().getTime();
                 countt = (currentDate.getTime() - startDate.getTime())/1000;
-                        Log.d(TAG, "countt"  + countt);
+
+                Log.d(TAG, "countt"  + countt);
+
                 handler.post(new Runnable() {
                     public void run() {
 

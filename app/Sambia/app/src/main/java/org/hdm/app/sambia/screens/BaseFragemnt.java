@@ -8,9 +8,10 @@ import android.app.Fragment;
 import android.view.View;
 
 import org.hdm.app.sambia.R;
-import org.hdm.app.sambia.datastorage.ActivityManager;
+import org.hdm.app.sambia.datastorage.DataManager;
 import org.hdm.app.sambia.listener.MainListener;
 import org.hdm.app.sambia.listener.MenuListener;
+import org.hdm.app.sambia.util.Variables;
 import org.hdm.app.sambia.views.MenuView;
 
 /**
@@ -26,7 +27,8 @@ public class BaseFragemnt extends Fragment implements
 
     public MainListener listener;
     public MenuView menuView;
-    public ActivityManager event = ActivityManager.getInstance();
+    public DataManager dataManager = DataManager.getInstance();
+    public Variables var = Variables.getInstance();
 
 
 
@@ -58,7 +60,7 @@ public class BaseFragemnt extends Fragment implements
 
     @Override
     public void mClickInteraction(View v) {
-        if(event.editable) event.editable = false;
+        if(var.editable) var.editable = false;
         this.listener.flip();
     }
 

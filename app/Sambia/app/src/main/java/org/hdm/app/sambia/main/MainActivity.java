@@ -1,11 +1,7 @@
 package org.hdm.app.sambia.main;
 
 import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
@@ -13,11 +9,9 @@ import android.view.WindowManager;
 
 import org.hdm.app.sambia.IntroActivity;
 import org.hdm.app.sambia.R;
-import org.hdm.app.sambia.datastorage.ActivityObject;
-import org.hdm.app.sambia.datastorage.ActivityManager;
+import org.hdm.app.sambia.datastorage.DataManager;
 import org.hdm.app.sambia.tasks.PullUpdatesTask;
 import org.hdm.app.sambia.util.FileLoader;
-import org.hdm.app.sambia.util.MyJsonParser;
 import org.hdm.app.sambia.util.Settings;
 
 import java.util.Calendar;
@@ -92,28 +86,23 @@ public class MainActivity extends Activity  {
 
     private void initConfiguration() {
 
-        // One and only int of ActivityManager
-        ActivityManager.init();
+        DataManager.init();
 
-
+        // ToDo check hole Fileload prozess - make it same as in VMC App
         FileLoader fl = new FileLoader(this);
         fl.initPropertyReader();
         fl.initFolder();
         fl.loadActivityObjects();
 
 
+        // Copy Images to Image Folder For Testing
+        int a = R.drawable.graphic_cutting;
+        int b = R.drawable.graphic_gardening;
+        int c = R.drawable.graphic_seed;
+        int d = R.drawable.graphic_walking;
 
-
-
-
-
-
-
-//        // Copy Images to Image Folder For Testing
-//        int a = R.drawable.onfarmwork_bagging;
-//        int b = R.drawable.onfarmwork_weeding;
-//        int[] resources = new int[] {a, b};
-//        fl.CopyImagesFromResourceToStorage(resources);
+        int[] resources = new int[] {a, b, c, d};
+        fl.CopyImagesFromResourceToStorage(resources);
 
     }
 
@@ -147,7 +136,7 @@ public class MainActivity extends Activity  {
         while(time.before(endTime)) {
             time = cal.getTime();
             Log.d(TAG, "startTime "+  time);
-            ActivityManager.getInstance().setCalenderMapEntry(time.toString(), null);
+            DataManager.getInstance().setCalenderMapEntry(time.toString(), null);
             // add 15 minutes to setTime
             cal.add(Calendar.MINUTE, 15);
             startMin++;

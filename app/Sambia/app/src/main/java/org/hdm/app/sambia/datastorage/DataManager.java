@@ -1,25 +1,21 @@
 package org.hdm.app.sambia.datastorage;
 
-import android.graphics.Bitmap;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.TreeMap;
 
-import static org.hdm.app.sambia.util.Consts.CALENDARITEMROW;
 import static org.hdm.app.sambia.util.Consts.DEBUGMODE;
 
 /**
  * Created by Hannes on 06.05.2016.
  */
-public class ActivityManager {
+public class DataManager {
 
     private final String TAG = "eEventManager";
     // Instance from DaataManager
-    private static ActivityManager instance = null;
+    private static DataManager instance = null;
 
 
     private ArrayList<ActivityObject> mActivityObject = null;
@@ -37,9 +33,9 @@ public class ActivityManager {
     // In this map is stored the activitys for Calender list
     private TreeMap<String, ArrayList<String>> calenderMap = new TreeMap<>();
 
-    // Editable Flag in Calendar Screen
-    public boolean editable = false;
-    public String selectedTime = "";
+
+
+
 
 
     public boolean createActivityObject(String name, ActivityObject activityObject) {
@@ -99,7 +95,7 @@ public class ActivityManager {
 
 
     /************
-     * create new event
+     * create new
      ************/
 
 
@@ -122,7 +118,7 @@ public class ActivityManager {
     }
 
     /***********
-     * create new event
+     * create new
      ***********/
 
 
@@ -241,14 +237,14 @@ public class ActivityManager {
 
     public static void init() {
         if (instance == null) {
-            instance = new ActivityManager();
+            instance = new DataManager();
 
         }
     }
 
-    public static ActivityManager getInstance() {
+    public static DataManager getInstance() {
         if (instance == null) {
-            instance = new ActivityManager();
+            instance = new DataManager();
         }
         return instance;
     }

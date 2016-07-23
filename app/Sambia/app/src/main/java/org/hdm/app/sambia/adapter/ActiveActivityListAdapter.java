@@ -27,11 +27,9 @@ public class ActiveActivityListAdapter extends RecyclerView.Adapter<View_Holder>
     private ActiveActivityListOnClickListener listener;
 
 
-
-    public ActiveActivityListAdapter(FragmentActivity fragmentActivity, List<ActivityObject> activityObject) {
+    public ActiveActivityListAdapter(List<ActivityObject> activityObject) {
         this.list = activityObject;
     }
-
 
 
     @Override
@@ -44,10 +42,6 @@ public class ActiveActivityListAdapter extends RecyclerView.Adapter<View_Holder>
     }
 
 
-
-
-
-
     @Override
     public void onBindViewHolder(View_Holder holder, int position) {
 
@@ -58,13 +52,10 @@ public class ActiveActivityListAdapter extends RecyclerView.Adapter<View_Holder>
     }
 
 
-
-
     @Override
     public long getItemId(int position) {
         return super.getItemId(position);
     }
-
 
 
     @Override
@@ -87,18 +78,12 @@ public class ActiveActivityListAdapter extends RecyclerView.Adapter<View_Holder>
     }
 
 
-
     // Remove a RecyclerView item containing a specified Daata object
     public void remove(ActivityObject activityObject) {
         int position = list.indexOf(activityObject);
         list.remove(position);
         notifyItemRemoved(position);
     }
-
-
-
-
-
 
 
     public void setListener(ActiveActivityListOnClickListener fragmentActivity) {
@@ -108,7 +93,7 @@ public class ActiveActivityListAdapter extends RecyclerView.Adapter<View_Holder>
 
     @Override
     public void didClickOnView(View view, String s, View_Holder holder) {
-        if(listener != null) listener.didOnClickActivityList(s, holder);
+        if (listener != null) listener.didOnClickActivityList(s, holder);
     }
 
 

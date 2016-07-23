@@ -1,10 +1,7 @@
 package org.hdm.app.sambia;
 
-import android.content.Context;
-
 import org.hdm.app.sambia.datastorage.ActivityObject;
-import org.hdm.app.sambia.datastorage.ActivityManager;
-import org.hdm.app.sambia.util.FileLoader;
+import org.hdm.app.sambia.datastorage.DataManager;
 import org.junit.Test;
 
 import static android.app.PendingIntent.getActivity;
@@ -27,10 +24,10 @@ public class SingletonImplementationUnitTest {
         for(int i = 0; i<10; i++) {
             ActivityObject activityObject = new ActivityObject();
             activityObject.title = "Hello";
-            ActivityManager.getInstance().setActivityObject(activityObject);
+            DataManager.getInstance().setActivityObject(activityObject);
         }
 
-        int actualSize = ActivityManager.getInstance().getActivityMap().size();
+        int actualSize = DataManager.getInstance().getActivityMap().size();
         int expectedSize = 1;
 
         assertEquals(actualSize, expectedSize);

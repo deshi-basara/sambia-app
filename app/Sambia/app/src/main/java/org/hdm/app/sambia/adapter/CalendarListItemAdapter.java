@@ -8,14 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.hdm.app.sambia.R;
-import org.hdm.app.sambia.datastorage.ActivityManager;
+import org.hdm.app.sambia.datastorage.DataManager;
 import org.hdm.app.sambia.datastorage.ActivityObject;
 import org.hdm.app.sambia.listener.CalendarItemOnClickListener;
 import org.hdm.app.sambia.listener.ViewHolderListener;
+import org.hdm.app.sambia.util.Variables;
 import org.hdm.app.sambia.util.View_Holder;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedHashMap;
 
 /**
@@ -34,7 +34,7 @@ public class CalendarListItemAdapter extends RecyclerView.Adapter<View_Holder> i
     private CalendarItemOnClickListener listener;
     private View v;
     public String time = "";
-    private ActivityManager manager = ActivityManager.getInstance();
+    public Variables var = Variables.getInstance();
 
 
 
@@ -68,7 +68,7 @@ public class CalendarListItemAdapter extends RecyclerView.Adapter<View_Holder> i
             ActivityObject dataa =(ActivityObject) data.get(list.get(position));
             holder.imageView.setImageBitmap(dataa.image);
             holder.title.setText(dataa.title);
-            holder.setCalendarItemBackground(manager.editable);
+            holder.setCalendarItemBackground(var.editable);
         }
     }
 
@@ -122,7 +122,7 @@ public class CalendarListItemAdapter extends RecyclerView.Adapter<View_Holder> i
 
     @Override
     public void didClickOnView(View view, String s, View_Holder view_holder) {
-            if(manager.editable) remove(s);
+            if(var.editable) remove(s);
             if(listener!=null) listener.didOnClick(time, s, view_holder);
     }
 

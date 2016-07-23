@@ -15,6 +15,18 @@ public class Variables {
     private int timeTreshold = 1;
 
 
+
+    /***** Activity Screen *****/
+    public int activityListRows = 2;
+    public int activeListRow = 1;
+    public int activeCount = 0;
+
+
+    // Editable Flag in Calendar Screen
+    public boolean editable = false;
+    public String selectedTime = "";
+
+
     /***********
      * Singelton pattern
      ***********/

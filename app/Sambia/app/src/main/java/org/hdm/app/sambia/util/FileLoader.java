@@ -1,6 +1,5 @@
 package org.hdm.app.sambia.util;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -11,7 +10,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.hdm.app.sambia.datastorage.ActivityManager;
+import org.hdm.app.sambia.datastorage.DataManager;
 import org.hdm.app.sambia.datastorage.ActivityObject;
 import org.hdm.app.sambia.main.MainActivity;
 
@@ -208,9 +207,10 @@ public class FileLoader {
 
         for(int i=0; i<list.size(); i++) {
             ActivityObject activityObject = list.get(i);
+            Log.d(TAG, "imageName " + activityObject.imageName);
             String imgPath = getEnvironment().toString() + "/" + "SambiaApp/Images/" + activityObject.imageName;
             activityObject.image = BitmapFactory.decodeFile(imgPath, options);
-            ActivityManager.getInstance().setActivityObject(activityObject);
+            DataManager.getInstance().setActivityObject(activityObject);
         }
     }
 
@@ -233,8 +233,4 @@ public class FileLoader {
         }
         return false;
     }
-
-
-
-
 }

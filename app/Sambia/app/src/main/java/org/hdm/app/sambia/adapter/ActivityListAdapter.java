@@ -7,11 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.hdm.app.sambia.R;
-import org.hdm.app.sambia.datastorage.ActivityManager;
+import org.hdm.app.sambia.datastorage.DataManager;
 import org.hdm.app.sambia.datastorage.ActivityObject;
 import org.hdm.app.sambia.listener.ActivityListOnClickListener;
 import org.hdm.app.sambia.listener.ViewHolderListener;
 import org.hdm.app.sambia.screens.FragmentActivity;
+import org.hdm.app.sambia.util.Variables;
 import org.hdm.app.sambia.util.View_Holder;
 
 import java.util.List;
@@ -26,15 +27,12 @@ public class ActivityListAdapter extends RecyclerView.Adapter<View_Holder> imple
 
 
     public List<ActivityObject> list = null;
-    FragmentActivity fr;
     private ActivityListOnClickListener listener;
-
-    public ActivityManager event = ActivityManager.getInstance();
-
+    public Variables var = Variables.getInstance();
 
 
-    public ActivityListAdapter(FragmentActivity fragmentActivity, List<ActivityObject> activityObject) {
-        fr = fragmentActivity;
+
+    public ActivityListAdapter(List<ActivityObject> activityObject) {
         this.list = activityObject;
     }
 
@@ -58,7 +56,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<View_Holder> imple
         holder.setListener(this);
         holder.title.setText(list.get(position).title);
         holder.imageView.setImageBitmap(list.get(position).image);
-        if(!event.editable) holder.setBackground(list.get(position).activeState);
+        if(!var.editable) holder.setBackground(list.get(position).activeState);
         Log.d(TAG, "position" + position);
     }
 
