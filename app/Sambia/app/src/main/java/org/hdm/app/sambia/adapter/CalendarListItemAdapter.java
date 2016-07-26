@@ -66,7 +66,7 @@ public class CalendarListItemAdapter extends RecyclerView.Adapter<View_Holder> i
         if(holder.imageView != null) {
 
             ActivityObject dataa =(ActivityObject) data.get(list.get(position));
-            holder.imageView.setImageBitmap(dataa.image);
+            if(dataa.image != null ) holder.imageView.setImageBitmap(dataa.image);
             holder.title.setText(dataa.title);
             holder.setCalendarItemBackground(var.editable);
         }

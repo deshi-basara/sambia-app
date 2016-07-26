@@ -1,5 +1,8 @@
 package org.hdm.app.sambia.adapter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,7 +58,17 @@ public class ActivityListAdapter extends RecyclerView.Adapter<View_Holder> imple
         //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
         holder.setListener(this);
         holder.title.setText(list.get(position).title);
-        holder.imageView.setImageBitmap(list.get(position).image);
+
+        if(list.get(position).image != null ) holder.imageView.setImageBitmap(list.get(position).image);
+
+        // Alternativ Way to load the images direct when it is uses
+//        BitmapFactory.Options options = new BitmapFactory.Options();
+//        options.inPreferredConfig = Bitmap.Config.ALPHA_8;
+//        options.inSampleSize = 2; //reduce quality
+//        String objectImgPath =  Environment.getExternalStorageDirectory().toString() + "/SambiaApp/Images/" + list.get(position).imageName;
+//        holder.imageView.setImageBitmap(BitmapFactory.decodeFile(objectImgPath, options));
+
+
         if(!var.editable) holder.setBackground(list.get(position).activeState);
         Log.d(TAG, "position" + position);
     }

@@ -22,7 +22,7 @@
             android:layout_weight="1"
             android:paddingTop="20dp"
             android:paddingBottom="5dp"
-            android:src="@drawable/graphic_cutting" />
+            android:src="@android:drawable/ic_menu_help" />
 
         <RelativeLayout
             android:layout_width="match_parent"

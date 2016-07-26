@@ -92,18 +92,7 @@ public class MainActivity extends Activity  {
         FileLoader fl = new FileLoader(this);
         fl.initPropertyReader();
         fl.initFolder();
-        fl.loadActivityObjects();
-
-
-        // Copy Images to Image Folder For Testing
-        int a = R.drawable.graphic_cutting;
-        int b = R.drawable.graphic_gardening;
-        int c = R.drawable.graphic_seed;
-        int d = R.drawable.graphic_walking;
-
-        int[] resources = new int[] {a, b, c, d};
-        fl.CopyImagesFromResourceToStorage(resources);
-
+        fl.initFiles("activitys.json", "configFolder");
     }
 
     private void initCalenderMap() {
