@@ -16,7 +16,7 @@ import org.hdm.app.sambia.util.Settings;
 
 import java.util.Calendar;
 import java.util.Date;
-
+import static org.hdm.app.sambia.util.Consts.*;
 
 public class MainActivity extends Activity  {
     private final String TAG = "MainActivity";
@@ -29,10 +29,9 @@ public class MainActivity extends Activity  {
     /**
      * Attributes
      */
-    private boolean hasIcon = false;
-
     int startMin = 0;
     int startHour = 6;
+    int endHour = 23;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,22 +83,24 @@ public class MainActivity extends Activity  {
         }
     }
 
+
+
+
     private void initConfiguration() {
-
         DataManager.init();
-
-        // ToDo check hole Fileload prozess - make it same as in VMC App
         FileLoader fl = new FileLoader(this);
         fl.initPropertyReader();
         fl.initFolder();
-        fl.initFiles("activitys.json", "configFolder");
+        fl.initFiles(JSONFILE, CONFIGFOLDER);
     }
+
+
+
 
     private void initCalenderMap() {
 
         Calendar cal = Calendar.getInstance();
         Date time = cal.getTime();
-
 
         // Reset Time to 00:00:00
         time.setHours(startHour);
@@ -113,18 +114,18 @@ public class MainActivity extends Activity  {
 
         Calendar calEndTime = Calendar.getInstance();
         Date endTime = calEndTime.getTime();
-        endTime.setHours(startMin);
+        endTime.setHours(endHour);
         endTime.setMinutes(startMin);
         endTime.setSeconds(startMin);
         calEndTime.setTime(endTime);
-        calEndTime.add(Calendar.DAY_OF_WEEK, 1);
+//        calEndTime.add(Calendar.DAY_OF_WEEK, 1);
         calEndTime.add(Calendar.MINUTE, -15);
         endTime = calEndTime.getTime();
 
 
         while(time.before(endTime)) {
             time = cal.getTime();
-            Log.d(TAG, "startTime "+  time);
+//            Log.d(TAG, "startTime "+  time);
             DataManager.getInstance().setCalenderMapEntry(time.toString(), null);
             // add 15 minutes to setTime
             cal.add(Calendar.MINUTE, 15);

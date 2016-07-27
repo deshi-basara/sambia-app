@@ -43,8 +43,8 @@ public class View_Holder extends RecyclerView.ViewHolder implements
     public  TextView title;
     public  TextView time;
     public  ImageView imageView;
-    private Timer timer;
-    private Handler handler = new Handler();
+    public Timer timer;
+    Handler handler = new Handler();
 
     public int count = 0;
     private String titleText;
@@ -55,6 +55,8 @@ public class View_Holder extends RecyclerView.ViewHolder implements
 
     Date startDate;
     public String id ="";
+
+    public boolean activityList;
 
     /************** Constructors ******************/
 
@@ -134,7 +136,8 @@ public class View_Holder extends RecyclerView.ViewHolder implements
             }
             iv_play.setVisibility(View.VISIBLE);
             time.setVisibility(View.VISIBLE);
-            runCount();
+//            if(activityList) runCount();
+//           runn(this);
 
         } else {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
@@ -146,11 +149,16 @@ public class View_Holder extends RecyclerView.ViewHolder implements
             }
             iv_play.setVisibility(View.GONE);
             time.setVisibility(View.GONE);
-            stopCount();
+//            stopCount();
+
         }
     }
 
+    private void runn(View_Holder view_holder) {
+        ActivityObject object = DataManager.getInstance().getActivityObject(title.getText().toString());
+        object.runCount(view_holder);
 
+    }
 
 
     public void setCalendarItemBackground(boolean editable) {
@@ -181,45 +189,53 @@ public class View_Holder extends RecyclerView.ViewHolder implements
 
 
     public void stopCount() {
-        if(timer != null) timer.cancel();
+
+        if(timer != null){
+            Log.d(TAG, "stopThead " + timer.toString());
+            timer.cancel();
+        }
+
     }
 
 
 
     public void runCount() {
 
-        ActivityObject object = DataManager.getInstance().getActivityObject(title.getText().toString());
-        startDate = object.startTime;
-
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-
-            @Override
-            public void run() {
-                Date currentDate = Calendar.getInstance().getTime();
-                countt = (currentDate.getTime() - startDate.getTime())/1000;
-
-                Log.d(TAG, "countt"  + countt);
-
-                handler.post(new Runnable() {
-                    public void run() {
-
-
-                        int seconds = (int) countt % 60;
-                        int minutes = (int) countt / 60;
-                        int houres = minutes / 60;
-                        String stringTime = String.format("%02d:%02d:%02d", houres, minutes, seconds);
-                        time.setText(stringTime);
-                        //count++;
-                    }
-                });
-
-            }
-        },
-        //Set how long before to start calling the TimerTask (in milliseconds)
-        0,
-        //Set the amount of time between each execution (in milliseconds)
-        1000);
+//        ActivityObject object = DataManager.getInstance().getActivityObject(title.getText().toString());
+//        startDate = object.startTime;
+//
+//        if(timer != null) {
+//            stopCount();
+//            Log.d(TAG, "StartCount " +title);
+//        }
+//
+//        timer = new Timer();
+//        timer.scheduleAtFixedRate(new TimerTask() {
+//
+//            @Override
+//            public void run() {
+//                Date currentDate = Calendar.getInstance().getTime();
+//                countt = (currentDate.getTime() - startDate.getTime())/1000;
+//
+//                Log.d(TAG, timer.toString()+  " "  + countt);
+//
+//                handler.post(new Runnable() {
+//                    public void run() {
+//                        int seconds = (int) countt % 60;
+//                        int minutes = (int) countt / 60;
+//                        int houres = minutes / 60;
+//                        String stringTime = String.format("%02d:%02d:%02d", houres, minutes, seconds);
+//                        time.setText(stringTime);
+//                        //count++;
+//                    }
+//                });
+//
+//            }
+//        },
+//        //Set how long before to start calling the TimerTask (in milliseconds)
+//        0,
+//        //Set the amount of time between each execution (in milliseconds)
+//        1000);
     }
 
     
