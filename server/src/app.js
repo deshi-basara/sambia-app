@@ -1,5 +1,6 @@
 import http from 'http';
 import express from 'express';
+import ejs from 'ejs';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import winston from 'winston';
@@ -20,6 +21,14 @@ mongoose.connection.on('error', (error) => {
 
 const app = express();
 app.server = http.createServer(app);
+
+/**
+ * Views
+ */
+/* app.set('views', `${__dirname}/public`);
+app.set('view engine', 'ejs');
+app.engine('ejs', ejs);*/
+app.use(express.static(`${__dirname}/public`));
 
 /**
  * Middleware

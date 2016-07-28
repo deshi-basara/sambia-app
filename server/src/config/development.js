@@ -1,5 +1,6 @@
 import ActivitiesController from '../controller/activities.js';
 import SubjectsController from '../controller/subjects.js';
+import InterfaceController from '../controller/interface.js';
 
 /**
  * Development configuration
@@ -12,6 +13,7 @@ export default {
   controller: [
     ActivitiesController,
     SubjectsController,
+    InterfaceController,
   ],
 
   models: [],
@@ -20,7 +22,7 @@ export default {
 
   api: {
     port: 8080,
-    host: '141.62.39.48',
+    host: 'localhost',
   },
 
   db: {

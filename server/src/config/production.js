@@ -1,5 +1,6 @@
 import ActivitiesController from '../controller/activities.js';
 import SubjectsController from '../controller/subjects.js';
+import InterfaceController from '../controller/interface.js';
 
 /**
  * Development configuration
@@ -7,11 +8,12 @@ import SubjectsController from '../controller/subjects.js';
 export default {
 
   name: 'Sambia Server',
-  mode: 'producation',
+  mode: 'production',
 
   controller: [
     ActivitiesController,
     SubjectsController,
+    InterfaceController,
   ],
 
   models: [],
