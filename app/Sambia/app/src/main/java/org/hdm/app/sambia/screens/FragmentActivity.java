@@ -23,10 +23,14 @@ import org.hdm.app.sambia.adapter.ActivityListAdapter;
 import org.hdm.app.sambia.adapter.ActiveActivityListAdapter;
 import org.hdm.app.sambia.util.View_Holder;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -56,6 +60,11 @@ public class FragmentActivity extends BaseFragemnt implements
     private Timer timer;
     private long countt;
 
+
+    Handler handler = new Handler();
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,6 +85,17 @@ public class FragmentActivity extends BaseFragemnt implements
     @Override
     public void onPause() {
         super.onPause();
+
+        LinkedHashMap<String, ActivityObject> a = (LinkedHashMap) dataManager.getActiveMap();
+
+        if (!a.isEmpty()){
+
+            for (LinkedHashMap.Entry<String, ActivityObject> entry : a.entrySet()) {
+                String b = entry.getKey();
+                a.get(b).stopCount();
+                Log.d(TAG, "onPause " + a.get(b).title);
+            }
+        }
     }
 
     /*******************
@@ -136,6 +156,7 @@ public class FragmentActivity extends BaseFragemnt implements
             listener.flip();
         } else {
 
+            // when Activity is not active
             if (!activityObject.activeState) {
 
                 // ToDo Show DialogFragment
@@ -151,13 +172,19 @@ public class FragmentActivity extends BaseFragemnt implements
                 // set temporary start time
                 activityObject.startTime = Calendar.getInstance().getTime();
 
+                if(holder != null) activityObject.runCount(holder);
+
+
                 // Count how many activity are active
                 var.activeCount++;
 
                 // add the active ActivityObject to the activeList
                 dataManager.setActiveObject(activityObject);
 
+
             } else {
+
+//                stopCount();
 
                 // Deactivate Activity
                 activityObject.activeState = false;
@@ -177,6 +204,8 @@ public class FragmentActivity extends BaseFragemnt implements
 
                 // Save Time and subCategory in Dsata
                 activityObject.saveTimeStamp();
+
+                activityObject.stopCount();
             }
         }
 
@@ -184,11 +213,11 @@ public class FragmentActivity extends BaseFragemnt implements
         dataManager.setActivityObject(activityObject);
 
 
+
         // Set Background if pressed from AdapterList
         if (holder != null) {
             holder.count = activityObject.count;
             holder.setBackground(activityObject.activeState);
-            // ToDo Discuss bestpractice for counter
         }
 
 
@@ -311,4 +340,58 @@ public class FragmentActivity extends BaseFragemnt implements
         activeAdapter.list = new ArrayList<>(dataManager.getActiveMap().values());
         activeAdapter.notifyDataSetChanged();
     }
+
+
+
+
+    public void stopCount() {
+
+        if(timer != null){
+            Log.d(TAG, "stopThead " + timer.toString());
+            timer.cancel();
+        }
+
+    }
+
+
+
+    public void runCount(final View_Holder holder) {
+
+        ActivityObject object = DataManager.getInstance().getActivityObject(holder.title.getText().toString());
+        startDate = object.startTime;
+
+        if(timer != null) {
+            stopCount();
+            Log.d(TAG, "StartCount " +holder.title);
+        }
+
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+
+                                      @Override
+                                      public void run() {
+                                          Date currentDate = Calendar.getInstance().getTime();
+                                          countt = (currentDate.getTime() - startDate.getTime())/1000;
+
+                                          Log.d(TAG, timer.toString()+  " "  + countt);
+
+                                          handler.post(new Runnable() {
+                                              public void run() {
+                                                  int seconds = (int) countt % 60;
+                                                  int minutes = (int) countt / 60;
+                                                  int houres = minutes / 60;
+                                                  String stringTime = String.format("%02d:%02d:%02d", houres, minutes, seconds);
+                                                  holder.time.setText(stringTime);
+                                                  //count++;
+                                              }
+                                          });
+
+                                      }
+                                  },
+                //Set how long before to start calling the TimerTask (in milliseconds)
+                0,
+                //Set the amount of time between each execution (in milliseconds)
+                1000);
+    }
+
 }
