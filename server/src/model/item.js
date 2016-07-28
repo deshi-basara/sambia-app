@@ -1,11 +1,12 @@
 import mongoose from 'mongoose';
 
 /**
- * Group Schema.
+ * Item Schema.
  *
- * Database schema for a group of activities.
+ * Database schema for on activity-item.
+ * An item has to belong to an activity and.
  */
-const GroupSchema = new mongoose.Schema({
+const ItemSchema = new mongoose.Schema({
 
   name: {
     type: String,
@@ -19,16 +20,10 @@ const GroupSchema = new mongoose.Schema({
   image: {
     type: String,
     required: false,
-    default: '',
-  },
-  activities: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: 'Activity',
-    required: true,
   },
   enabled: {
     type: Boolean,
-    required: true,
+    required: false,
     default: false,
   },
   createdAt: {
@@ -39,6 +34,6 @@ const GroupSchema = new mongoose.Schema({
 });
 
 /**
- * @typedef Group
+ * @typedef Activity
  */
-export default mongoose.model('Group', GroupSchema);
+export default mongoose.model('Item', ItemSchema);

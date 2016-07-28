@@ -1,6 +1,10 @@
 // @flow
+import Promise from 'bluebird';
+import _ from 'underscore';
 
 import Group from '../model/group.js';
+import Activity from '../model/activity.js';
+import Item from '../model/item.js';
 
 /**
  * Controller for managing activities.
@@ -40,6 +44,7 @@ class ActivitiesController {
    */
   static returnAllActivityGroups(req: any, res: any): void {
     return Group.find({})
+      .populate('activities')
       .then((groups) =>
         // send all available activities
         res
@@ -104,22 +109,55 @@ class ActivitiesController {
   static saveActivityGroup(req: any, res: any): void {
     //  parse upload
     const group = req.body;
-    group.activities = JSON.stringify(group.activities);
 
-    return Group.create(group)
-      .then(() => {
-        res.send({ data: 'Insert successfull.' });
-      })
-      .error((error) =>
-        // send error
-        res
-          .status(500)
-          .send({
-            error: {
-              msg: error,
-            },
-          })
-      );
+    // loop through activities
+    const activityIds = [];
+    return Promise.each(group.activities, (activity) => {
+      const currentActivity = activity;
+
+      // we have sub-items, create database entry
+      return Item.create(currentActivity.items)
+        .then((itemResults) => {
+          // extract itemIds
+          const itemIds = [];
+          itemResults.forEach((item) => {
+            itemIds.push(item._id);
+          });
+
+          return itemIds;
+        })
+        .then((itemIds) => {
+          // add items to activity
+          currentActivity.items = itemIds;
+
+          // create activity
+          return Activity.create(currentActivity);
+        })
+        .then((activityResult) => {
+          // extract activityId
+          activityIds.push(activityResult._id);
+        });
+    })
+    .then(() => {
+      // add activities to group
+      group.activities = activityIds;
+
+      // create group
+      return Group.create(group);
+    })
+    .then(() =>
+      res.send({ data: 'Insert successfull.' })
+    )
+    .error((error) =>
+      // send error
+      res
+        .status(500)
+        .send({
+          error: {
+            msg: error,
+          },
+        })
+    );
   }
 
   /**

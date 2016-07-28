@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 /**
  * Activity Schema.
  *
- * Database schema for on activity. A activity has to be in a group and
+ * Database schema for on activity. An activity has to be in a group and
  * can have a items describing the activity.
  */
 const ActivitySchema = new mongoose.Schema({
@@ -19,10 +19,11 @@ const ActivitySchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    required: true,
+    required: false,
   },
   items: {
-    type: [Number],
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Item',
     required: true,
   },
   enabled: {
