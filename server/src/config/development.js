@@ -20,7 +20,7 @@ export default {
 
   api: {
     port: 8080,
-    host: 'localhost',
+    host: '141.62.39.48',
   },
 
   db: {
