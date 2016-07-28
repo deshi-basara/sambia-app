@@ -44,13 +44,20 @@ class ActivitiesController {
    */
   static returnAllActivityGroups(req: any, res: any): void {
     return Group.find({})
-      .populate('activities')
-      .then((groups) =>
+      .populate({
+        path: 'activities',
+        model: 'Activity',
+        populate: {
+          path: 'items',
+          model: 'Item',
+        },
+      })
+      .then((groups) => {
         // send all available activities
         res
           .status(200)
           .send({ data: groups })
-      )
+      })
       .error((error) =>
         // send error
         res
@@ -83,12 +90,22 @@ class ActivitiesController {
     }
 
     return Group.find({ _id: id })
-      .then((group) =>
+      .populate({
+        path: 'activities',
+        model: 'Activity',
+        populate: {
+          path: 'items',
+          model: 'Item',
+        },
+      })
+      .then((group) => {
+        console.log(group);
+
         // send available activity
         res
           .status(200)
           .send({ data: group })
-      )
+      })
       .error((error) =>
         // send error
         res
