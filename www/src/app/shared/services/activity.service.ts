@@ -103,7 +103,6 @@ export class ActivityService {
 
       // parse group activity and extract activities
       let activityArray: Activity[] = [];
-      currentGroupData.activities = JSON.parse(currentGroupData.activities);
       for (let i = 0; i < currentGroupData.activities.length; i++) {
         let currentActivityData = currentGroupData.activities[i];
 
