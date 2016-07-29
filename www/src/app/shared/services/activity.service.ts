@@ -111,8 +111,10 @@ export class ActivityService {
         for (let i = 0; i < currentActivityData.items.length; i++) {
           let currentItemData = currentActivityData.items[i];
 
+          console.log(currentItemData);
+
           let currentItem = new Item(
-            '',
+            currentItemData._id,
             currentItemData.name,
             '',
             '',
@@ -123,7 +125,7 @@ export class ActivityService {
 
         // build activity object
         let currentActivity = new Activity(
-          '',
+          currentActivityData._id,
           currentActivityData.name,
           '',
           '',
