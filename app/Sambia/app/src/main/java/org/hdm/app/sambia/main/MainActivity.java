@@ -87,11 +87,13 @@ public class MainActivity extends Activity  {
 
 
     private void initConfiguration() {
+        // Init the Data Structure - there all the created where hosted
         DataManager.init();
+
         FileLoader fl = new FileLoader(this);
-        fl.initPropertyReader();
-        fl.initFolder();
-        fl.initFiles(JSONFILE, CONFIGFOLDER);
+        fl.initFiles();
+
+
     }
 
 

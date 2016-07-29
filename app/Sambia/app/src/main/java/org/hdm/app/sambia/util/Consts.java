@@ -11,7 +11,14 @@ public final class Consts {
     public final static int CALENDARITEMROW = 1;
 
     public final static String JSONFILE = "activitys.json";
+    public final static String MAINFOLDER = "mainFolder";
+    public final static String IMAGEFOLDER = "imageFolder";
     public final static String CONFIGFOLDER = "configFolder";
+    public final static String LOGFOLDER = "logFolder";
+
+
+    public final static String PROPERTIESFILE = "folder.properties";
+
 
 
 

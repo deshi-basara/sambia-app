@@ -85,17 +85,6 @@ public class FragmentActivity extends BaseFragemnt implements
     @Override
     public void onPause() {
         super.onPause();
-
-        LinkedHashMap<String, ActivityObject> a = (LinkedHashMap) dataManager.getActiveMap();
-
-        if (!a.isEmpty()){
-
-            for (LinkedHashMap.Entry<String, ActivityObject> entry : a.entrySet()) {
-                String b = entry.getKey();
-                a.get(b).stopCount();
-                Log.d(TAG, "onPause " + a.get(b).title);
-            }
-        }
     }
 
     /*******************
@@ -172,7 +161,7 @@ public class FragmentActivity extends BaseFragemnt implements
                 // set temporary start time
                 activityObject.startTime = Calendar.getInstance().getTime();
 
-                if(holder != null) activityObject.runCount(holder);
+//                if(holder != null) activityObject.runCount(holder);
 
 
                 // Count how many activity are active
@@ -205,7 +194,7 @@ public class FragmentActivity extends BaseFragemnt implements
                 // Save Time and subCategory in Dsata
                 activityObject.saveTimeStamp();
 
-                activityObject.stopCount();
+//                activityObject.stopCount();
             }
         }
 

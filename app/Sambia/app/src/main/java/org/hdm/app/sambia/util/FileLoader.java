@@ -10,7 +10,6 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.datastorage.DataManager;
 import org.hdm.app.sambia.datastorage.ActivityObject;
 import org.hdm.app.sambia.main.MainActivity;
@@ -24,7 +23,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Properties;
+
+import static org.hdm.app.sambia.util.Consts.*;
+
 
 /**
  * Created by Hannes on 09.05.2016.
@@ -46,6 +49,27 @@ public class FileLoader {
     public FileLoader(MainActivity mainActivity) {
         context = mainActivity;
     }
+
+
+
+
+    /**************************
+     * Init File Prozess
+     *************************/
+
+    public void initFiles() {
+
+        initFolder();
+
+        // Check if Json File is in External Folder
+        // if not than copy Json file from Asset to external Folder
+        if (isExternalFileExists(CONFIGFOLDER + "/" + JSONFILE)) {
+            copyFileFromAssetToExternal(JSONFILE, CONFIGFOLDER);
+            if(DEBUGMODE) Log.d(TAG, "inti " + JSONFILE);
+        }
+        loadActivityObjects(JSONFILE, CONFIGFOLDER);
+    }
+
 
 
     /**************************
@@ -80,17 +104,18 @@ public class FileLoader {
 
 
 
-    private String readFromFolder(String fileName, String folderPath) {
+    private String readStringFromExternalFolder(String fileName, String folderPath) {
 
-        BufferedReader reader = null;
-        StringBuilder sb = null;
-        String mLine = null;
+        if(isExternalFileExists(folderPath + "/" + fileName)) return null;
+
+        BufferedReader reader;
+        StringBuilder sb;
+        String mLine;
         File file = new File(enviroment+"/"+folderPath, fileName);
 
         try {
 
             FileInputStream fileInputStream = new FileInputStream(file);
-
             reader = new BufferedReader(
                     new InputStreamReader(fileInputStream));
             sb = new StringBuilder();
@@ -116,11 +141,11 @@ public class FileLoader {
             OutputStream out = null;
             try {
                 in = context.getAssets().open(fileName);
-                File outFile = new File(getEnvironment().toString()+ "/" + path, fileName);
+                File outFile = new File(enviroment.toString()+ "/" + path, fileName);
                 out = new FileOutputStream(outFile);
                 copyFile(in, out);
             } catch (IOException e) {
-                Log.e("tag", "Failed to copy asset file: " + fileName, e);
+                Log.d(TAG, "Failed to copy asset file: " + fileName, e);
                 return false;
             } finally {
                 if (in != null) {
@@ -148,8 +173,8 @@ public class FileLoader {
     public boolean CopyImagesFromResourceToExternal(int[] resources) {
 
         if (resources.length != 0) {
-            String imageFolder = getPropertiesFromAssets("configuration.properties")
-                    .getProperty("imageFolder");
+            String imageFolder = getPropertiesFromAssets(PROPERTIESFILE)
+                    .getProperty(IMAGEFOLDER);
             for (int i = 0; i < resources.length; i++) {
                 String fileName = enviroment + "/" + imageFolder + "/" +
                         context.getResources().getResourceEntryName(resources[i]) +
@@ -183,15 +208,17 @@ public class FileLoader {
     public String createExternalFolder(String folderName) {
 
         if (!isExternalStorageWritable()) {
-            Toast.makeText(context, folderName + " External Storage is not writeble", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, " External Storage is not writeble -" +
+                    "folder could not be created", Toast.LENGTH_SHORT).show();
             return null;
         }
+
         File f = new File(enviroment, folderName);
         if (!f.exists()) {
             f.mkdirs();
             if (f.exists()) return f.toString();
         }
-        Toast.makeText(context, folderName + " already exists", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, folderName + " already exists", Toast.LENGTH_SHORT).show();
         return null;
     }
 
@@ -203,11 +230,11 @@ public class FileLoader {
      * Property File
      *************************/
 
-    public void initPropertyReader() {
-        properties = new Properties();
-    }
 
     public Properties getPropertiesFromAssets(String file) {
+
+        properties = new Properties();
+
         try {
             AssetManager assetManager = context.getAssets();
             InputStream inputStream = assetManager.open(file);
@@ -224,41 +251,18 @@ public class FileLoader {
 
 
 
-    /**************** Init process ****************/
+
+
 
     public void initFolder() {
 
-        // Create MainFolder
-        String mainFolder = getPropertiesFromAssets("configuration.properties")
-                .getProperty("mainFolder");
-        createExternalFolder(mainFolder);
+        Properties properties = getPropertiesFromAssets(PROPERTIESFILE);
 
-        // Create ImageFolder
-        String imageFolder = getPropertiesFromAssets("configuration.properties")
-                .getProperty("imageFolder");
-        createExternalFolder(imageFolder);
-
-        // Create ConfigFolder
-        String configFolder = getPropertiesFromAssets("configuration.properties")
-                .getProperty("configFolder");
-        createExternalFolder(configFolder);
-    }
-
-
-
-    public void initFiles(String fileName, String folderPath) {
-
-        // Check if Json File is in External Folder
-        // if not than copy Json file from Asset to external Folder
-        String configFolder = getPropertiesFromAssets("configuration.properties")
-                .getProperty(folderPath);
-        if (!isExternalFileExists(configFolder + "/" + fileName)) {
-            copyFileFromAssetToExternal(fileName, configFolder);
+        for(Map.Entry<Object, Object> x : properties.entrySet()) {
+            createExternalFolder((String) x.getValue());
         }
-
-        // Load ActivityObjects
-        loadActivityObjects(fileName, configFolder);
     }
+
 
 
 
@@ -267,31 +271,58 @@ public class FileLoader {
     // Load Content
     public void loadActivityObjects(String fileName, String folderPath) {
 
-        // Load and Parse JsonFile
-        String jsonString = readFromFolder(fileName+"77", folderPath);
-        if(jsonString == null) {
+
+        // Check if JsonFile is in External Folder if not copy them from Asset to External Folder
+        if(!isExternalFileExists(folderPath+ "/" + fileName)) {
+            copyFileFromAssetToExternal(fileName, getPropertiesFromAssets(PROPERTIESFILE)
+                    .getProperty(CONFIGFOLDER));
+        }
+
+        // Read out JsonFile from External Folder
+        String jsonString = readStringFromExternalFolder(fileName, folderPath);
+        if(jsonString == null){
             jsonString = readFromAssets(context, fileName);
         }
-        Log.d(TAG, "jasonString " + jsonString);
+
+
+
         MyJsonParser jParser = new MyJsonParser();
         ArrayList<ActivityObject> list = jParser.createOjectFromJson("activitys", jsonString);
+        if(DEBUGMODE) Log.d(TAG, "jasonString " + jsonString +"" +  list.size());
 
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ALPHA_8;
         options.inSampleSize = 2; //reduce quality
-        String imgPath = enviroment.toString() + "/" + getPropertiesFromAssets("configuration.properties")
-                .getProperty("imageFolder")+ "/";
+
+
+        String imgPath = enviroment.toString() + "/" + getPropertiesFromAssets(PROPERTIESFILE)
+                .getProperty(IMAGEFOLDER)+ "/";
 
 
 
         for (int i = 0; i < list.size(); i++) {
             ActivityObject activityObject = list.get(i);
-            //Log.d(TAG, "imageName " + activityObject.imageName);
+
+            Log.d(TAG, "imageName " + activityObject.imageName);
             String objectImgPath =  imgPath + activityObject.imageName;
-            activityObject.image = BitmapFactory.decodeFile(objectImgPath, options);
+
+            // check if Image is in externalFolder available
+            // if not than save it from asset to external load again
+            if(isExternalFileExists(objectImgPath)) {
+                activityObject.image = BitmapFactory.decodeFile(objectImgPath, options);
+            }else {
+                // Save Image from Asset to External
+                copyFileFromAssetToExternal(activityObject.imageName, getPropertiesFromAssets(PROPERTIESFILE)
+                        .getProperty(IMAGEFOLDER));
+                activityObject.image = BitmapFactory.decodeFile(objectImgPath, options);
+            }
             DataManager.getInstance().setActivityObject(activityObject);
         }
+
+
+        // ToDo Upload Mechanism
+        jParser.createJsonFromObject();
     }
 
 
@@ -311,9 +342,7 @@ public class FileLoader {
 
     public boolean isExternalFileExists(String filePath) {
         File f = new File(filePath);
-        if (f.exists()) {
-            return true;
-        }
+        if (f.exists())  return true;
         return false;
     }
 
@@ -342,6 +371,7 @@ public class FileLoader {
     public File getEnvironment() {
         return enviroment;
     }
+
 
 
 }

@@ -3,233 +3,82 @@
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Land Preparation ",
+      "item": "Hand",
       "title": "Ploughing",
-      "id": 1,
+      "_id": "1",
       "imageName": "graphic_cutting.png"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Land Preparation ",
+      "item": "Hand",
       "title": "Harrowing",
-      "id": 2,
+      "_id": "2",
       "imageName": "graphic_seed.png"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Land Preparation ",
+      "item": "Hand",
       "title": "Ridging",
-      "id": 3,
+      "_id": "3",
       "imageName": "graphic_walking.png"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Land Preparation ",
+      "item": "Hand",
       "title": "Others",
-      "id": 4,
+      "_id": "4",
       "imageName": "graphic_cutting.png"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "",
+      "item": "Hand",
       "title": "Planting",
-      "id": 5,
+      "_id": "5",
       "imageName": "graphic_seed.png"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "",
+      "item": "Hand",
       "title": "Weeding",
-      "id": 6,
+      "_id": "6",
       "imageName": "graphic_walking.png"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "",
+      "item": "Hand",
       "title": "Pest Control",
-      "id": 7,
+      "_id": "7",
       "imageName": "graphic_walking.png"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "",
+      "item": "Hand",
       "title": "Fertilization",
-      "id": 8,
+      "_id": "8",
       "imageName": "graphic_cutting.png"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "",
+      "item": "Hand",
       "title": "Protection of Crops",
-      "id": 9,
+      "_id": "9",
       "imageName": "graphic_walking.png"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "",
+      "item": "Hand",
       "title": "Irrigation ",
-      "id": 10,
+      "_id": "10",
       "imageName": "graphic_walking.png"
-    },
-    {
-      "group_activity": "On-Farm-Work",
-      "sub_activity": "Harvesting",
-      "title": "Bundling",
-      "id": 11,
-      "imageName": "graphic_walking.png"
-    },
-    {
-      "group_activity": "On-Farm-Work",
-      "sub_activity": "Harvesting",
-      "title": "Drying",
-      "id": 12,
-      "imageName": "graphic_seed.png"
-    },
-    {
-      "group_activity": "On-Farm-Work",
-      "sub_activity": "Harvesting",
-      "title": "Storing",
-      "id": 13,
-      "imageName": "graphic_walking.png"
-    },
-    {
-      "group_activity": "On-Farm-Work",
-      "sub_activity": "Harvesting",
-      "title": "Bagging",
-      "id": 14,
-      "imageName": "graphic_cutting.png"
-    },
-    {
-      "group_activity": "On-Farm-Work",
-      "sub_activity": "Harvesting",
-      "title": "Others",
-      "id": 15,
-      "imageName": "graphic_seed.png"
-    },
-    {
-      "group_activity": "On-Farm-Work",
-      "sub_activity": "Processing",
-      "title": "Treshing + Shelling",
-      "id": 16,
-      "imageName": "graphic_gardening.png"
-    },
-    {
-      "group_activity": "On-Farm-Work",
-      "sub_activity": "Processing",
-      "title": "Grinding + Pounding",
-      "id": 17,
-      "imageName": "graphic_walking.png"
-    },
-    {
-      "group_activity": "On-Farm-Work",
-      "sub_activity": "Processing",
-      "title": "Winnowing",
-      "id": 18,
-      "imageName": "graphic_walking.png"
-    },
-    {
-      "group_activity": "On-Farm-Work",
-      "sub_activity": "Processing",
-      "title": "Beverage Preparation",
-      "id": 19,
-      "imageName": "graphic_seed.png"
-    },
-    {
-      "group_activity": "On-Farm-Work",
-      "sub_activity": "Processing",
-      "title": "Others",
-      "id": 20,
-      "imageName": "graphic_cutting.png"
-    },
-    {
-      "group_activity": "On-Farm-Work",
-      "sub_activity": "",
-      "title": "Marketing",
-      "id": 21,
-      "imageName": "graphic_walking.png"
-    },
-    {
-      "group_activity": "On-Farm-Work",
-      "sub_activity": "Animal Husbandry",
-      "title": "Breading",
-      "id": 22,
-      "imageName": "graphic_gardening.png"
-    },
-    {
-      "group_activity": "On-Farm-Work",
-      "sub_activity": "Animal Husbandry",
-      "title": "Care + Feeding",
-      "id": 23,
-      "imageName": "graphic_seed.png"
-    },
-    {
-      "group_activity": "On-Farm-Work",
-      "sub_activity": "Animal Husbandry",
-      "title": "Milking",
-      "id": 24,
-      "imageName": "graphic_walking.png"
-    },
-    {
-      "group_activity": "On-Farm-Work",
-      "sub_activity": "Animal Husbandry",
-      "title": "Butchering",
-      "id": 25,
-      "imageName": "graphic_cutting.png"
-    },
-    {
-      "group_activity": "On-Farm-Work",
-      "sub_activity": "Animal Husbandry",
-      "title": "Others",
-      "id": 26,
-      "imageName": "graphic_gardening.png"
-    },
-    {
-      "group_activity": "On-Farm-Work",
-      "sub_activity": "",
-      "title": "Hunting + fishing",
-      "id": 27,
-      "imageName": "graphic_walking.png"
-    },
-    {
-      "group_activity": "On-Farm-Work",
-      "sub_activity": "",
-      "title": "Fitting + maintaining",
-      "id": 28,
-      "imageName": "graphic_walking.png"
-    },
-    {
-      "group_activity": "On-Farm-Work",
-      "sub_activity": "",
-      "title": "Farm administration",
-      "id": 29,
-      "imageName": "graphic_cutting.png"
-    },
-    {
-      "group_activity": "On-Farm-Work",
-      "sub_activity": "",
-      "title": "Travel between fields",
-      "id": 30,
-      "imageName": "graphic_gardening.png"
-    },
-    {
-      "group_activity": "On-Farm-Work",
-      "sub_activity": "",
-      "title": "Others",
-      "id": 31,
-      "imageName": "graphic_cutting.png"
-    },
-    {
-      "group_activity": "Off-Farm-Work ",
-      "sub_activity": "",
-      "title": "Agricultural Work ",
-      "id": 32,
-      "imageName": "graphic_gardening.png"
-    },
-    {
-      "group_activity": "Off-Farm-Work ",
-      "sub_activity": "",
-      "title": "Non-Agricultural Work",
-      "id": 33,
-      "imageName": "graphic_gardening.png"
     }
   ]
 }

@@ -9,11 +9,9 @@ public class TimeFrame {
 
     public Date startTime;
     public Date endTime;
-    public String workingStyle = null;
 
-    public TimeFrame(Date startTime, Date endTime, String workingStyle) {
+    public TimeFrame(Date startTime, Date endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
-        this.workingStyle = workingStyle;
     }
 }
