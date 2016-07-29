@@ -136,7 +136,7 @@ public class View_Holder extends RecyclerView.ViewHolder implements
             }
             iv_play.setVisibility(View.VISIBLE);
             time.setVisibility(View.VISIBLE);
-//            if(activityList) runCount();
+            if(activityList) runCount();
 //           runn(this);
 
         } else {
@@ -149,14 +149,14 @@ public class View_Holder extends RecyclerView.ViewHolder implements
             }
             iv_play.setVisibility(View.GONE);
             time.setVisibility(View.GONE);
-//            stopCount();
+            stopCount();
 
         }
     }
 
     private void runn(View_Holder view_holder) {
         ActivityObject object = DataManager.getInstance().getActivityObject(title.getText().toString());
-        object.runCount(view_holder);
+//        object.runCount(view_holder);
 
     }
 
@@ -201,41 +201,41 @@ public class View_Holder extends RecyclerView.ViewHolder implements
 
     public void runCount() {
 
-//        ActivityObject object = DataManager.getInstance().getActivityObject(title.getText().toString());
-//        startDate = object.startTime;
-//
-//        if(timer != null) {
-//            stopCount();
-//            Log.d(TAG, "StartCount " +title);
-//        }
-//
-//        timer = new Timer();
-//        timer.scheduleAtFixedRate(new TimerTask() {
-//
-//            @Override
-//            public void run() {
-//                Date currentDate = Calendar.getInstance().getTime();
-//                countt = (currentDate.getTime() - startDate.getTime())/1000;
-//
-//                Log.d(TAG, timer.toString()+  " "  + countt);
-//
-//                handler.post(new Runnable() {
-//                    public void run() {
-//                        int seconds = (int) countt % 60;
-//                        int minutes = (int) countt / 60;
-//                        int houres = minutes / 60;
-//                        String stringTime = String.format("%02d:%02d:%02d", houres, minutes, seconds);
-//                        time.setText(stringTime);
-//                        //count++;
-//                    }
-//                });
-//
-//            }
-//        },
-//        //Set how long before to start calling the TimerTask (in milliseconds)
-//        0,
-//        //Set the amount of time between each execution (in milliseconds)
-//        1000);
+        ActivityObject object = DataManager.getInstance().getActivityObject(title.getText().toString());
+        startDate = object.startTime;
+
+        if(timer != null) {
+            stopCount();
+            Log.d(TAG, "StartCount " +title);
+        }
+
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+
+            @Override
+            public void run() {
+                Date currentDate = Calendar.getInstance().getTime();
+                countt = (currentDate.getTime() - startDate.getTime())/1000;
+
+                Log.d(TAG, timer.toString()+  " "  + countt);
+
+                handler.post(new Runnable() {
+                    public void run() {
+                        int seconds = (int) countt % 60;
+                        int minutes = (int) countt / 60;
+                        int houres = minutes / 60;
+                        String stringTime = String.format("%02d:%02d:%02d", houres, minutes, seconds);
+                        time.setText(stringTime);
+                        //count++;
+                    }
+                });
+
+            }
+        },
+        //Set how long before to start calling the TimerTask (in milliseconds)
+        0,
+        //Set the amount of time between each execution (in milliseconds)
+        1000);
     }
 
     
