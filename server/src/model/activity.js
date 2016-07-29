@@ -24,7 +24,8 @@ const ActivitySchema = new mongoose.Schema({
   items: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'Item',
-    required: true,
+    required: false,
+    default: [],
   },
   enabled: {
     type: Boolean,
