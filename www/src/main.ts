@@ -3,6 +3,9 @@ import { enableProdMode } from '@angular/core';
 import { HTTP_PROVIDERS } from '@angular/http';
 import { disableDeprecatedForms, provideForms } from '@angular/forms';
 
+// Override the router `LocationStrategy` to hashbangs
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+
 import { AppComponent, environment } from './app/';
 import { APP_ROUTER_PROVIDERS } from './app/app.routes';
 
@@ -16,6 +19,7 @@ bootstrap(AppComponent, [
 
     // angular router
     APP_ROUTER_PROVIDERS,
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
 
     // angular forms (new api)
     disableDeprecatedForms(),
