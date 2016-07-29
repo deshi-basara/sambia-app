@@ -154,11 +154,12 @@ export class ActivityService {
    * @param  {any}        error [Response from Angular-http]
    * @return {Observable}       [Thrown error with extracted message]
    */
-  private handleError(error: any) {
+  private handleError(_error: any) {
+    const error = _error.json().error;
     let errMsg = (error.message) ? error.message :
-      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+      _error.status ? `${_error.status} - ${_error.statusText}` : 'Server error';
 
-    console.error(errMsg); // log to console instead
+    console.error(errMsg); // log to console
     return Observable.throw(errMsg);
   }
 }
