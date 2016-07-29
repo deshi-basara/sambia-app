@@ -12,12 +12,12 @@
         android:layout_centerHorizontal="true"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="6dp"
         android:innerRadius="0dp"
         android:shape="ring"
         android:thicknessRatio="1.9"
         app:cardBackgroundColor="@android:color/holo_green_dark"
-        app:cardCornerRadius="24dp"
+        app:cardCornerRadius="23dp"
 
         >
 

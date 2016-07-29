@@ -9,9 +9,11 @@ public class TimeFrame {
 
     public Date startTime;
     public Date endTime;
+    public String service;
 
-    public TimeFrame(Date startTime, Date endTime) {
+    public TimeFrame(Date startTime, Date endTime, String service) {
         this.startTime = startTime;
         this.endTime = endTime;
+        this.service = service;
     }
 }

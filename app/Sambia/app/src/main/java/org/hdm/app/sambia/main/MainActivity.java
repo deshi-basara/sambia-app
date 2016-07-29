@@ -31,7 +31,7 @@ public class MainActivity extends Activity  {
      */
     int startMin = 0;
     int startHour = 6;
-    int endHour = 23;
+    int endHour = 24;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

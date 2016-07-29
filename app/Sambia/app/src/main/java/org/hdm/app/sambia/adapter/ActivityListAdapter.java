@@ -122,5 +122,9 @@ public class ActivityListAdapter extends RecyclerView.Adapter<View_Holder> imple
 
     @Override
     public void didLongClickOnView(View view, String title, View_Holder holder) {
+        // A Activity can be done for some one else
+        // TODO Implement Feature for long Click
+        // Add service true for TimeFrame
+        // Change Background to yellow in all Activitys (List / ActiveList / Calendar )
     }
 }

@@ -188,6 +188,7 @@ public class FragmentActivity extends BaseFragemnt implements
                 // Remove the active ActivityObject from the activeList
                 dataManager.removeActiveObject(activityObject);
 
+                // ToDo Implement Function when Activity is not longer than 1 Minute than do not count
                 // add ActivityObject to CalendarContentList
                 addActivtyObjectForCalenderContent(activityObject);
 
@@ -232,70 +233,74 @@ public class FragmentActivity extends BaseFragemnt implements
 
     private void addActivtyObjectForCalenderContent(ActivityObject activityObject) {
 
-        int startHour = activityObject.startTime.getHours();
-        int startMin = activityObject.startTime.getMinutes();
+        Date startTime = activityObject.startTime;
+        int startMin = startTime.getMinutes();
+
+        Date firstDate = activityObject.startTime;
+        int firstMin;
 
 
+
+        Calendar calTimeSlot = Calendar.getInstance();
         Calendar cal = Calendar.getInstance();
         Date currentDate = cal.getTime();
-        int currentMin = 0;
 
 
         // find current TimeSlot
         if (startMin < 15) {
-            currentMin = 0;
+            firstMin = 0;
         } else if (startMin < 30) {
-            currentMin = 15;
+            firstMin = 15;
         } else if (startMin < 45) {
-            currentMin = 30;
+            firstMin = 30;
         } else {
-            currentMin = 45;
+            firstMin = 45;
         }
 
+
         // Set Current TimeSlot
-        currentDate.setSeconds(0);
-        currentDate.setHours(startHour);
-        currentDate.setMinutes(currentMin);
-        cal.setTime(currentDate);
-        currentDate = cal.getTime();
+        firstDate.setSeconds(0);
+        firstDate.setMinutes(firstMin);
 
-        if (DEBUGMODE) Log.d(TAG, "currentDate " + currentDate);
 
-        // save once current activityTitle in map
-        dataManager.setCalenderMapEntry(currentDate.toString(), activityObject.title);
+        if (DEBUGMODE) Log.d(TAG, "c "
+                + firstDate + " || s "
+                + activityObject.startTime);
+
+
 
         // Debugging
         if (DEBUGMODE) {
-            ArrayList<String> list = dataManager.getCalendarMap().get(currentDate.toString());
-            if(DEBUGMODE) {
-                Log.d(TAG, "List entrys " + list.toString());
-                Log.d(TAG, "List size " + list.size());
-            }
+            ArrayList<String> list = dataManager.getCalendarMap().get(firstDate.toString());
+            Log.d(TAG, "List size; " + list.size() + " List entrys " + list.toString());
+
+//            cal.add(Calendar.HOUR, -1);
+//            startTime = cal.getTime();
+//
+//            calTimeSlot.setTime(firstDate);
+//            calTimeSlot.add(Calendar.HOUR, -1);
+//            firstDate = calTimeSlot.getTime();
         }
 
 
-        // check if endTime is outside currentTime (15 min slot)
-        // if true than safe activityTitle to all correspond time slots
-        while (currentDate.after(activityObject.endTime)) {
-            cal.setTime(currentDate);
+        while(startTime.before(currentDate)){
+            dataManager.setCalenderMapEntry(firstDate.toString(), activityObject.title);
+
+            // Count Start + 15 min
+            cal.setTime(startTime);
             cal.add(Calendar.MINUTE, 15);
-            currentDate = cal.getTime();
-            dataManager.setCalenderMapEntry(currentDate.toString(), activityObject.title);
+            startTime = cal.getTime();
 
-            if (DEBUGMODE) {
-                Log.d(TAG, "currentTime "
-                        + currentDate.toString()
-                        + "Title "
-                        + activityObject.title);
-            }
+            // Count FirstDate + 15 min
+            calTimeSlot.setTime(firstDate);
+            calTimeSlot.add(Calendar.MINUTE, 15);
+            firstDate = calTimeSlot.getTime();
         }
 
-        if (DEBUGMODE) {
-            Log.d(TAG, " " + activityObject.startTime.toString()
-                    + " " + activityObject.startTime.getHours()
-                    + " " + activityObject.startTime.getMinutes());
-        }
     }
+
+
+
 
 
 
@@ -350,7 +355,7 @@ public class FragmentActivity extends BaseFragemnt implements
         startDate = object.startTime;
 
         if(timer != null) {
-            stopCount();
+           // stopCount();
             Log.d(TAG, "StartCount " +holder.title);
         }
 

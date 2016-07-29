@@ -39,12 +39,12 @@ public class ActivityObject extends Object{
     // Dynamic parameters
     public boolean activeState = false;
     public String subCategoryName = "";
-    public Date startTime;
-    public Date endTime;
     public int count = 0;
     private long countt;
 
-
+    public Date startTime;
+    public Date endTime;
+    private String service;
 
     public ActivityObject() {
         timeFrameList = new ArrayList<>();
@@ -57,8 +57,9 @@ public class ActivityObject extends Object{
 
 
     public void saveTimeStamp() {
-        this.timeFrameList.add(new TimeFrame(this.startTime, this.endTime));
+        this.timeFrameList.add(new TimeFrame(this.startTime, this.endTime, this.service));
         this.startTime = null;
         this.endTime = null;
+        this.service = null;
     }
 }
