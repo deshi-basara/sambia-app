@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { SnackbarComponent } from '../snackbar';
 import { ActivityService } from '../shared/services/activity.service';
 import { ImageUpload } from '../shared/directives/image-upload.directive';
 
@@ -13,10 +14,11 @@ import { Item } from './item';
   selector: 'app-activity-detail',
   templateUrl: 'activity-detail.component.html',
   styleUrls: ['activity-detail.component.css'],
-  directives: [ImageUpload],
+  directives: [ImageUpload, SnackbarComponent],
   providers: [ActivityService]
 })
 export class ActivityDetailComponent implements OnInit {
+  @ViewChild(SnackbarComponent) snackbar: SnackbarComponent;
   private subscribedRoute: any;
 
   /**
@@ -61,8 +63,7 @@ export class ActivityDetailComponent implements OnInit {
               this.groupModel = activityGroup[0];
             },
             error => {
-              // TODO: Implement error feedback
-              console.log(error);
+              this.snackbar.showSnackbar(error, true);
             }
           );
       }
@@ -83,10 +84,10 @@ export class ActivityDetailComponent implements OnInit {
     this.activityService.putActivityGroup(this.groupModel)
       .subscribe(
         activityGroup => {
-          console.log(activityGroup);
+          this.snackbar.showSnackbar('Activity-Group successfully updated.', true);
         },
         error => {
-          console.log(error);
+          this.snackbar.showSnackbar(error, true);
         }
       );
   }

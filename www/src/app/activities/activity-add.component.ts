@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { SnackbarComponent } from '../snackbar';
 import { ActivityService } from '../shared/services/activity.service';
 import { ImageUpload } from '../shared/directives/image-upload.directive';
 
@@ -13,10 +14,11 @@ import { Item } from './item';
   selector: 'app-activity-add',
   templateUrl: 'activity-add.component.html',
   styleUrls: ['activity-add.component.css'],
-  directives: [ImageUpload],
+  directives: [ImageUpload, SnackbarComponent],
   providers: [ActivityService]
 })
 export class ActivityAddComponent implements OnInit {
+  @ViewChild(SnackbarComponent) snackbar: SnackbarComponent;
 
   /**
    * Attributes
@@ -56,14 +58,16 @@ export class ActivityAddComponent implements OnInit {
     // cast strings from select-option into boolean
     this.groupModel.enabled = (this.groupModel.enabled == 'true') ? true : false;
 
+    // was there at least on activity added
+
     // submit to server
     this.activityService.postActivityGroup(this.groupModel)
       .subscribe(
         activityGroup => {
-          this.router.navigate(['/activities']);
+          this.snackbar.showSnackbar('Activity-Group was successfully created.', false);
         },
         error => {
-          console.log(error);
+          this.snackbar.showSnackbar(error, true);
         }
       );
   }

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/common';
 
+import { SnackbarComponent } from '../snackbar';
 import { SubjectService } from '../shared/services/subject.service';
 
 import { Subject } from './subject';
@@ -11,9 +12,12 @@ import { Subject } from './subject';
   selector: 'app-subject-add',
   templateUrl: 'subject-add.component.html',
   styleUrls: ['subject-add.component.css'],
-  providers: [SubjectService]
+  providers: [SubjectService],
+  directives: [SnackbarComponent]
 })
 export class SubjectAddComponent implements OnInit {
+  @ViewChild(SnackbarComponent) snackbar: SnackbarComponent;
+
   subjectModel = new Subject();
   educationArray = ['Student', 'Farmer'];
 
@@ -22,14 +26,21 @@ export class SubjectAddComponent implements OnInit {
     private subjectService: SubjectService
   ) {}
 
+  /**
+   * Executed when the subject-form is submitted.
+   */
   onSubmit() {
     this.subjectService.postSubject(this.subjectModel)
       .subscribe(
         result => {
-          this.router.navigate(['/subjects']);
+          this.snackbar.showSnackbar('Subject was successfully created.', false);
+
+          setTimeout(() => {
+            this.router.navigate(['/subjects']);
+          }, 2000);
         },
         error => {
-          console.log(error);
+          this.snackbar.showSnackbar(error, true);
         }
       )
   }

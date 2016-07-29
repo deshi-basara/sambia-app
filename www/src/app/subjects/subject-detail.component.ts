@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { SnackbarComponent } from '../snackbar';
 
 import { SubjectService } from '../shared/services/subject.service';
 
@@ -12,14 +14,18 @@ import { Subject } from './subject';
   styleUrls: ['subject-detail.component.css'],
   providers: [
     SubjectService
-  ]
+  ],
+  directives: [SnackbarComponent]
 })
 export class SubjectDetailComponent implements OnInit {
+  @ViewChild(SnackbarComponent) snackbar: SnackbarComponent;
+
   private subscribedRoute: any;
   educationArray = ['Student', 'Farmer'];
   subjectModel: Subject = new Subject();
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private subjectService: SubjectService
   ) {}
@@ -37,8 +43,7 @@ export class SubjectDetailComponent implements OnInit {
             this.subjectModel = result;
           },
           error => {
-            //@todo print error
-            console.log(error);
+            this.snackbar.showSnackbar(error, true);
           }
         );
       }
@@ -60,12 +65,14 @@ export class SubjectDetailComponent implements OnInit {
     // make an update-request
     this.subjectService.putSubject(this.subjectModel).subscribe(
       result => {
-        //@todo implement feedback
-        console.log(result);
+        this.snackbar.showSnackbar('Subject was successfully updated.', false);
+
+        setTimeout(() => {
+          this.router.navigate(['/subjects']);
+        }, 2000);
       },
       error => {
-        //@todo print error
-        console.log(error);
+        this.snackbar.showSnackbar(error, true);
       }
     )
   }
