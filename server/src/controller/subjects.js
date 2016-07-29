@@ -106,6 +106,9 @@ class SubjectsController {
     //  parse upload
     const subject = req.body;
 
+    console.log('saveSubject');
+    console.log(subject);
+
     // save into db
     return Subject.create(subject)
       .then((entry) =>
