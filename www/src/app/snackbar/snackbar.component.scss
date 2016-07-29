@@ -1,0 +1,37 @@
+@import "../shared/globals";
+
+.snackbar {
+  position: absolute;
+  min-height: 14px;
+  width: 50%;
+  left: -50px;
+  margin-left: 25%;
+  bottom: -30px;
+  padding: 18px 24px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+
+  font-family: $font-primary;
+  font-size: 14px;
+  background-color: $grey;
+  color: $white;
+  line-height: 22px;
+  opacity: 0;
+  cursor: pointer;
+
+  transition-property: opacity, bottom;
+  transition-duration: 0.5s;
+  transition-timing-function: ease;
+
+  &.error {
+    background-color: $light-red;
+  }
+
+  &.visible {
+    opacity: 1;
+    bottom: 20px;
+  }
+}

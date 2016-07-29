@@ -73,6 +73,7 @@ const barrels: string[] = [
   'app/subjects/subject-add',
   'app/activities',
   'app/activity-add',
+  'app/snackbar',
   /** @cli-barrel */
 ];
 
