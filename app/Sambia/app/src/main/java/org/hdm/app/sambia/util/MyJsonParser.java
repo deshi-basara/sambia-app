@@ -3,11 +3,8 @@ package org.hdm.app.sambia.util;
 
 import android.util.Log;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 import org.hdm.app.sambia.datastorage.ActivityObject;
 import org.hdm.app.sambia.datastorage.ActivityObjectMap;
@@ -18,10 +15,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.hdm.app.sambia.util.Consts.*;
 
 
 public class MyJsonParser {
@@ -70,7 +67,7 @@ public class MyJsonParser {
             //Convert object to JSON string
             String jsonInString = mapper.writeValueAsString(user);
            Log.d(TAG, " "+ jsonInString);
-
+            
 //            //Convert object to JSON string and pretty print
 //            jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
 //            Log.d(TAG, " "+ jsonInString);
@@ -84,18 +81,14 @@ public class MyJsonParser {
     }
 
 
-    private static User createDummyUser(){
+    private User createDummyUser(){
 
         User user = new User();
 
         Calendar cal = Calendar.getInstance();
         Date cDate = cal.getTime();
 
-        user.date = cDate.getYear() +
-                ":" + cDate.getMonth() +
-                ":" + cDate.getDay();
-
-
+        user.date = cDate.getYear() + ":" + cDate.getMonth() + ":" + cDate.getDay();
         user.user_id = "fdsjhf3738";
 
         Map<String, ActivityObject> map = DataManager.getInstance().getActivityMap();
@@ -104,34 +97,28 @@ public class MyJsonParser {
 
         for (Map.Entry<String, ActivityObject> entry : map.entrySet()) {
             ActivityObject object = entry.getValue();
-            String _id = object._id;
+
+            // Create new Log Object
+            Logs logs = new Logs();
+            logs._id = object._id;
+
+            // Get TimeFrameList - with all tracked timeframes from the activity
             ArrayList<TimeFrame> list = object.timeFrameList;
+//            if(DEBUGMODUS) Log.d(TAG, object.title + " " + object.timeFrameList.size());
 
+            // Inner List add all tracked timeFrame in String format to TimeStamp List
+            for(int i = 0; i< list.size(); i++){
+                TimeFrame frame = list.get(i);
+                TimeStamp timeStamp = new TimeStamp();
+                timeStamp.start = frame.startTime.getHours() + ":" + frame.startTime.getMinutes();
+                timeStamp.end = frame.startTime.getHours() + ":" + frame.startTime.getMinutes();
+                logs.timeStamps.add(timeStamp);
+            }
 
+            user.logs.add(logs);
         }
-
-
-
 
         return user;
 
     }
-
-
-
-
-    private static class User {
-
-        public String date;
-        public String user_id;
-        public List<TimeFrame> logs;
-    }
-
-    private static class Logs {
-
-        public String _id;
-        public List<String[]> timestamps;
-    }
-
-    int count =  0;
 }

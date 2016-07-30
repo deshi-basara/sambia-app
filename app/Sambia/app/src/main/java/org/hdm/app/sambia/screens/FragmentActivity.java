@@ -21,6 +21,7 @@ import org.hdm.app.sambia.listener.ActiveActivityListOnClickListener;
 import org.hdm.app.sambia.listener.ActivityListOnClickListener;
 import org.hdm.app.sambia.adapter.ActivityListAdapter;
 import org.hdm.app.sambia.adapter.ActiveActivityListAdapter;
+import org.hdm.app.sambia.util.MyJsonParser;
 import org.hdm.app.sambia.util.View_Holder;
 
 import java.lang.reflect.Array;
@@ -173,7 +174,6 @@ public class FragmentActivity extends BaseFragemnt implements
 
             } else {
 
-//                stopCount();
 
                 // Deactivate Activity
                 activityObject.activeState = false;
@@ -195,7 +195,11 @@ public class FragmentActivity extends BaseFragemnt implements
                 // Save Time and subCategory in Dsata
                 activityObject.saveTimeStamp();
 
-//                activityObject.stopCount();
+
+                // ToDo Save File on External
+                // ToDo Upload to Server
+                // ToDo Save Objects when App is closed
+                new MyJsonParser().createJsonFromObject();
             }
         }
 

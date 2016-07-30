@@ -321,8 +321,7 @@ public class FileLoader {
         }
 
 
-        // ToDo Upload Mechanism
-        jParser.createJsonFromObject();
+
     }
 
 
