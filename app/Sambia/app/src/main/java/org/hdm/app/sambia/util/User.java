@@ -34,7 +34,7 @@ public class User {
 
         this.user_id = "fdsjhf3738";
 
-        Map<String, ActivityObject> map = DataManager.getInstance().getActivityMap();
+        Map<String, ActivityObject> map = DataManager.getInstance().getObjectMap();
 
 
 

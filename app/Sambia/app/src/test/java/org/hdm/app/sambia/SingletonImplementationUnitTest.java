@@ -27,7 +27,7 @@ public class SingletonImplementationUnitTest {
             DataManager.getInstance().setActivityObject(activityObject);
         }
 
-        int actualSize = DataManager.getInstance().getActivityMap().size();
+        int actualSize = DataManager.getInstance().getObjectMap().size();
         int expectedSize = 1;
 
         assertEquals(actualSize, expectedSize);

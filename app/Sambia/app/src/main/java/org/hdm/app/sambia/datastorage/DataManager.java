@@ -36,6 +36,8 @@ public class DataManager {
 
 
 
+    public ArrayList<String> activeList = new ArrayList<>();
+
 
 
     public boolean createActivityObject(String name, ActivityObject activityObject) {
@@ -84,7 +86,7 @@ public class DataManager {
         return activityMap.size();
     }
 
-    public LinkedHashMap getActivityMap() {
+    public LinkedHashMap getObjectMap() {
         return activityMap;
     }
 

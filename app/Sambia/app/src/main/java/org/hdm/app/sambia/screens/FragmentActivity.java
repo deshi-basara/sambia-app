@@ -19,19 +19,14 @@ import org.hdm.app.sambia.datastorage.ActivityObject;
 import org.hdm.app.sambia.datastorage.DataManager;
 import org.hdm.app.sambia.listener.ActiveActivityListOnClickListener;
 import org.hdm.app.sambia.listener.ActivityListOnClickListener;
-import org.hdm.app.sambia.adapter.ActivityListAdapter;
-import org.hdm.app.sambia.adapter.ActiveActivityListAdapter;
-import org.hdm.app.sambia.util.MyJsonParser;
+import org.hdm.app.sambia.adapter.ObjectListAdapter;
+import org.hdm.app.sambia.adapter.ActiveListAdapter;
 import org.hdm.app.sambia.util.View_Holder;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -53,10 +48,9 @@ public class FragmentActivity extends BaseFragemnt implements
     private RecyclerView recyclerView;
     private RecyclerView recyclerView_activeData;
 
-    private ActivityListAdapter adapter;
-    private ActiveActivityListAdapter activeAdapter;
+    private ObjectListAdapter objectAdapter;
+    private ActiveListAdapter activeAdapter;
 
-    private List<ActivityObject> activityObject;
     private Date startDate;
     private Timer timer;
     private long countt;
@@ -64,6 +58,8 @@ public class FragmentActivity extends BaseFragemnt implements
 
     Handler handler = new Handler();
 
+    private ArrayList<String> activityList;
+    private ArrayList<String> activityObject;
 
 
     @Override
@@ -71,8 +67,8 @@ public class FragmentActivity extends BaseFragemnt implements
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_activitys, container, false);
         initMenu(view);
-        initActiveActivityList();
-        initActivityList();
+        initActiveList();
+        initObjectList();
         return view;
     }
 
@@ -81,6 +77,7 @@ public class FragmentActivity extends BaseFragemnt implements
     public void onResume() {
         super.onResume();
         editableMode();
+        updateActiveList();
     }
 
     @Override
@@ -93,10 +90,10 @@ public class FragmentActivity extends BaseFragemnt implements
      ***********************/
 
 
-    private void initActiveActivityList() {
+    private void initActiveList() {
 
-        activityObject = new ArrayList<>(dataManager.getActiveMap().values());
-        activeAdapter = new ActiveActivityListAdapter(activityObject);
+        activityList = new ArrayList<>();
+        activeAdapter = new ActiveListAdapter(activityList);
         activeAdapter.setListener(this);
         recyclerView_activeData = (RecyclerView) view.findViewById(R.id.rv_active);
         recyclerView_activeData.setAdapter(activeAdapter);
@@ -105,13 +102,15 @@ public class FragmentActivity extends BaseFragemnt implements
                 var.activeListRow, StaggeredGridLayoutManager.HORIZONTAL));
     }
 
-    private void initActivityList() {
 
-        activityObject = new ArrayList<>(dataManager.getActivityMap().values());
-        adapter = new ActivityListAdapter(activityObject);
-        adapter.setListener(this);
+
+    private void initObjectList() {
+
+        activityObject = new ArrayList<>(dataManager.getObjectMap().keySet());
+        objectAdapter = new ObjectListAdapter(activityObject);
+        objectAdapter.setListener(this);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_list);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(objectAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(
                 var.activityListRows, StaggeredGridLayoutManager.VERTICAL));
@@ -172,6 +171,7 @@ public class FragmentActivity extends BaseFragemnt implements
                 dataManager.setActiveObject(activityObject);
 
 
+                dataManager.activeList.add(activityObject.title);
             } else {
 
 
@@ -194,6 +194,9 @@ public class FragmentActivity extends BaseFragemnt implements
 
                 // Save Time and subCategory in Dsata
                 activityObject.saveTimeStamp();
+
+
+                dataManager.activeList.remove(activityObject.title);
             }
         }
 
@@ -211,8 +214,8 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
         // Update both RecycleViewAdapters
-        updateAdpterList();
-        updateActiveAdaperList();
+//        updateObjectList();
+        updateActiveList();
 
 
         // get activeMap look into and for every entry add to
@@ -322,14 +325,14 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
     // load edited List and update ActivityObjectListAdapter
-    private void updateAdpterList() {
-        adapter.list = new ArrayList<>(dataManager.getActivityMap().values());
-        adapter.notifyDataSetChanged();
+    private void updateObjectList() {
+        objectAdapter.list = new ArrayList<>(dataManager.getObjectMap().values());
+        objectAdapter.notifyDataSetChanged();
     }
 
     // load edited List and update activeActivityObjectListAdapter
-    private void updateActiveAdaperList() {
-        activeAdapter.list = new ArrayList<>(dataManager.getActiveMap().values());
+    private void updateActiveList() {
+        activeAdapter.list = dataManager.activeList;
         activeAdapter.notifyDataSetChanged();
     }
 

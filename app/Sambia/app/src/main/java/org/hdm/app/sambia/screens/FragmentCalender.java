@@ -92,7 +92,7 @@ public class FragmentCalender extends BaseFragemnt implements
 
 
     private void initCalenderList() {
-        data = dataManager.getActivityMap();
+        data = dataManager.getObjectMap();
         calendar = dataManager.getCalendarMap();
         adapter = new CalendarListAdapter(getActivity(),data, calendar);
         adapter.setListener(this);
