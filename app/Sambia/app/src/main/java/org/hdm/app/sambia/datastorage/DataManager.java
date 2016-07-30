@@ -13,7 +13,7 @@ import static org.hdm.app.sambia.util.Consts.DEBUGMODE;
  */
 public class DataManager {
 
-    private final String TAG = "DataManager";
+    private final String TAG = "eEventManager";
     // Instance from DaataManager
     private static DataManager instance = null;
 
@@ -24,13 +24,10 @@ public class DataManager {
     // It is used as DataBase from every Screen
     private LinkedHashMap<String, ActivityObject> activityMap = new LinkedHashMap<>();
 
-
     // In this map are all the active ActivityObjects stored
     // It is used from the FragmentActivity RecycleView to display all the Activitys
     // which are current recorded
     private LinkedHashMap<String, ActivityObject> activeMap = new LinkedHashMap<>();
-
-    public ArrayList<String> activeList = new ArrayList<>();
 
 
     // In this map is stored the activitys for Calender list
@@ -83,7 +80,7 @@ public class DataManager {
     }
 
 
-    public int getActivityCount() {
+    public int getAcrivityCount() {
         return activityMap.size();
     }
 
