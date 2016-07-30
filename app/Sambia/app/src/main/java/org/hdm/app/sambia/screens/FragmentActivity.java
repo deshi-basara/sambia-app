@@ -52,14 +52,11 @@ public class FragmentActivity extends BaseFragemnt implements
     private ActiveListAdapter activeAdapter;
 
     private Date startDate;
-    private Timer timer;
     private long countt;
 
 
-    Handler handler = new Handler();
 
-    private ArrayList<String> activityList;
-    private ArrayList<String> activityObject;
+
 
 
     @Override
@@ -79,7 +76,6 @@ public class FragmentActivity extends BaseFragemnt implements
         updateActiveList();
         updateObjectList();
         editableMode();
-
     }
 
     @Override
@@ -94,8 +90,7 @@ public class FragmentActivity extends BaseFragemnt implements
 
     private void initActiveList() {
 
-        activityList = new ArrayList<>();
-        activeAdapter = new ActiveListAdapter(activityList);
+        activeAdapter = new ActiveListAdapter(new ArrayList<String>());
         activeAdapter.setListener(this);
         recyclerView_activeData = (RecyclerView) view.findViewById(R.id.rv_active);
         recyclerView_activeData.setAdapter(activeAdapter);
@@ -108,8 +103,7 @@ public class FragmentActivity extends BaseFragemnt implements
 
     private void initObjectList() {
 
-        activityObject = new ArrayList<>(dataManager.getObjectMap().keySet());
-        objectAdapter = new ObjectListAdapter(activityObject);
+        objectAdapter = new ObjectListAdapter((List) new ArrayList<>(dataManager.getObjectMap().keySet()));
         objectAdapter.setListener(this);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_list);
         recyclerView.setAdapter(objectAdapter);
@@ -150,7 +144,7 @@ public class FragmentActivity extends BaseFragemnt implements
             // when Activity is not active
             if (!activityObject.activeState) {
 
-                // ToDo Show DialogFragment
+                // ToDo Show DialogFragment  -  not at the Moment had to bee discussed in Africa
 //            if(list.get(position).sub_category && list.get(position).activeState) {
 //                DFragment dFragment = new DFragment(dsata);
 //                FragmentManager fm = fr.getFragmentManager();
@@ -169,13 +163,8 @@ public class FragmentActivity extends BaseFragemnt implements
                 // Count how many activity are active
                 var.activeCount++;
 
-                // add the active ActivityObject to the activeList
-                dataManager.setActiveObject(activityObject);
-
-
                 dataManager.activeList.add(activityObject.title);
             } else {
-
 
                 // Deactivate Activity
                 activityObject.activeState = false;
@@ -187,10 +176,8 @@ public class FragmentActivity extends BaseFragemnt implements
                 //Count how many activitys are active
                 var.activeCount--;
 
-                // Remove the active ActivityObject from the activeList
-                dataManager.removeActiveObject(activityObject);
 
-                // ToDo Implement Function when Activity is not longer than 1 Minute than do not count
+                // ToDo Implement Function when Activity is not longer than 1 Minute active than do not count
                 // add ActivityObject to CalendarContentList
                 addActivtyObjectForCalenderContent(activityObject);
 
@@ -215,18 +202,16 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
 
-        // Update both RecycleViewAdapters
-//        updateObjectList();
         updateActiveList();
-
         if(holder == null) updateObjectList();
 
 
         // get activeMap look into and for every entry add to
         if (DEBUGMODE) {
-            Log.d(TAG, "aaa " + activityObject.title + " " + activityObject.activeState + " " + activityObject.timeFrameList.size());
-//            Log.d(TAG, "activeCount " + var.activeCount);
-//            Log.d(TAG, "activeCount " + var.activeCount);
+            Log.d(TAG, "aaa "
+                    + activityObject.title + " "
+                    + activityObject.activeState + " "
+                    + activityObject.timeFrameList.size());
         }
     }
 
@@ -302,7 +287,6 @@ public class FragmentActivity extends BaseFragemnt implements
             calTimeSlot.add(Calendar.MINUTE, 15);
             firstDate = calTimeSlot.getTime();
         }
-
     }
 
 
@@ -339,59 +323,6 @@ public class FragmentActivity extends BaseFragemnt implements
     private void updateActiveList() {
         activeAdapter.list = dataManager.activeList;
         activeAdapter.notifyDataSetChanged();
-    }
-
-
-
-
-    public void stopCount() {
-
-        if(timer != null){
-            Log.d(TAG, "stopThead " + timer.toString());
-            timer.cancel();
-        }
-
-    }
-
-
-
-    public void runCount(final View_Holder holder) {
-
-        ActivityObject object = DataManager.getInstance().getActivityObject(holder.title.getText().toString());
-        startDate = object.startTime;
-
-        if(timer != null) {
-           // stopCount();
-            Log.d(TAG, "StartCount " +holder.title);
-        }
-
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-
-                                      @Override
-                                      public void run() {
-                                          Date currentDate = Calendar.getInstance().getTime();
-                                          countt = (currentDate.getTime() - startDate.getTime())/1000;
-
-                                          Log.d(TAG, timer.toString()+  " "  + countt);
-
-                                          handler.post(new Runnable() {
-                                              public void run() {
-                                                  int seconds = (int) countt % 60;
-                                                  int minutes = (int) countt / 60;
-                                                  int houres = minutes / 60;
-                                                  String stringTime = String.format("%02d:%02d:%02d", houres, minutes, seconds);
-                                                  holder.time.setText(stringTime);
-                                                  //count++;
-                                              }
-                                          });
-
-                                      }
-                                  },
-                //Set how long before to start calling the TimerTask (in milliseconds)
-                0,
-                //Set the amount of time between each execution (in milliseconds)
-                1000);
     }
 
 }

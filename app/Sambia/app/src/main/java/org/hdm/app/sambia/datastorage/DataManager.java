@@ -24,10 +24,6 @@ public class DataManager {
     // It is used as DataBase from every Screen
     private LinkedHashMap<String, ActivityObject> activityMap = new LinkedHashMap<>();
 
-    // In this map are all the active ActivityObjects stored
-    // It is used from the FragmentActivity RecycleView to display all the Activitys
-    // which are current recorded
-    private LinkedHashMap<String, ActivityObject> activeMap = new LinkedHashMap<>();
 
 
     // In this map is stored the activitys for Calender list
@@ -82,107 +78,10 @@ public class DataManager {
     }
 
 
-    public int getAcrivityCount() {
-        return activityMap.size();
-    }
-
     public LinkedHashMap getObjectMap() {
         return activityMap;
     }
-
-
-
-
-
-
-
-    /************
-     * create new
-     ************/
-
-
-    public ArrayList<ActivityObject> getActivityObject() {
-        return mActivityObject;
-    }
-
-
-
-    public void setActivityObjectArrayList(ArrayList<ActivityObject> activityObject) {
-        this.mActivityObject = activityObject;
-    }
-
-
-
-
-
-    public ActivityObject findById(int id) {
-        return mActivityObject.get(id);
-    }
-
-    /***********
-     * create new
-     ***********/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public boolean setActiveObject(ActivityObject activityObject) {
-        if (activityObject != null && activeMap != null) {
-            activeMap.put(activityObject.title, activityObject);
-            return true;
-        }
-        return false;
-    }
-
-
-
-    public boolean removeActiveObject(String name) {
-        if (name != null && activeMap != null) {
-            activeMap.remove(name);
-            return true;
-        }
-        return false;
-    }
-
-
-
-
-    public boolean removeActiveObject(ActivityObject activityObject) {
-        if (activityObject != null && activeMap != null) {
-            activeMap.remove(activityObject.title);
-            return true;
-        }
-        return false;
-    }
-
-    public LinkedHashMap getActiveMap() {
-        return activeMap;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
     public boolean setCalenderMapEntry(String key, String activity) {
 
