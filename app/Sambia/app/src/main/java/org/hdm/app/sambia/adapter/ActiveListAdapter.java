@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.datastorage.ActivityObject;
+import org.hdm.app.sambia.datastorage.DataManager;
 import org.hdm.app.sambia.listener.ActiveActivityListOnClickListener;
 import org.hdm.app.sambia.listener.ViewHolderListener;
 import org.hdm.app.sambia.screens.FragmentActivity;
@@ -17,17 +18,18 @@ import java.util.List;
 /**
  * Created by Hannes on 27.05.2016.
  */
-public class ActiveActivityListAdapter extends RecyclerView.Adapter<View_Holder> implements
+public class ActiveListAdapter extends RecyclerView.Adapter<View_Holder> implements
         ViewHolderListener {
 
-    private final String TAG = "ActiveActivityListAdapter";
+    private final String TAG = "aActiveActivityListAdapter";
 
 
-    public List<ActivityObject> list = null;
+    public List<String> list = null;
     private ActiveActivityListOnClickListener listener;
 
+    public DataManager dataManager = DataManager.getInstance();
 
-    public ActiveActivityListAdapter(List<ActivityObject> activityObject) {
+    public ActiveListAdapter(List<String> activityObject) {
         this.list = activityObject;
     }
 
@@ -47,8 +49,13 @@ public class ActiveActivityListAdapter extends RecyclerView.Adapter<View_Holder>
 
         //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
         holder.setListener(this);
-        holder.title.setText(list.get(position).title);
-        if(list.get(position).image != null ) holder.imageView.setImageBitmap(list.get(position).image);
+//        holder.title.setText(list.get(position).title);
+//        if(list.get(position).image != null ) holder.imageView.setImageBitmap(list.get(position).image);
+
+        holder.title.setText(dataManager.getActivityObject(list.get(position)).title);
+        if(dataManager.getActivityObject(list.get(position)).image != null ) {
+            holder.imageView.setImageBitmap(dataManager.getActivityObject(list.get(position)).image);
+        }
     }
 
 
@@ -72,7 +79,7 @@ public class ActiveActivityListAdapter extends RecyclerView.Adapter<View_Holder>
 
 
     // Insert a new item to the RecyclerView on a predefined position
-    public void insert(int position, ActivityObject activityObject) {
+    public void insert(int position, String activityObject) {
         list.add(position, activityObject);
         notifyItemInserted(position);
     }

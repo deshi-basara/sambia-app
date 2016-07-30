@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.datastorage.ActivityObject;
+import org.hdm.app.sambia.datastorage.DataManager;
 import org.hdm.app.sambia.listener.ActivityListOnClickListener;
 import org.hdm.app.sambia.listener.ViewHolderListener;
 import org.hdm.app.sambia.screens.FragmentActivity;
@@ -19,19 +20,20 @@ import java.util.List;
 /**
  * Created by Hannes on 27.05.2016.
  */
-public class ActivityListAdapter extends RecyclerView.Adapter<View_Holder> implements
+public class ObjectListAdapter extends RecyclerView.Adapter<View_Holder> implements
         ViewHolderListener {
 
-    private final String TAG = "ActivityListAdapter";
+    private final String TAG = "ObjectListAdapter";
 
 
     public List<ActivityObject> list = null;
     private ActivityListOnClickListener listener;
     public Variables var = Variables.getInstance();
 
+    public DataManager dataManager = DataManager.getInstance();
 
 
-    public ActivityListAdapter(List<ActivityObject> activityObject) {
+    public ObjectListAdapter(List<ActivityObject> activityObject) {
         this.list = activityObject;
     }
 
@@ -53,6 +55,9 @@ public class ActivityListAdapter extends RecyclerView.Adapter<View_Holder> imple
     public void onBindViewHolder(View_Holder holder, int position) {
         //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
         holder.setListener(this);
+
+
+
         holder.title.setText(list.get(position).title);
         holder.activityList = true;
         if(list.get(position).image != null ) holder.imageView.setImageBitmap(list.get(position).image);
