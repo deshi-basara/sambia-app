@@ -17,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import static org.hdm.app.sambia.util.Consts.*;
 
@@ -54,71 +55,25 @@ public class MyJsonParser {
     }
 
 
+    public String logName;
 
-
-    public void createJsonFromObject() {
+    public String createLogJsonFromActivityObjects() {
 
         ObjectMapper mapper = new ObjectMapper();
-
-        //For testing
-        User user = createDummyUser();
-
-        try {
-            //Convert object to JSON string
-            String jsonInString = mapper.writeValueAsString(user);
-           Log.d(TAG, " "+ jsonInString);
-            
-//            //Convert object to JSON string and pretty print
-//            jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
-//            Log.d(TAG, " "+ jsonInString);
-
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-
-    private User createDummyUser(){
+        String jsonInString;
 
         User user = new User();
 
-        Calendar cal = Calendar.getInstance();
-        Date cDate = cal.getTime();
 
-        user.date = cDate.getYear() + ":" + cDate.getMonth() + ":" + cDate.getDay();
-        user.user_id = "fdsjhf3738";
-
-        Map<String, ActivityObject> map = DataManager.getInstance().getActivityMap();
-
-
-
-        for (Map.Entry<String, ActivityObject> entry : map.entrySet()) {
-            ActivityObject object = entry.getValue();
-
-            // Create new Log Object
-            Logs logs = new Logs();
-            logs._id = object._id;
-
-            // Get TimeFrameList - with all tracked timeframes from the activity
-            ArrayList<TimeFrame> list = object.timeFrameList;
-//            if(DEBUGMODUS) Log.d(TAG, object.title + " " + object.timeFrameList.size());
-
-            // Inner List add all tracked timeFrame in String format to TimeStamp List
-            for(int i = 0; i< list.size(); i++){
-                TimeFrame frame = list.get(i);
-                TimeStamp timeStamp = new TimeStamp();
-                timeStamp.start = frame.startTime.getHours() + ":" + frame.startTime.getMinutes();
-                timeStamp.end = frame.startTime.getHours() + ":" + frame.startTime.getMinutes();
-                logs.timeStamps.add(timeStamp);
-            }
-
-            user.logs.add(logs);
+        try {
+            //Convert object to JSON string
+            jsonInString = mapper.writeValueAsString(user);
+            logName  = user.date + "-"+ user.user_id + "-activities.txt";
+            return jsonInString;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
-
-        return user;
 
     }
 }

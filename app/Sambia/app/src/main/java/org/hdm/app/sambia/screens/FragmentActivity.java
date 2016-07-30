@@ -194,12 +194,6 @@ public class FragmentActivity extends BaseFragemnt implements
 
                 // Save Time and subCategory in Dsata
                 activityObject.saveTimeStamp();
-
-
-                // ToDo Save File on External
-                // ToDo Upload to Server
-                // ToDo Save Objects when App is closed
-                new MyJsonParser().createJsonFromObject();
             }
         }
 

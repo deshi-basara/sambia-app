@@ -17,6 +17,7 @@ import org.hdm.app.sambia.main.MainActivity;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -373,4 +374,35 @@ public class FileLoader {
 
 
 
+    public void saveDataOnExternal() {
+
+        MyJsonParser parser = new MyJsonParser();
+        String logFile = parser.createLogJsonFromActivityObjects();
+
+        FileOutputStream stream = null;
+        String path = enviroment.toString() + "/" + getPropertiesFromAssets(PROPERTIESFILE)
+                .getProperty(LOGFOLDER);
+
+
+        File file = new File(path, parser.logName);
+
+
+        try {
+            stream = new FileOutputStream(file);
+            stream.write(logFile.getBytes());
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        finally {
+            try {
+                stream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
