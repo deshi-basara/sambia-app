@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.hdm.app.sambia.adapter.CalendarListAdapter;
-import org.hdm.app.sambia.adapter.CalendarListItemAdapter;
+import org.hdm.app.sambia.adapter.CalendarItemListAdapter;
 import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.datastorage.DataManager;
 import org.hdm.app.sambia.datastorage.ActivityObject;
@@ -20,6 +20,8 @@ import org.hdm.app.sambia.listener.ViewHolderListener;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -57,6 +59,7 @@ public class View_Holder extends RecyclerView.ViewHolder implements
     public String id ="";
 
     public boolean activityList;
+    private TimerTask timerTask;
 
     /************** Constructors ******************/
 
@@ -75,7 +78,7 @@ public class View_Holder extends RecyclerView.ViewHolder implements
     }
 
 
-    public View_Holder(View v, CalendarListItemAdapter calendarListItemAdapter) {
+    public View_Holder(View v, CalendarItemListAdapter calendarItemListAdapter) {
         super(v);
         initActivityItemLayout();
     }
@@ -137,7 +140,6 @@ public class View_Holder extends RecyclerView.ViewHolder implements
             iv_play.setVisibility(View.VISIBLE);
             time.setVisibility(View.VISIBLE);
             if(activityList) runCount();
-//           runn(this);
 
         } else {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
@@ -150,14 +152,7 @@ public class View_Holder extends RecyclerView.ViewHolder implements
             iv_play.setVisibility(View.GONE);
             time.setVisibility(View.GONE);
             stopCount();
-
         }
-    }
-
-    private void runn(View_Holder view_holder) {
-        ActivityObject object = DataManager.getInstance().getActivityObject(title.getText().toString());
-//        object.runCount(view_holder);
-
     }
 
 
@@ -182,21 +177,15 @@ public class View_Holder extends RecyclerView.ViewHolder implements
                 cv.setCardBackgroundColor(cv.getResources().getColor(R.color.gray));
             }
         }
-
     }
 
 
 
 
     public void stopCount() {
-
-        if(timer != null){
-            Log.d(TAG, "stopThead " + timer.toString());
-            timer.cancel();
-        }
-
+        if(timer != null)timer.cancel();
+        if(timerTask != null) timerTask.cancel();
     }
-
 
 
     public void runCount() {
@@ -210,8 +199,7 @@ public class View_Holder extends RecyclerView.ViewHolder implements
         }
 
         timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-
+        timerTask = new TimerTask() {
             @Override
             public void run() {
                 Date currentDate = Calendar.getInstance().getTime();
@@ -229,13 +217,10 @@ public class View_Holder extends RecyclerView.ViewHolder implements
                         //count++;
                     }
                 });
-
             }
-        },
-        //Set how long before to start calling the TimerTask (in milliseconds)
-        0,
-        //Set the amount of time between each execution (in milliseconds)
-        1000);
+        };
+
+        timer.scheduleAtFixedRate(timerTask,0, 1000);
     }
 
     
@@ -257,13 +242,11 @@ public class View_Holder extends RecyclerView.ViewHolder implements
 
     }
 
-
     @Override
     public boolean onLongClick(View v) {
         if(listener != null) listener.didLongClickOnView(v, title.getText().toString(), this);
         return false;
     }
-
 
 
 }

@@ -81,7 +81,7 @@ public class DataManager {
     public LinkedHashMap getObjectMap() {
         return activityMap;
     }
-    
+
 
     public boolean setCalenderMapEntry(String key, String activity) {
 

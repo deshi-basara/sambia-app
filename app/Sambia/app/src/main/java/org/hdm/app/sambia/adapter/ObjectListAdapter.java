@@ -15,6 +15,7 @@ import org.hdm.app.sambia.screens.FragmentActivity;
 import org.hdm.app.sambia.util.Variables;
 import org.hdm.app.sambia.util.View_Holder;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -25,12 +26,12 @@ public class ObjectListAdapter extends RecyclerView.Adapter<View_Holder> impleme
 
     private final String TAG = "ObjectListAdapter";
 
-
     public List<String> list = null;
     private ActivityListOnClickListener listener;
     public Variables var = Variables.getInstance();
-
     public DataManager dataManager = DataManager.getInstance();
+    public String activeTime;
+    public boolean leave;
 
 
     public ObjectListAdapter(List<String> activityObject) {
@@ -54,6 +55,7 @@ public class ObjectListAdapter extends RecyclerView.Adapter<View_Holder> impleme
     @Override
     public void onBindViewHolder(View_Holder holder, int position) {
         //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
+
         ActivityObject object = dataManager.getActivityObject(list.get(position));
         holder.setListener(this);
         holder.title.setText(object.title);

@@ -1,22 +1,15 @@
 package org.hdm.app.sambia.datastorage;
 
 import android.graphics.Bitmap;
-import android.os.Handler;
-import android.util.Log;
-
-import org.hdm.app.sambia.util.View_Holder;
-
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by Hannes on 27.05.2016.
  */
 
-public class ActivityObject extends Object{
+public class ActivityObject extends Object  {
 
     private static final String TAG = "ActivityObject";
 
@@ -62,4 +55,6 @@ public class ActivityObject extends Object{
         this.endTime = null;
         this.service = null;
     }
+
+
 }

@@ -49,7 +49,6 @@ public class ActiveListAdapter extends RecyclerView.Adapter<View_Holder> impleme
 
         //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
         ActivityObject object = dataManager.getActivityObject(list.get(position));
-
         holder.setListener(this);
         holder.title.setText(object.title);
         if(object.image != null ) holder.imageView.setImageBitmap(object.image);

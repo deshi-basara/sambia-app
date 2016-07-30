@@ -21,10 +21,10 @@ import java.util.LinkedHashMap;
 /**
  * Created by Hannes on 27.05.2016.
  */
-public class CalendarListItemAdapter extends RecyclerView.Adapter<View_Holder> implements
+public class CalendarItemListAdapter extends RecyclerView.Adapter<View_Holder> implements
         ViewHolderListener {
 
-    private final String TAG = "CalendarListItemAdapter";
+    private final String TAG = "CalendarItemListAdapter";
     private final LinkedHashMap data;
     private Context context;
 
@@ -38,7 +38,7 @@ public class CalendarListItemAdapter extends RecyclerView.Adapter<View_Holder> i
 
 
 
-    public CalendarListItemAdapter(Context context, LinkedHashMap data, ArrayList recActivityTitles) {
+    public CalendarItemListAdapter(Context context, LinkedHashMap data, ArrayList recActivityTitles) {
         this.context = context;
         this.data = data;
         list = recActivityTitles;

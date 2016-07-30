@@ -4,6 +4,7 @@ package org.hdm.app.sambia.screens;
  * Created by Hannes on 13.05.2016.
  */
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
@@ -124,17 +125,17 @@ public class FragmentActivity extends BaseFragemnt implements
         didClickOnActivityListItem(title, null);
     }
 
-
+    List<Timer> timerList = new ArrayList<>();
 
     // Listener from the ActivityObjectList
     @Override
     public void didClickOnActivityListItem(String title, View_Holder holder) {
 
+
         // Get the DataObject which was clicked
         // there are all information stored about the activity object
         // state, names image ect.
         ActivityObject activityObject = dataManager.getActivityObject(title);
-
         // If editable Mode - than add activity to selectedTime in CalendearList
         if (var.editable) {
             dataManager.setCalenderMapEntry(var.selectedTime, activityObject.title);
@@ -157,13 +158,15 @@ public class FragmentActivity extends BaseFragemnt implements
                 // set temporary start time
                 activityObject.startTime = Calendar.getInstance().getTime();
 
-//                if(holder != null) activityObject.runCount(holder);
+
 
 
                 // Count how many activity are active
                 var.activeCount++;
 
                 dataManager.activeList.add(activityObject.title);
+
+
             } else {
 
                 // Deactivate Activity
@@ -176,14 +179,12 @@ public class FragmentActivity extends BaseFragemnt implements
                 //Count how many activitys are active
                 var.activeCount--;
 
-
                 // ToDo Implement Function when Activity is not longer than 1 Minute active than do not count
                 // add ActivityObject to CalendarContentList
                 addActivtyObjectForCalenderContent(activityObject);
 
                 // Save Time and subCategory in Dsata
                 activityObject.saveTimeStamp();
-
 
                 dataManager.activeList.remove(activityObject.title);
             }
@@ -203,7 +204,7 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
         updateActiveList();
-        if(holder == null) updateObjectList();
+        if(holder == null) objectAdapter.notifyItemChanged(objectAdapter.list.indexOf(activityObject.title));
 
 
         // get activeMap look into and for every entry add to
@@ -262,9 +263,7 @@ public class FragmentActivity extends BaseFragemnt implements
 
         // Debugging
         if (DEBUGMODE) {
-            ArrayList<String> list = dataManager.getCalendarMap().get(firstDate.toString());
-            Log.d(TAG, "List size; " + list.size() + " List entrys " + list.toString());
-
+//            ArrayList<String> list = dataManager.getCalendarMap().get(firstDate.toString());
 //            cal.add(Calendar.HOUR, -1);
 //            startTime = cal.getTime();
 //
@@ -323,6 +322,36 @@ public class FragmentActivity extends BaseFragemnt implements
     private void updateActiveList() {
         activeAdapter.list = dataManager.activeList;
         activeAdapter.notifyDataSetChanged();
+    }
+
+
+    public void updateActiveObjectTime(String title, String time) {
+
+        final String mtitle = title;
+        objectAdapter.activeTime = time;
+
+
+
+        new AsyncTask<Void, String, String>()
+        {
+            @Override
+            protected String doInBackground(Void... params)
+            {
+                String valuee = mtitle;
+                return valuee;
+            }
+            @Override
+            protected void onPostExecute(String result)
+            {
+                // Führe neue Methode im UI Thread aus
+                updateView(result);
+            };
+        }.execute();
+    }
+
+
+    private void updateView(String result) {
+        objectAdapter.notifyItemChanged(objectAdapter.list.indexOf(result));
     }
 
 }

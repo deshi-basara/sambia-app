@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.hdm.app.sambia.R;
-import org.hdm.app.sambia.datastorage.DataManager;
 import org.hdm.app.sambia.datastorage.ActivityObject;
 import org.hdm.app.sambia.listener.CalendarItemOnClickListener;
 import org.hdm.app.sambia.listener.ViewHolderListener;
@@ -48,7 +47,7 @@ public class CalendarListAdapter extends RecyclerView.Adapter<View_Holder> imple
 
 
 
-    private CalendarListItemAdapter resAdapter;
+    private CalendarItemListAdapter resAdapter;
 
 
     public CalendarListAdapter(Activity activity, LinkedHashMap data, TreeMap calendar) {
@@ -92,7 +91,7 @@ public class CalendarListAdapter extends RecyclerView.Adapter<View_Holder> imple
         }
 
         // Init RowItemContent
-        resAdapter = new CalendarListItemAdapter(context, data, (ArrayList) calendarMap.get(title));
+        resAdapter = new CalendarItemListAdapter(context, data, (ArrayList) calendarMap.get(title));
         resAdapter.setListener(this);
         resAdapter.time = list.get(position).toString();
         holder.rv_content.setAdapter(resAdapter);
