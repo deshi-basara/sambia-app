@@ -76,8 +76,10 @@ public class FragmentActivity extends BaseFragemnt implements
     @Override
     public void onResume() {
         super.onResume();
-        editableMode();
         updateActiveList();
+        updateObjectList();
+        editableMode();
+
     }
 
     @Override
@@ -217,11 +219,14 @@ public class FragmentActivity extends BaseFragemnt implements
 //        updateObjectList();
         updateActiveList();
 
+        if(holder == null) updateObjectList();
+
 
         // get activeMap look into and for every entry add to
         if (DEBUGMODE) {
-            Log.d(TAG, "activeCount " + var.activeCount);
-            Log.d(TAG, "activeCount " + var.activeCount);
+            Log.d(TAG, "aaa " + activityObject.title + " " + activityObject.activeState + " " + activityObject.timeFrameList.size());
+//            Log.d(TAG, "activeCount " + var.activeCount);
+//            Log.d(TAG, "activeCount " + var.activeCount);
         }
     }
 
@@ -326,7 +331,7 @@ public class FragmentActivity extends BaseFragemnt implements
 
     // load edited List and update ActivityObjectListAdapter
     private void updateObjectList() {
-        objectAdapter.list = new ArrayList<>(dataManager.getObjectMap().values());
+        objectAdapter.list = new ArrayList<>(dataManager.getObjectMap().keySet());
         objectAdapter.notifyDataSetChanged();
     }
 
