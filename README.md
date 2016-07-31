@@ -18,6 +18,10 @@ The project consists of three components:
 
 * Upgrade already created Database-entries from Web-Interface
 * Pull/Push Activities from App to Server
+* Implement picture-uploads/-downloads
+* Setup user on first-app-start
+* Web-Interface-Session for Login
+* Print log-data
 
 ## Licence & Copyright
 
