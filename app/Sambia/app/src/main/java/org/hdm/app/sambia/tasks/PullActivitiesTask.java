@@ -3,10 +3,8 @@ package org.hdm.app.sambia.tasks;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.util.Log;
 
 import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.main.MainActivity;
