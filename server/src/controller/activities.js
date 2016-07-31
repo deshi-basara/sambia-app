@@ -18,6 +18,12 @@ class ActivitiesController {
       this.returnAllActivityGroups,
     );
 
+    // [GET] /api/activities/app
+    app.get(
+      '/api/activities/app',
+      this.returnAllActivityGroupsApp,
+    );
+
     // [GET] /api/activities/:id
     app.get(
       '/api/activities/:id',
@@ -56,16 +62,105 @@ class ActivitiesController {
         // send all available activities
         res
           .status(200)
-          .send({ data: groups })
+          .send({ data: groups });
       })
-      .error((error) =>
+      .catch((error) =>
         // send error
         res
           .status(500)
           .send({
-            error: {
-              msg: error,
-            },
+            error,
+          })
+      );
+  }
+
+  /**
+   * Returns all available activities from our database and parses them
+   * into app-friendly format.
+   *
+   * @return {JSON}      [All available activity objects]
+   */
+  static returnAllActivityGroupsApp(req: any, res: any): void {
+    return Group.find({})
+      .populate({
+        path: 'activities',
+        model: 'Activity',
+        populate: {
+          path: 'items',
+          model: 'Item',
+        },
+      })
+      .then((groups) => {
+        // parse into app-friendly json
+        const appResult = [];
+        for (let i = 0; i < groups.length; i++) {
+          const currentGroup = groups[i];
+
+          if (currentGroup.enabled) {
+            const jsonParent = {
+              group_activity: currentGroup.name,
+              sub_activity: '',
+              item: '',
+              title: '',
+              _id: '',
+              imageName: 'graphic_seed.png',
+            };
+
+            // fetch all activities of group
+            for (let j = 0; j < currentGroup.activities.length; j++) {
+              const currentActivity = currentGroup.activities[j];
+
+              // is activity enabled?
+              if (!currentActivity.enabled) {
+                break;
+              }
+
+              // copy parent & manipulate
+              let jsonChild = JSON.parse(JSON.stringify(jsonParent));
+              jsonChild.sub_activity = currentActivity.name;
+              jsonChild.title = currentActivity.name;
+              jsonChild._id = currentActivity._id;
+
+              // fetch all items of activity
+              for (let k = 0; k < currentActivity.items.length; k++) {
+                const currentItem = currentActivity.items[k];
+
+                // is item enabled?
+                if (!currentItem.enabled) {
+                  break;
+                }
+
+                // overwrite parent & manipulate
+                jsonChild = JSON.parse(JSON.stringify(jsonChild));
+                jsonChild.item = currentItem.name;
+                jsonChild.title = currentItem.name;
+                jsonChild._id = currentItem._id;
+
+                appResult.push(jsonChild);
+              }
+
+              // if the activity has no items, push activity
+              if (currentActivity.items.length === 0) {
+                appResult.push(jsonChild);
+              }
+            }
+          }
+        }
+
+        return appResult;
+      })
+      .then((result) => {
+        // send all available activities
+        res
+          .status(200)
+          .send({ activitys: result });
+      })
+      .catch((error) =>
+        // send error
+        res
+          .status(500)
+          .send({
+            error,
           })
       );
   }
@@ -98,22 +193,18 @@ class ActivitiesController {
           model: 'Item',
         },
       })
-      .then((group) => {
-        console.log(group);
-
+      .then((group) =>
         // send available activity
         res
           .status(200)
           .send({ data: group })
-      })
-      .error((error) =>
+      )
+      .catch((error) =>
         // send error
         res
           .status(500)
           .send({
-            error: {
-              msg: error,
-            },
+            error,
           })
       );
   }
@@ -132,14 +223,18 @@ class ActivitiesController {
     return Promise.each(group.activities, (activity) => {
       const currentActivity = activity;
 
-      // we have sub-items, create database entry
+      // if we have sub-items, create database entries
       return Item.create(currentActivity.items)
         .then((itemResults) => {
           // extract itemIds
           const itemIds = [];
-          itemResults.forEach((item) => {
-            itemIds.push(item._id);
-          });
+
+          // does the activity have items?
+          if (itemResults) {
+            itemResults.forEach((item) => {
+              itemIds.push(item._id);
+            });
+          }
 
           return itemIds;
         })
@@ -165,14 +260,12 @@ class ActivitiesController {
     .then(() =>
       res.send({ data: 'Insert successfull.' })
     )
-    .error((error) =>
+    .catch((error) =>
       // send error
       res
         .status(500)
         .send({
-          error: {
-            msg: error,
-          },
+          error,
         })
     );
   }
@@ -185,22 +278,95 @@ class ActivitiesController {
   static updateActivityGroup(req: any, res: any): void {
     //  parse upload
     const group = req.body;
-    group.activities = JSON.stringify(group.activities);
 
-    return Group.update({ _id: group.id }, { $set: group })
+    let groupEntry = null;
+    let newActivityIds = [];
+    return Group.findOne({ _id: group.id })
+      .populate({
+        path: 'activities',
+        model: 'Activity',
+        populate: {
+          path: 'items',
+          model: 'Item',
+        },
+      })
+      .then((result) => {
+        groupEntry = result;
+
+        // loop through all database activities and decide if we have to update or
+        // delete it
+        return Promise.each(result.activities, (activity) => {
+
+          for (var i = 0; i < group.activities.length; i++) {
+            let currentActivity = group.activities[i];
+
+            if (currentActivity.id === activity._id.toString()) {
+              // remove from array
+              group.activities.splice(i, 1);
+
+              // activity already exists, do we need to update items?
+              let newItemIds = [];
+              for (var j = 0; j < currentActivity.items.length; j++) {
+                let currentItem = currentActivity.items[j];
+
+                // if (activity.item)
+              }
+              // TODO: Also update items
+
+              // activity already exists, try to update it
+              return activity.update({ $set: currentActivity })
+                .then((result) => {
+                  newActivityIds.push(activity._id);
+                });
+            }
+          }
+
+          // activity doesn't exist anymore, try to delete it
+          return activity.delete();
+        })
+        .then(() => {
+          // all activities left have to be new activities, create them
+          return Promise.each(group.activities, (newActivity) => {
+            // create new entry in database
+            return Activity.create(newActivity)
+              .then((activityResult) => {
+                newActivityIds.push(activityResult._id);
+              });
+          })
+        });
+      })
+      .then(() => {
+        // re-add activities to group
+        group.activities = newActivityIds;
+
+        return groupEntry.update({ $set: group });
+      })
       .then(() => {
         res.send({ data: 'Update successfull.' });
       })
-      .error((error) =>
+      .catch((error) => {
+        console.log(error);
+
         // send error
         res
           .status(500)
           .send({
-            error: {
-              msg: error,
-            },
+            error,
           })
-      );
+      });
+
+    /* return Group.update({ _id: group.id }, { $set: group })
+      .then(() => {
+        res.send({ data: 'Update successfull.' });
+      })
+      .catch((error) =>
+        // send error
+        res
+          .status(500)
+          .send({
+            error,
+          })
+      );*/
   }
 }
 
