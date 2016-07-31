@@ -99,7 +99,7 @@ public class FragmentActivity extends BaseFragemnt implements
         recyclerView_activeData.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView_activeData.setLayoutManager(new StaggeredGridLayoutManager(
                 var.activeListRow, StaggeredGridLayoutManager.HORIZONTAL));
-        Log.d(TAG, "size init Activity List");
+        Log.d(TAG, "size init Activity List " + dataManager.activeList.size());
     }
 
 

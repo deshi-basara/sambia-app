@@ -15,6 +15,7 @@ import org.hdm.app.sambia.tasks.PushActivitiesTask;
 import org.hdm.app.sambia.util.FileLoader;
 import org.hdm.app.sambia.util.Settings;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import static org.hdm.app.sambia.util.Consts.*;
@@ -102,7 +103,6 @@ public class MainActivity extends Activity  {
     private void initConfiguration() {
         // Init the Data Structure - there all the created where hosted
         DataManager.init();
-
         FileLoader fl = new FileLoader(this);
         fl.initFiles();
     }

@@ -73,6 +73,8 @@ public class FileLoader {
 
         // Check if "temp-activities.json" is in External Folder
 //        if(isExternalFileExists(path + TEMPACTIVITIES)) fileName =  TEMPACTIVITIES;
+        // ToDo change this when load currentState is proper working
+        DataManager.getInstance().activeList = new ArrayList<String>();
 
         loadActivityObjects(path, fileName);
     }
