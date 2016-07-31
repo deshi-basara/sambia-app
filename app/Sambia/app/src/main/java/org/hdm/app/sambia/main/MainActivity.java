@@ -10,7 +10,7 @@ import android.view.WindowManager;
 import org.hdm.app.sambia.IntroActivity;
 import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.datastorage.DataManager;
-import org.hdm.app.sambia.tasks.PullActivitiesTask;
+import org.hdm.app.sambia.tasks.PullUpdatesTask;
 import org.hdm.app.sambia.util.FileLoader;
 import org.hdm.app.sambia.util.Settings;
 
@@ -145,11 +145,8 @@ public class MainActivity extends Activity  {
         }
     }
 
-    /**
-     * Checks for updates, e.g. overwrites the activites.json if it was changed on the server.
-     */
     private void checkForUpdates() {
-        new PullActivitiesTask(this).execute();
+        new PullUpdatesTask(this).execute();
     }
 
 }

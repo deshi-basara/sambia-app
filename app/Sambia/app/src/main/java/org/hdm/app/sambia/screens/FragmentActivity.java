@@ -99,6 +99,7 @@ public class FragmentActivity extends BaseFragemnt implements
         recyclerView_activeData.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView_activeData.setLayoutManager(new StaggeredGridLayoutManager(
                 var.activeListRow, StaggeredGridLayoutManager.HORIZONTAL));
+        Log.d(TAG, "size init Activity List");
     }
 
 
@@ -332,10 +333,4 @@ public class FragmentActivity extends BaseFragemnt implements
         Log.d(TAG, "size " + timerList.size());
         activeAdapter.notifyDataSetChanged();
     }
-
-
-    private void updateView(String result) {
-        objectAdapter.notifyItemChanged(objectAdapter.list.indexOf(result));
-    }
-
 }

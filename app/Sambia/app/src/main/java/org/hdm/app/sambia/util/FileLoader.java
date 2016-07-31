@@ -72,7 +72,7 @@ public class FileLoader {
         }
 
         // Check if "temp-activities.json" is in External Folder
-        if(isExternalFileExists(path + TEMPACTIVITIES)) fileName =  TEMPACTIVITIES;
+//        if(isExternalFileExists(path + TEMPACTIVITIES)) fileName =  TEMPACTIVITIES;
 
         loadActivityObjects(path, fileName);
     }
