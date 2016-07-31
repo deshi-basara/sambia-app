@@ -13,7 +13,7 @@ import static org.hdm.app.sambia.util.Consts.DEBUGMODE;
  */
 public class DataManager {
 
-    private final String TAG = "eEventManager";
+    private final String TAG = "DataManager";
     // Instance from DaataManager
     private static DataManager instance = null;
 

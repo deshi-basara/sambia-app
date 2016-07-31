@@ -55,7 +55,7 @@ public class MainActivity extends Activity  {
         if(DEBUGMODE) Log.d(TAG, "onStop");
         FileLoader fl = new FileLoader(this);
         fl.saveLogsOnExternal();
-        fl.saveActivityStateOnExternal();
+//        fl.saveActivityStateOnExternal();
     }
 
 
