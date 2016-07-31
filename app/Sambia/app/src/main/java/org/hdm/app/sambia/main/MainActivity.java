@@ -1,6 +1,5 @@
 package org.hdm.app.sambia.main;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,9 +10,8 @@ import android.view.WindowManager;
 import org.hdm.app.sambia.IntroActivity;
 import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.datastorage.DataManager;
-import org.hdm.app.sambia.tasks.PullUpdatesTask;
+import org.hdm.app.sambia.tasks.PullActivitiesTask;
 import org.hdm.app.sambia.util.FileLoader;
-import org.hdm.app.sambia.util.MyJsonParser;
 import org.hdm.app.sambia.util.Settings;
 
 import java.util.Calendar;
@@ -46,8 +44,6 @@ public class MainActivity extends Activity  {
         setContentView(R.layout.activity_main);
 
         checkForUpdates();
-
-
     }
 
 
@@ -150,8 +146,11 @@ public class MainActivity extends Activity  {
         }
     }
 
+    /**
+     * Checks for updates, e.g. overwrites the activites.json if it was changed on the server.
+     */
     private void checkForUpdates() {
-        new PullUpdatesTask(this).execute();
+        new PullActivitiesTask(this).execute();
     }
 
 }
