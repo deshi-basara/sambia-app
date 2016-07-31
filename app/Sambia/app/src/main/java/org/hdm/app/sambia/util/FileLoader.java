@@ -65,16 +65,14 @@ public class FileLoader {
         String path = enviroment + "/" + getPropertiesFromAssets(PROPERTIESFILE)
                 .getProperty(CONFIGFOLDER);
 
-        // Check if "temp-activities.txt" is in External Folder
-        if(isExternalFileExists(path + TEMPACTIVITIES)) {
-//            fileName =  TEMPACTIVITIES;
-        } else {
-            // Check if Json File is in External Folder
-            // if not than copy Json file from Asset to external Folder
-            if (!isExternalFileExists(path + JSONFILE)) {
-                copyFileFromAssetToExternal(JSONFILE, path);
-            }
+        // Check if Json File is in External Folder
+        // if not than copy Json file from Asset to external Folder
+        if (!isExternalFileExists(path + JSONFILE)) {
+            copyFileFromAssetToExternal(JSONFILE, path);
         }
+
+        // Check if "temp-activities.txt" is in External Folder
+//        if(isExternalFileExists(path + TEMPACTIVITIES)) fileName =  TEMPACTIVITIES;
 
         loadActivityObjects(path, fileName);
     }
@@ -264,6 +262,8 @@ public class FileLoader {
     // Load Content
     public void loadActivityObjects(String folderPath, String fileName) {
 
+        if (DEBUGMODE) Log.d(TAG, "loadActivityObjects " + folderPath + fileName);
+
 
 //        // Check if JsonFile is in External Folder if not copy them from Asset to External Folder
 //        if (!isExternalFileExists(folderPath + fileName) && fileName.equals(JSONFILE)) {
@@ -272,20 +272,22 @@ public class FileLoader {
 
         // Read out JsonFile from External Folder
         String jsonString = readStringFromExternalFolder(folderPath, fileName);
-
-        Log.d(TAG, "string " + jsonString);
-
-        if (jsonString == null) {
-            jsonString = readFromAssets(context, JSONFILE);
-            if (DEBUGMODE) Log.d(TAG, "jasonString == null" + jsonString);
-        }
-
         if (DEBUGMODE) Log.d(TAG, "jasonString " + jsonString);
-
 
         MyJsonParser jParser = new MyJsonParser();
-        ArrayList<ActivityObject> list = jParser.createOjectFromJson(ACTIVITIES, jsonString);
-        if (DEBUGMODE) Log.d(TAG, "jasonString " + jsonString);
+        ArrayList<ActivityObject> list = jParser.createObjectFromJson(ACTIVITIES, jsonString);
+        if (DEBUGMODE) Log.d(TAG, "list " + list);
+
+        if (list == null) {
+            jsonString = readStringFromExternalFolder(folderPath, JSONFILE);
+            if (DEBUGMODE) Log.d(TAG, "list == null" + jsonString);
+
+            if(jsonString == null) {
+                    jsonString = readFromAssets(context, JSONFILE);
+                    if (DEBUGMODE) Log.d(TAG, "jasonString == null" + jsonString);
+            }
+            list = jParser.createObjectFromJson(ACTIVITIES, jsonString);
+        }
 
 
         BitmapFactory.Options options = new BitmapFactory.Options();
@@ -379,7 +381,12 @@ public class FileLoader {
 
     private void writeStringOnExternal(String stringFile, String fileName, String path) {
 
-        if (path != null && stringFile != null && fileName != null) {
+        if (stringFile != null && fileName != null && path != null) {
+
+            File f = new File(path);
+            if (!f.exists()) {
+                initFolder();
+            }
 
 
             File file = new File(path, fileName);
