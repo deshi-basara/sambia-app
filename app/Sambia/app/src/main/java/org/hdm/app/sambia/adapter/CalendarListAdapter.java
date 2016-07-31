@@ -80,18 +80,26 @@ public class CalendarListAdapter extends RecyclerView.Adapter<View_Holder> imple
         holder.id = title;
         holder.setListener(this);
 
+        Log.d(TAG,"title "+ title);
+
         // Display only Hours and Minutes
-        String titleText = title.substring(14, title.length()-13);
+        // Cut away the first 14 characters
+        title = title.substring(11);
+        // Cut away all characters after item 5
+        title = title.substring(0, 5);
 
-        if(!titleText.contains("00")){
-            holder.title.setText("   " + title.substring(14, title.length()-13));
+
+        if(!title.contains("00")){
+            String subTitle = title;
+            holder.title.setText("   " + subTitle.substring(3));
         } else {
-
-        holder.title.setText(title.substring(11, title.length()-13));
+            holder.title.setText(title);
         }
 
         // Init RowItemContent
-        resAdapter = new CalendarItemListAdapter(context, data, (ArrayList) calendarMap.get(title));
+        resAdapter = new CalendarItemListAdapter(context,
+                data,
+                (ArrayList) calendarMap.get(list.get(position).toString()));
         resAdapter.setListener(this);
         resAdapter.time = list.get(position).toString();
         holder.rv_content.setAdapter(resAdapter);
@@ -109,9 +117,13 @@ public class CalendarListAdapter extends RecyclerView.Adapter<View_Holder> imple
         // Set
         Date currentTime = Calendar.getInstance().getTime();
         Date givenTime = Calendar.getInstance().getTime();
-        int houre =  Integer.parseInt(title.substring(11, title.length()-16));
-        int min =  Integer.parseInt(title.substring(14, title.length()-13));
-        givenTime.setHours(houre);
+
+
+        int hour =  Integer.parseInt(title.substring(0, 2));
+        int min =  Integer.parseInt(title.substring(3));
+
+        Log.d(TAG, "hour " +hour +" "+ min);
+        givenTime.setHours(hour);
         givenTime.setMinutes(min);
 
         if(givenTime.before(currentTime)) {
@@ -192,7 +204,7 @@ public class CalendarListAdapter extends RecyclerView.Adapter<View_Holder> imple
     private void removeStrings() {
         for(int i=0; i<list.size(); i++){
             String str = (String) list.get(i);
-            String strNew = str.substring(11, str.length()-13);
+            String strNew = str.substring(11, 17);
             list.set(i,strNew);
         }
     }

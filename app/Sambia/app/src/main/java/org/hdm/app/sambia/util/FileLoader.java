@@ -71,8 +71,8 @@ public class FileLoader {
             copyFileFromAssetToExternal(JSONFILE, path);
         }
 
-        // Check if "temp-activities.txt" is in External Folder
-//        if(isExternalFileExists(path + TEMPACTIVITIES)) fileName =  TEMPACTIVITIES;
+        // Check if "temp-activities.json" is in External Folder
+        if(isExternalFileExists(path + TEMPACTIVITIES)) fileName =  TEMPACTIVITIES;
 
         loadActivityObjects(path, fileName);
     }
@@ -356,27 +356,19 @@ public class FileLoader {
 
         MyJsonParser parser = new MyJsonParser();
         String logFile = parser.createLogJsonFromActivityObjects();
-
         String path = enviroment.toString() + "/" + getPropertiesFromAssets(PROPERTIESFILE)
                 .getProperty(LOGFOLDER);
-
         writeStringOnExternal(logFile, parser.logName, path);
-
-
     }
 
 
     public void saveActivityStateOnExternal() {
         MyJsonParser parser = new MyJsonParser();
         String activityState = parser.createActivityStateJson();
-
         String path = enviroment.toString() + "/" + getPropertiesFromAssets(PROPERTIESFILE)
                 .getProperty(CONFIGFOLDER);
-
         writeStringOnExternal(activityState, parser.logName, path);
     }
-
-
 
 
     private void writeStringOnExternal(String stringFile, String fileName, String path) {

@@ -55,8 +55,10 @@ public class MainActivity extends Activity  {
         if(DEBUGMODE) Log.d(TAG, "onStop");
         FileLoader fl = new FileLoader(this);
         fl.saveLogsOnExternal();
-//        fl.saveActivityStateOnExternal();
+        fl.saveActivityStateOnExternal();
     }
+
+
 
     private void setFullScreen(boolean fullscreen) {
 
@@ -102,8 +104,6 @@ public class MainActivity extends Activity  {
 
         FileLoader fl = new FileLoader(this);
         fl.initFiles();
-
-
     }
 
 

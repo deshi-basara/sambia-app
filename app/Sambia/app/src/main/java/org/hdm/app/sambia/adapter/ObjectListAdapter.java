@@ -55,14 +55,13 @@ public class ObjectListAdapter extends RecyclerView.Adapter<View_Holder> impleme
     @Override
     public void onBindViewHolder(View_Holder holder, int position) {
         //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
-
         ActivityObject object = dataManager.getActivityObject(list.get(position));
         holder.setListener(this);
         holder.title.setText(object.title);
         holder.activityList = true;
         if(object.image != null ) holder.imageView.setImageBitmap(object.image);
         if(!var.editable) holder.setBackground(object.activeState);
-        Log.d(TAG, "position " + position + " " + object.title + " "+ holder.toString());
+        Log.d(TAG, "position " + position + " " + object.title + " "+ object.activeState);
     }
 
 

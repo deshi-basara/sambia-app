@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -91,7 +92,7 @@ public class FragmentActivity extends BaseFragemnt implements
 
     private void initActiveList() {
 
-        activeAdapter = new ActiveListAdapter(new ArrayList<String>());
+        activeAdapter = new ActiveListAdapter(new ArrayList<>(dataManager.activeList));
         activeAdapter.setListener(this);
         recyclerView_activeData = (RecyclerView) view.findViewById(R.id.rv_active);
         recyclerView_activeData.setAdapter(activeAdapter);
@@ -158,9 +159,6 @@ public class FragmentActivity extends BaseFragemnt implements
                 // set temporary start time
                 activityObject.startTime = Calendar.getInstance().getTime();
 
-
-
-
                 // Count how many activity are active
                 var.activeCount++;
 
@@ -176,6 +174,16 @@ public class FragmentActivity extends BaseFragemnt implements
                 // set temporary end time
                 activityObject.endTime = Calendar.getInstance().getTime();
 
+
+                Calendar aa = Calendar.getInstance();
+                        aa.setTimeZone(TimeZone.getTimeZone("MESZ"));
+                Log.d(TAG, "new Time " + aa.getTime());
+                Log.d(TAG, "new Time " + aa.getTimeZone().toString());
+
+                Calendar ca = Calendar.getInstance();
+                ca.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+                Log.d(TAG, "new Time " + ca.getTime());
                 //Count how many activitys are active
                 var.activeCount--;
 
@@ -313,40 +321,16 @@ public class FragmentActivity extends BaseFragemnt implements
 
 
     // load edited List and update ActivityObjectListAdapter
-    private void updateObjectList() {
+    public void updateObjectList() {
         objectAdapter.list = new ArrayList<>(dataManager.getObjectMap().keySet());
         objectAdapter.notifyDataSetChanged();
     }
 
     // load edited List and update activeActivityObjectListAdapter
-    private void updateActiveList() {
+    public void updateActiveList() {
         activeAdapter.list = dataManager.activeList;
+        Log.d(TAG, "size " + timerList.size());
         activeAdapter.notifyDataSetChanged();
-    }
-
-
-    public void updateActiveObjectTime(String title, String time) {
-
-        final String mtitle = title;
-        objectAdapter.activeTime = time;
-
-
-
-        new AsyncTask<Void, String, String>()
-        {
-            @Override
-            protected String doInBackground(Void... params)
-            {
-                String valuee = mtitle;
-                return valuee;
-            }
-            @Override
-            protected void onPostExecute(String result)
-            {
-                // Führe neue Methode im UI Thread aus
-                updateView(result);
-            };
-        }.execute();
     }
 
 
