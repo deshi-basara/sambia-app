@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>SambiaAdmin</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300' rel='stylesheet' type='text/css'>  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+
+  <!-- Vendor -->
+  <link href="vendor/chartist/dist/chartist.min.css" rel="stylesheet" href="/css/master.css" media="screen" title="no title" charset="utf-8">
+
+  <style media="screen">
+    html, body {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    app-root {
+      display: flex;
+      x-justify-content: space-around;
+      x-align-items: stretch;
+
+      height: 100%;
+
+      font-family: 'Roboto', sans-serif;
+    }
+
+    app-sections {
+      position: relative;
+      display: block;
+      width: 100%;
+    }
+
+    .ct-series-a .ct-bar, .ct-series-a .ct-line, .ct-series-a .ct-point, .ct-series-a .ct-slice-donut {
+      stroke: #47BC3B;
+    }
+
+    .ct-series-a .ct-area, .ct-series-a .ct-slice-pie {
+      fill: #8CEF5D;
+    }
+  </style>
+</head>
+<body>
+  <app-root>
+    <h1>Loading...</h1>
+  </app-root>
+
+  <script src="vendor/es6-shim/es6-shim.js"></script>
+  <script src="vendor/reflect-metadata/Reflect.js"></script>
+  <script src="vendor/systemjs/dist/system.src.js"></script>
+  <script src="vendor/zone.js/dist/zone.js"></script>
+  <script>
+    System.import('system-config.js').then(function () {
+      System.import('main');
+    }).catch(console.error.bind(console));
+  </script>
+
+</body>
+</html>

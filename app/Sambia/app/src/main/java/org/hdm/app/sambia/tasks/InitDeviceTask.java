@@ -86,7 +86,8 @@ public class InitDeviceTask extends AsyncTask<SubjectModel, Integer, Boolean> {
         RequestBody body = RequestBody.create(JSON, subjectJson);
         Request request = new Request.Builder()
                 // TODO: Use real IP
-                .url("http://192.168.1.158:8080/api/subjects")
+                //.url("http://192.168.1.158:8080/api/subjects")
+                .url("https://sambia.i-was-perfect.net/api/subjects")
                 .post(body)
                 .build();
 

@@ -3,15 +3,16 @@ package org.hdm.app.sambia.tasks;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.AsyncTask;
-import android.util.Log;
+import android.os.Environment;
 
 import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.main.MainActivity;
+import org.hdm.app.sambia.util.Consts;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileWriter;
 import java.io.IOException;
 
 import okhttp3.OkHttpClient;
@@ -23,8 +24,8 @@ import okhttp3.Response;
  *
  * During the execution a Notification is shown by the Android NotificationManager.
  */
-public class PullUpdatesTask extends AsyncTask<Void, Integer, Boolean> {
-    private final String LOG_INDICATOR = "InitDeviceTask";
+public class PullActivitiesTask extends AsyncTask<Void, Integer, Boolean> {
+    private final String LOG_INDICATOR = "PullActivitiesTask";
 
 
     /**
@@ -39,15 +40,16 @@ public class PullUpdatesTask extends AsyncTask<Void, Integer, Boolean> {
      * Constructor
      * @param _context
      */
-    public PullUpdatesTask(Context _context) {
+    public PullActivitiesTask(Context _context) {
         this.context = _context;
     }
 
     protected Boolean doInBackground(Void... subjects) {
         // show update notification
-        showNotificationIcon();
+        // showNotificationIcon();
 
         this.activitiesJSON = downloadActivities();
+        writeToSd(this.activitiesJSON);
 
         return true;
     }
@@ -68,7 +70,8 @@ public class PullUpdatesTask extends AsyncTask<Void, Integer, Boolean> {
     private JSONObject downloadActivities() {
         Request request = new Request.Builder()
                 // TODO: Use real IP
-                .url("http://192.168.1.158:8080/api/activities")
+                //.url("http://192.168.1.158:8080/api/activities/app")
+                .url("https://sambia.i-was-perfect.net/api/activities/app")
                 .build();
 
         // make request and handle response
@@ -81,7 +84,6 @@ public class PullUpdatesTask extends AsyncTask<Void, Integer, Boolean> {
 
             // parse string to json
             responseJSON = new JSONObject(responseMessage);
-            Log.d(LOG_INDICATOR, responseJSON.toString());
 
             publishProgress(70);
         } catch(IOException error) {
@@ -91,6 +93,31 @@ public class PullUpdatesTask extends AsyncTask<Void, Integer, Boolean> {
         }
 
         return responseJSON;
+    }
+
+    /**
+     * Writes the JSON-Response from downloadActivities into activities.json on sd-card.
+     *
+     * @param _responseJSON Activities as JSON
+     * @return True, if everything went well.
+     */
+    private boolean writeToSd(JSONObject _responseJSON) {
+        // use file-writer
+        String fileName = Environment.getExternalStorageDirectory().toString() + "/" +
+                Consts.PARENTPATH+ "/" + Consts.CONFIGPATH + "/" + Consts.JSONFILE;
+        FileWriter file;
+        try {
+            file = new FileWriter(fileName, false);
+            file.write(_responseJSON.toString());
+            file.flush();
+            file.close();
+        } catch(IOException _error) {
+            _error.printStackTrace();
+
+            return false;
+        }
+
+        return true;
     }
 
     /**

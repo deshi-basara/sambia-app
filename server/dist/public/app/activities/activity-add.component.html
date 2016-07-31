@@ -1,0 +1,214 @@
+<form class="form" (ngSubmit)="onSubmit()">
+
+  <!-- Image -->
+  <div class="form-image">
+    <div [image-upload]="groupModel" class="form-image-holder">
+      <img />
+      <i class="zmdi zmdi-camera zmdi-hc-1x"></i>
+      <input name="group-image" type="file" accept="image/*" />
+    </div>
+  </div>
+
+  <!-- Group -->
+  <div class="form-data">
+
+    <div class="row">
+      <div class="form-group col-10">
+          <label for="name">Group-Name</label>
+          <input type="text" class="form-control z0" name="name" [(ngModel)]="groupModel.name" required>
+      </div>
+      <div class="form-group col-2">
+          <label for="enabled">Enabled</label>
+          <select class="" name="enabled" [(ngModel)]="groupModel.enabled" required>
+            <option value="true" [selected]="groupModel.enabled">Yes</option>
+            <option value="false" [selected]="!groupModel.enabled">No</option>
+          </select>
+      </div>
+    </div>
+
+    <!-- Translation --
+    <div class="row form-divider">
+      <div class="row form-header">
+        <h4>Translation</h4>
+        <span class="zmdi-hc-stack zmdi-hc-lg button-round">
+          <i class="zmdi zmdi-circle zmdi-hc-stack-2x"></i>
+          <i class="zmdi zmdi-plus zmdi-hc-stack-1x zmdi-hc-inverse"></i>
+        </span>
+      </div>
+      <div class="row form-item">
+        Weeding
+      </div>
+    </div>-->
+
+    <!-- Activity -->
+    <div class="row form-divider">
+      <div class="row form-header">
+        <h4>Activities</h4>
+        <span class="zmdi-hc-stack zmdi-hc-lg button-round" (click)="toggleModal(null)">
+          <i class="zmdi zmdi-plus zmdi-hc-stack-1x zmdi-hc-inverse"></i>
+        </span>
+      </div>
+
+      <!-- Empty State -->
+      <div class="form-empty"
+        *ngIf="groupModel.activities == 0">
+        <i class="zmdi zmdi-hc-3x zmdi-alert-polygon"></i>
+        <p>No activities added yet</p>
+      </div>
+
+      <!-- Activity Item -->
+      <div class="form-item row z1"
+        *ngFor="let activity of groupModel.activities; let i = index"
+        (click)="toggleModal(i)">
+
+        <!-- Image -->
+        <div [image-upload]="activity" class="form-image-holder form-item-image-holder">
+          <img />
+          <i class="zmdi zmdi-image-o zmdi-hc-1x"></i>
+          <input name="activity-image" type="file" accept="image/*" />
+        </div>
+
+        <!-- Name -->
+        <div class="form-item-name">
+          {{ activity.name }}
+        </div>
+
+        <!-- Item controls -->
+        <div class="form-item-controls">
+
+          <!-- Sub Indicator -->
+          <span>
+            <i class="zmdi zmdi-run"></i><span class="sub-indicator">{{ activity.items.length }}</span>
+          </span>
+
+          <!-- Active Indicator -->
+          <span>
+            <i [hidden]="!activity.enabled" class="zmdi zmdi-check-circle"></i>
+            <i [hidden]="activity.enabled" class="zmdi zmdi-minus-circle"></i>
+          </span>
+
+          <!-- Remove Checkbox --
+          <span>
+            <i class="zmdi zmdi-square-o"></i>
+          </span>-->
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="row form-controls">
+      <button type="submit" name="button" class="button">Submit</button>
+    </div>
+
+  </div>
+
+</form>
+
+<!-- Modal -->
+<div class="modal-wrapper" [ngClass]="{ show: showModal }">
+  <form class="modal z3" (ngSubmit)="onAdd()">
+
+    <!-- Header -->
+    <div class="modal-header">
+      <button type="button" (click)="toggleModal(null)">
+        <i class="zmdi zmdi-close zmdi-hc-2x"></i>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-body">
+
+      <!-- Name -->
+      <div class="row">
+        <div class="form-group col-10">
+            <label for="name">Aktivity-Name</label>
+            <input type="text" class="form-control z0" name="name" required
+              [(ngModel)]="activityModel.name">
+        </div>
+        <div class="form-group col-2">
+            <label for="enabled">Enabled</label>
+            <select class="" name="enabled" required
+              [(ngModel)]="activityModel.enabled">
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+        </div>
+      </div>
+
+      <!-- Translation --
+      <div class="row modal-divider">
+        <div class="form-header row">
+          <h4>Translation</h4>
+          <span class="zmdi-hc-stack zmdi-hc-lg button-round">
+            <i class="zmdi zmdi-circle zmdi-hc-stack-2x"></i>
+            <i class="zmdi zmdi-plus zmdi-hc-stack-1x zmdi-hc-inverse"></i>
+          </span>
+        </div>
+        <div class="form-item row">
+          Weeding
+        </div>
+      </div>-->
+
+      <!-- Sub-Activity -->
+      <div class="row modal-divider">
+        <div class="row form-header">
+          <h4>Sub-Activities</h4>
+          <span class="zmdi-hc-stack zmdi-hc-lg button-round"
+              (click)="onAddItem()">
+            <i class="zmdi zmdi-plus zmdi-hc-stack-1x zmdi-hc-inverse"></i>
+          </span>
+        </div>
+
+        <!-- Empty State -->
+        <div class="form-empty"
+          *ngIf="activityModel.items == 0">
+          <i class="zmdi zmdi-hc-3x zmdi-alert-polygon"></i>
+          <p>No sub-activities added yet</p>
+        </div>
+
+        <!-- Activity Item -->
+        <div class="row form-item z1"
+          *ngFor="let item of activityModel.items; let i = index">
+
+          <!-- Image -->
+          <div [image-upload]="item" class="form-image-holder form-item-image-holder">
+            <img />
+            <i class="zmdi zmdi-image-o zmdi-hc-1x"></i>
+            <input name="activity-image" type="file" accept="image/*" />
+          </div>
+
+          <!-- Name -->
+          <div class="form-item-name">
+            <input type="text" class="z0" name="name" placeholder="Sub-Activity Name" required
+              [value]="item.name"
+              (input)="item.name=$event.target.value">
+          </div>
+
+          <!-- Item controls -->
+          <div class="form-item-controls">
+
+            <!-- Remove Checkbox -->
+            <span>
+              <i class="zmdi zmdi-square-o"></i>
+            </span>
+
+            <!-- Active Indicator -->
+            <span>
+              <i class="zmdi zmdi-check-circle"></i>
+            </span>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="modal-controls row">
+        <button type="submit" name="button" class="button">Save</button>
+      </div>
+
+    </div>
+  </form>
+</div>
+<app-snackbar></app-snackbar>

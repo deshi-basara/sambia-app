@@ -4,6 +4,8 @@ import { SubjectsComponent, SubjectDetailComponent, SubjectAddComponent } from '
 import { ActivitiesComponent, ActivityDetailComponent, ActivityAddComponent } from './activities';
 
 export const routes:RouterConfig = [
+    // dashboard
+    { path: '', redirectTo: 'dash' },
     { path: 'dash', component: DashboardComponent },
 
     // activities

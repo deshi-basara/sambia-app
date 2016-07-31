@@ -22,6 +22,7 @@ public class Settings {
     public static final String PREF_ID = "SAMBIA_PREFS";
     public static final String PREF_SUBJECT_ID = "SAMBIA_USER_ID";
     public static final String PREF_UPDATE_VERSION = "SAMBIA_UPDATE_VERSION";
+    public static final String PREF_LAST_PUSH = "SAMBIA_LAST_PUSH";
     public static final String PREF_PLAIN_STARTED = "SUS_PLAIN_STARTED"; // init reference
     private static final String PREF_UNENCRYPTED_NAME = "encrypted_prefs.xml";
 
@@ -119,6 +120,7 @@ public class Settings {
         SharedPreferences.Editor setupEditor = setupPreferences.edit();
         setupEditor.putString(Settings.PREF_SUBJECT_ID, _subjectId);
         setupEditor.putString(Settings.PREF_UPDATE_VERSION, _updateVersion);
+        setupEditor.putString(Settings.PREF_LAST_PUSH, "");
         setupEditor.commit();
 
         Log.d(LOG_TAG, "subjectId: " + setupPreferences.getString(Settings.PREF_SUBJECT_ID, null));
