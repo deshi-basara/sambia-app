@@ -42,7 +42,6 @@ public class MainActivity extends Activity  {
         initCalenderMap();
         setFullScreen(true);
         setContentView(R.layout.activity_main);
-
         checkForUpdates();
     }
 
@@ -54,8 +53,9 @@ public class MainActivity extends Activity  {
         // ToDo Upload to Server
         // ToDo Save Objects when App is closed
         if(DEBUGMODE) Log.d(TAG, "onStop");
-        new FileLoader(this).saveDataOnExternal();
-
+        FileLoader fl = new FileLoader(this);
+        fl.saveLogsOnExternal();
+        fl.saveActivityStateOnExternal();
 
     }
 

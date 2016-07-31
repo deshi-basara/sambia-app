@@ -12,13 +12,13 @@ import java.util.Map;
 /**
  * Created by Hannes on 30.07.2016.
  */
-public class User {
+public class ActivityLogs {
     public String date;
     public String user_id;
     public List<Logs> logs = new ArrayList<>();
 
 
-    public User () {
+    public ActivityLogs() {
         createUser();
     }
 

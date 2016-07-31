@@ -11,6 +11,11 @@ public final class Consts {
     public final static int CALENDARITEMROW = 1;
 
     public final static String JSONFILE = "activitys.json";
+    public final static String TEMPACTIVITIES = "temp-activities.json";
+
+    public final static String ACTIVITIES = "activitys";
+
+
     public final static String MAINFOLDER = "SambiaApp";
     public final static String IMAGEFOLDER = "Images";
     public final static String CONFIGFOLDER = "Config";
