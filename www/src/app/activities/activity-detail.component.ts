@@ -80,8 +80,10 @@ export class ActivityDetailComponent implements OnInit {
     // cast strings from select-option into boolean
     this.groupModel.enabled = (this.groupModel.enabled == 'true') ? true : false;
 
+    return this.snackbar.showSnackbar('Update of nested groups is currently disabled.', true);
+
     // submit to server
-    this.activityService.putActivityGroup(this.groupModel)
+    /*this.activityService.putActivityGroup(this.groupModel)
       .subscribe(
         activityGroup => {
           this.snackbar.showSnackbar('Activity-Group successfully updated.', true);
@@ -89,7 +91,7 @@ export class ActivityDetailComponent implements OnInit {
         error => {
           this.snackbar.showSnackbar(error, true);
         }
-      );
+      );*/
   }
 
   /**

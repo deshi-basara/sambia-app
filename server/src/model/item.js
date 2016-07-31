@@ -24,7 +24,7 @@ const ItemSchema = new mongoose.Schema({
   enabled: {
     type: Boolean,
     required: false,
-    default: false,
+    default: true,
   },
   createdAt: {
     type: Date,

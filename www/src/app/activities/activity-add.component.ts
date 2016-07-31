@@ -65,6 +65,10 @@ export class ActivityAddComponent implements OnInit {
       .subscribe(
         activityGroup => {
           this.snackbar.showSnackbar('Activity-Group was successfully created.', false);
+
+          setTimeout(() => {
+            this.router.navigate(['/activities']);
+          }, 2000);
         },
         error => {
           this.snackbar.showSnackbar(error, true);
