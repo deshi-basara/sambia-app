@@ -1,6 +1,5 @@
 package org.hdm.app.sambia.main;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.datastorage.DataManager;
 import org.hdm.app.sambia.tasks.PullUpdatesTask;
 import org.hdm.app.sambia.util.FileLoader;
-import org.hdm.app.sambia.util.MyJsonParser;
 import org.hdm.app.sambia.util.Settings;
 
 import java.util.Calendar;
@@ -44,10 +42,7 @@ public class MainActivity extends Activity  {
         initCalenderMap();
         setFullScreen(true);
         setContentView(R.layout.activity_main);
-
         checkForUpdates();
-
-
     }
 
 
@@ -58,8 +53,9 @@ public class MainActivity extends Activity  {
         // ToDo Upload to Server
         // ToDo Save Objects when App is closed
         if(DEBUGMODE) Log.d(TAG, "onStop");
-        new FileLoader(this).saveDataOnExternal();
-
+        FileLoader fl = new FileLoader(this);
+        fl.saveLogsOnExternal();
+        fl.saveActivityStateOnExternal();
 
     }
 

@@ -8,19 +8,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.hdm.app.sambia.datastorage.ActivityObject;
 import org.hdm.app.sambia.datastorage.ActivityObjectMap;
-import org.hdm.app.sambia.datastorage.DataManager;
-import org.hdm.app.sambia.datastorage.TimeFrame;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
 
 import static org.hdm.app.sambia.util.Consts.*;
-
 
 public class MyJsonParser {
     private final String TAG = "MyJsonParser";
@@ -42,8 +34,7 @@ public class MyJsonParser {
 
             ActivityObject a =(ActivityObject) arrayList.get(1);
 
-//            Log.d(TAG,"object " + a.title);
-//            Log.d(TAG, "done");
+            Log.d(TAG,"object " + a.title + " done");
             return arrayList;
         } catch (JsonParseException e) {
             e.printStackTrace();
@@ -57,23 +48,37 @@ public class MyJsonParser {
 
     public String logName;
 
+
     public String createLogJsonFromActivityObjects() {
 
-        ObjectMapper mapper = new ObjectMapper();
-        String jsonInString;
+        ActivityLogs activityLogs = new ActivityLogs();
+        String jsonInString = convertObjectToJson(activityLogs);
+        logName  = activityLogs.date + "-"+ activityLogs.user_id + "-activities.txt";
 
-        User user = new User();
+        return jsonInString;
+    }
 
+
+
+    public String createActivityStateJson() {
+
+        ActivityState activityState = new ActivityState();
+        String jsonInString =  convertObjectToJson(activityState);
+        logName  = TEMPACTIVITIES;
+        return jsonInString;
+    }
+
+
+
+
+    private String convertObjectToJson(Object object) {
 
         try {
             //Convert object to JSON string
-            jsonInString = mapper.writeValueAsString(user);
-            logName  = user.date + "-"+ user.user_id + "-activities.txt";
-            return jsonInString;
+            return new ObjectMapper().writeValueAsString(object);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
-
     }
 }

@@ -52,8 +52,6 @@ public class FileLoader {
     }
 
 
-
-
     /**************************
      * Init File Prozess
      *************************/
@@ -62,15 +60,24 @@ public class FileLoader {
 
         initFolder();
 
-        // Check if Json File is in External Folder
-        // if not than copy Json file from Asset to external Folder
-        if (isExternalFileExists(CONFIGFOLDER + "/" + JSONFILE)) {
-            copyFileFromAssetToExternal(JSONFILE, CONFIGFOLDER);
-            if(DEBUGMODE) Log.d(TAG, "inti " + JSONFILE);
-        }
-        loadActivityObjects(JSONFILE, CONFIGFOLDER);
-    }
 
+        String fileName = JSONFILE;
+        String path = enviroment + "/" + getPropertiesFromAssets(PROPERTIESFILE)
+                .getProperty(CONFIGFOLDER);
+
+        // Check if "temp-activities.txt" is in External Folder
+        if(isExternalFileExists(path + TEMPACTIVITIES)) {
+//            fileName =  TEMPACTIVITIES;
+        } else {
+            // Check if Json File is in External Folder
+            // if not than copy Json file from Asset to external Folder
+            if (!isExternalFileExists(path + JSONFILE)) {
+                copyFileFromAssetToExternal(JSONFILE, path);
+            }
+        }
+
+        loadActivityObjects(path, fileName);
+    }
 
 
     /**************************
@@ -102,17 +109,14 @@ public class FileLoader {
     }
 
 
+    private String readStringFromExternalFolder(String folderPath, String fileName) {
 
-
-
-    private String readStringFromExternalFolder(String fileName, String folderPath) {
-
-        if(isExternalFileExists(folderPath + "/" + fileName)) return null;
+        if (!isExternalFileExists(folderPath + fileName)) return null;
 
         BufferedReader reader;
         StringBuilder sb;
         String mLine;
-        File file = new File(enviroment+"/"+folderPath, fileName);
+        File file = new File(folderPath, fileName);
 
         try {
 
@@ -135,14 +139,16 @@ public class FileLoader {
     }
 
 
+
     public boolean copyFileFromAssetToExternal(String fileName, String path) {
 
         if (fileName != null && path != null) {
             InputStream in = null;
             OutputStream out = null;
+
             try {
                 in = context.getAssets().open(fileName);
-                File outFile = new File(enviroment.toString()+ "/" + path, fileName);
+                File outFile = new File(path, fileName);
                 out = new FileOutputStream(outFile);
                 copyFile(in, out);
             } catch (IOException e) {
@@ -224,9 +230,6 @@ public class FileLoader {
     }
 
 
-
-
-
     /**************************
      * Property File
      *************************/
@@ -248,48 +251,41 @@ public class FileLoader {
     }
 
 
-
-
-
-
-
-
-
     public void initFolder() {
 
         Properties properties = getPropertiesFromAssets(PROPERTIESFILE);
 
-        for(Map.Entry<Object, Object> x : properties.entrySet()) {
+        for (Map.Entry<Object, Object> x : properties.entrySet()) {
             createExternalFolder((String) x.getValue());
         }
     }
 
 
-
-
-
-
     // Load Content
-    public void loadActivityObjects(String fileName, String folderPath) {
+    public void loadActivityObjects(String folderPath, String fileName) {
 
 
-        // Check if JsonFile is in External Folder if not copy them from Asset to External Folder
-        if(!isExternalFileExists(folderPath+ "/" + fileName)) {
-            copyFileFromAssetToExternal(fileName, getPropertiesFromAssets(PROPERTIESFILE)
-                    .getProperty(CONFIGFOLDER));
-        }
+//        // Check if JsonFile is in External Folder if not copy them from Asset to External Folder
+//        if (!isExternalFileExists(folderPath + fileName) && fileName.equals(JSONFILE)) {
+//            copyFileFromAssetToExternal(fileName, folderPath);
+//        }
 
         // Read out JsonFile from External Folder
-        String jsonString = readStringFromExternalFolder(fileName, folderPath);
-        if(jsonString == null){
-            jsonString = readFromAssets(context, fileName);
+        String jsonString = readStringFromExternalFolder(folderPath, fileName);
+
+        Log.d(TAG, "string " + jsonString);
+
+        if (jsonString == null) {
+            jsonString = readFromAssets(context, JSONFILE);
+            if (DEBUGMODE) Log.d(TAG, "jasonString == null" + jsonString);
         }
 
+        if (DEBUGMODE) Log.d(TAG, "jasonString " + jsonString);
 
 
         MyJsonParser jParser = new MyJsonParser();
-        ArrayList<ActivityObject> list = jParser.createOjectFromJson("activitys", jsonString);
-        if(DEBUGMODE) Log.d(TAG, "jasonString " + jsonString +"" +  list.size());
+        ArrayList<ActivityObject> list = jParser.createOjectFromJson(ACTIVITIES, jsonString);
+        if (DEBUGMODE) Log.d(TAG, "jasonString " + jsonString);
 
 
         BitmapFactory.Options options = new BitmapFactory.Options();
@@ -298,36 +294,29 @@ public class FileLoader {
 
 
         String imgPath = enviroment.toString() + "/" + getPropertiesFromAssets(PROPERTIESFILE)
-                .getProperty(IMAGEFOLDER)+ "/";
-
+                .getProperty(IMAGEFOLDER);
 
 
         for (int i = 0; i < list.size(); i++) {
             ActivityObject activityObject = list.get(i);
 
             Log.d(TAG, "imageName " + activityObject.imageName);
-            String objectImgPath =  imgPath + activityObject.imageName;
+            String objectImgPath = imgPath + activityObject.imageName;
 
             // check if Image is in externalFolder available
             // if not than save it from asset to external load again
-            if(isExternalFileExists(objectImgPath)) {
+            if (isExternalFileExists(objectImgPath)) {
                 activityObject.image = BitmapFactory.decodeFile(objectImgPath, options);
-            }else {
+            } else {
                 // Save Image from Asset to External
-                copyFileFromAssetToExternal(activityObject.imageName, getPropertiesFromAssets(PROPERTIESFILE)
-                        .getProperty(IMAGEFOLDER));
+                copyFileFromAssetToExternal(activityObject.imageName, imgPath);
                 activityObject.image = BitmapFactory.decodeFile(objectImgPath, options);
             }
             DataManager.getInstance().setActivityObject(activityObject);
         }
 
 
-
     }
-
-
-
-
 
 
     /**************************
@@ -342,20 +331,9 @@ public class FileLoader {
 
     public boolean isExternalFileExists(String filePath) {
         File f = new File(filePath);
-        if (f.exists())  return true;
+        if (f.exists()) return true;
         return false;
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
     private void copyFile(InputStream in, OutputStream out) throws IOException {
@@ -367,41 +345,60 @@ public class FileLoader {
     }
 
 
-
     public File getEnvironment() {
         return enviroment;
     }
 
 
-
-    public void saveDataOnExternal() {
+    public void saveLogsOnExternal() {
 
         MyJsonParser parser = new MyJsonParser();
         String logFile = parser.createLogJsonFromActivityObjects();
 
-        FileOutputStream stream = null;
         String path = enviroment.toString() + "/" + getPropertiesFromAssets(PROPERTIESFILE)
                 .getProperty(LOGFOLDER);
 
+        writeStringOnExternal(logFile, parser.logName, path);
 
-        File file = new File(path, parser.logName);
+
+    }
 
 
-        try {
-            stream = new FileOutputStream(file);
-            stream.write(logFile.getBytes());
+    public void saveActivityStateOnExternal() {
+        MyJsonParser parser = new MyJsonParser();
+        String activityState = parser.createActivityStateJson();
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String path = enviroment.toString() + "/" + getPropertiesFromAssets(PROPERTIESFILE)
+                .getProperty(CONFIGFOLDER);
 
-        finally {
+        writeStringOnExternal(activityState, parser.logName, path);
+    }
+
+
+
+
+    private void writeStringOnExternal(String stringFile, String fileName, String path) {
+
+        if (path != null && stringFile != null && fileName != null) {
+
+
+            File file = new File(path, fileName);
+            FileOutputStream stream = null;
+
             try {
-                stream.close();
+                stream = new FileOutputStream(file);
+                stream.write(stringFile.getBytes());
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    stream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
