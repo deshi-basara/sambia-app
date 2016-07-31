@@ -1,6 +1,7 @@
 package org.hdm.app.sambia.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class ActiveListAdapter extends RecyclerView.Adapter<View_Holder> impleme
 
     public ActiveListAdapter(List<String> activityObject) {
         this.list = activityObject;
+        Log.d(TAG, "size init " + list.size());
     }
 
 
@@ -51,6 +53,7 @@ public class ActiveListAdapter extends RecyclerView.Adapter<View_Holder> impleme
         ActivityObject object = dataManager.getActivityObject(list.get(position));
         holder.setListener(this);
         holder.title.setText(object.title);
+        Log.d(TAG, "size " + list.size());
         if(object.image != null ) holder.imageView.setImageBitmap(object.image);
     }
 

@@ -18,26 +18,23 @@ public class ActivityObject extends Object  {
     public String _id = null;
     public String item = null;
 
-    public String group_activity = null;
-    public String sub_activity = null;
+    public String group_activity = "";
+    public String sub_activity = "";
     public boolean sub_category = false;
 
-    public String imageName = null;
+    public String imageName = "";
     public Bitmap image = null;
-    public int imageId;
     public ArrayList<TimeFrame> timeFrameList = null;
 
 
 
     // Dynamic parameters
     public boolean activeState = false;
-    public String subCategoryName = "";
     public int count = 0;
-    private long countt;
 
-    public Date startTime;
-    public Date endTime;
-    private String service;
+    public Date startTime = null;
+    public Date endTime = null;
+    private String service = null;
 
     public ActivityObject() {
         timeFrameList = new ArrayList<>();
