@@ -1,5 +1,5 @@
 #Sambia-App
-**Contributors:** [deshi-basara](https://github.com/deshi-basara), [HannesBuchwald](https://github.com/HannesBuchwald)
+**Contributors:** [deshi-basara](https://github.com/deshi-basara), [HannesBuchwald](https://github.com/HannesBuchwald)  
 **Organisation:** Stuttgart Media University  
 **License:** GPLv3 ([http://www.gnu.org/licenses/gpl-3.0.html](http://www.gnu.org/licenses/gpl-3.0.html))
 
@@ -21,5 +21,5 @@ The project consists of three components:
 
 ## Licence & Copyright
 
-sambia-app was written by Simon Schuster and Hannes Buchwald.
+sambia-app was written by Simon Schuster and Hannes Buchwald.  
 sambia-app is licensed under the [GNU General Public License v3](http://www.gnu.org/licenses/gpl-3.0).
