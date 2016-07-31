@@ -1,0 +1,89 @@
+<!-- Side navigation -->
+<nav>
+  <!-- Nav header -->
+  <div id="nav-header" class="z0">
+    <span>Sambia</span> App
+  </div>
+
+  <!-- Nav links -->
+  <ul id="nav-link">
+    <!-- Dashboard -->
+    <li>
+      <a [routerLink]="['/dash']" class="nav-link-item">
+        <span>
+          <i class="zmdi zmdi-apps"></i>
+          Dashboard
+        </span>
+      </a>
+    </li>
+    <!-- Probands -->
+    <li>
+      <a [routerLink]="['/subjects']" class="nav-link-item">
+        <span>
+          <i class="zmdi zmdi-accounts-alt"></i>
+          Subjects
+        </span>
+      </a>
+    </li>
+    <!-- Activities -->
+    <li>
+      <a [routerLink]="['/activities']" class="nav-link-item">
+        <span>
+          <i class="zmdi zmdi-run"></i>
+          Activities
+        </span>
+      </a>
+    </li>
+    <!-- Logs -->
+    <li>
+      <a href="#" class="nav-link-item">
+        <span>
+          <i class="zmdi zmdi-file-text"></i>
+          Data
+        </span>
+      </a>
+    </li>
+    <!-- Phones -->
+    <li>
+      <a href="#" class="nav-link-item">
+        <span>
+          <i class="zmdi zmdi-smartphone-android"></i>
+          Devices
+        </span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<!-- Content-Area -->
+<div class="content-area">
+  <!-- Header Bar -->
+  <header class="z1">
+
+    <!-- Header name -->
+    <div class="header-name">
+      Thomas Daum <i class="zmdi zmdi-chevron-down"></i>
+    </div>
+
+    <!-- Header new data -->
+    <div class="header-notification">
+      <span class="zmdi-hc-stack zmdi-hc-lg">
+        <i class="zmdi zmdi-circle zmdi-hc-stack-2x"></i>
+        <i class="zmdi zmdi-notifications zmdi-hc-stack-1x zmdi-hc-inverse"></i>
+      </span>
+    </div>
+
+    <!-- Header new email -->
+    <div class="header-notification">
+      <span class="zmdi-hc-stack zmdi-hc-lg">
+        <i class="zmdi zmdi-circle zmdi-hc-stack-2x"></i>
+        <i class="zmdi zmdi-email zmdi-hc-stack-1x zmdi-hc-inverse"></i>
+      </span>
+    </div>
+  </header>
+
+  <!-- Content Section -->
+  <section>
+    <router-outlet></router-outlet>
+  </section>
+</div>

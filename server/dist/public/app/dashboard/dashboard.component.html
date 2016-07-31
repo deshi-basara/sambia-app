@@ -1,0 +1,176 @@
+<!-- Status Indicator -->
+<div class="status-indicator row">
+
+  <!-- Status User -->
+  <div class="status-indicator-item status-green z0 col-3">
+
+    <div class="status-indicator-item-headline row">
+      <div class="status-indicator-item-headline-name col-6">
+        <i class="zmdi zmdi-accounts zmdi-hc-2x"></i>
+        <div>Subjects</div>
+      </div>
+      <div class="status-indicator-item-headline-count col-6">
+        {{ userCount }}
+      </div>
+    </div>
+
+    <div class="status-indicator-item-progress z0 row">
+      <div class="status-indicator-item-progress-count" [ngStyle]="{ width: userCount + '%' }">
+        <span>{{ userCount }}</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Status Api -->
+  <div class="status-indicator-item status-yellow z0 col-3">
+
+    <div class="status-indicator-item-headline row">
+      <div class="status-indicator-item-headline-name col-6">
+        <i class="zmdi zmdi-cloud-outline-alt zmdi-hc-2x"></i>
+        <div>API Calls</div>
+      </div>
+      <div class="status-indicator-item-headline-count col-6">
+        {{ apiCount + 200 }}
+      </div>
+    </div>
+
+    <div class="status-indicator-item-progress z0 row">
+      <div class="status-indicator-item-progress-count" [ngStyle]="{ width: apiCount + '%' }">
+        <span>{{ apiCount }}</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Status New Logs -->
+  <div class="status-indicator-item status-blue z0 col-3">
+
+    <div class="status-indicator-item-headline row">
+      <div class="status-indicator-item-headline-name col-6">
+        <i class="zmdi zmdi-assignment-o zmdi-hc-2x"></i>
+        <div>New Data</div>
+      </div>
+      <div class="status-indicator-item-headline-count col-6">
+        {{ dataCount + 41 }}
+      </div>
+    </div>
+
+    <div class="status-indicator-item-progress z0 row">
+      <div class="status-indicator-item-progress-count" [ngStyle]="{ width: dataCount + '%' }">
+        <span>{{ dataCount }}</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Status Support -->
+  <div class="status-indicator-item status-red z0 col-3">
+
+    <div class="status-indicator-item-headline row">
+      <div class="status-indicator-item-headline-name col-6">
+        <i class="zmdi zmdi-email-open zmdi-hc-2x"></i>
+        <div>Requests</div>
+      </div>
+      <div class="status-indicator-item-headline-count col-6">
+        {{ requestCount - 9 }}
+      </div>
+    </div>
+
+    <div class="status-indicator-item-progress z0 row">
+      <div class="status-indicator-item-progress-count" [ngStyle]="{ width: requestCount + '%' }">
+        <span>{{ requestCount }}</span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Status Data/Time -->
+<div class="status-data z0 row">
+  <h4>Logged Activities</h4>
+
+  <x-chartist
+    [data]="chartData"
+    [type]="chartType"
+    [options]="chartOptions"
+    >
+  </x-chartist>
+</div>
+
+
+<!-- Table Box -->
+<table class="table z0">
+
+  <!-- Table Head -->
+  <tr class="table-header">
+    <td class="table-align-left">
+      <i class="zmdi zmdi-square-o"></i>
+    </td>
+    <td class="table-align-left">Name</td>
+    <td>Age</td>
+    <td>Gender</td>
+    <td>Household</td>
+    <td>Education</td>
+    <td>Tribe</td>
+    <td>
+      Land Owned
+      <span>(m2)</span>
+    </td>
+    <td>
+      Land Cultivated
+      (m2)
+    </td>
+    <!--<td>Crops</td>
+    <td>Work</td>-->
+    <td>
+      Size
+      (cm)
+    </td>
+    <td>
+      Weight
+      (kg)
+    </td>
+  </tr>
+
+  <!-- Table Entry -->
+  <tr class="table-entry" *ngFor="let person of [1,2]">
+    <td class="table-align-left">
+      <i class="zmdi zmdi-square-o"></i>
+    </td>
+    <td class="table-align-left">
+      Hannes Buchwald
+    </td>
+    <td>
+      30
+    </td>
+    <td>
+      <i class="zmdi zmdi-male"></i>
+    </td>
+    <td>
+      4
+    </td>
+    <td>
+      Student
+    </td>
+    <td>
+      Vikinger
+    </td>
+    <td>
+      100
+    </td>
+    <td>
+      20
+    </td>
+    <!--<td>Crops</td>
+    <td>Work</td>-->
+    <td>
+      180
+    </td>
+    <td>
+      80
+    </td>
+  </tr>
+
+</table>
