@@ -11,6 +11,7 @@ import org.hdm.app.sambia.IntroActivity;
 import org.hdm.app.sambia.R;
 import org.hdm.app.sambia.datastorage.DataManager;
 import org.hdm.app.sambia.tasks.PullActivitiesTask;
+import org.hdm.app.sambia.tasks.PushActivitiesTask;
 import org.hdm.app.sambia.util.FileLoader;
 import org.hdm.app.sambia.util.Settings;
 
@@ -42,7 +43,7 @@ public class MainActivity extends Activity  {
         initCalenderMap();
         setFullScreen(true);
         setContentView(R.layout.activity_main);
-        checkForUpdates();
+        // syncWithServer();
     }
 
 
@@ -147,9 +148,11 @@ public class MainActivity extends Activity  {
 
     /**
      * Checks for updates, e.g. overwrites the activites.json if it was changed on the server.
+     * Also pushes new logged data to the server.
      */
-    private void checkForUpdates() {
+    private void syncWithServer() {
         new PullActivitiesTask(this).execute();
+        new PushActivitiesTask(this).execute();
     }
 
 }
