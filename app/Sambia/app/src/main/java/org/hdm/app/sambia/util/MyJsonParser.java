@@ -21,7 +21,7 @@ public class MyJsonParser {
     public MyJsonParser() {}
 
 
-    public ArrayList<ActivityObject> createOjectFromJson(String objects, String jsonString) {
+    public ArrayList<ActivityObject> createObjectFromJson(String objects, String jsonString) {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -30,6 +30,7 @@ public class MyJsonParser {
 //            JsonParser jp = jsonFactory.createJsonParser(jsonString);
             ActivityObjectMap activityObjectMap = objectMapper.readValue(jsonString, ActivityObjectMap.class);
             ArrayList arrayList = activityObjectMap.get(objects);
+
 
 
             ActivityObject a =(ActivityObject) arrayList.get(1);
