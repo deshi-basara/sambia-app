@@ -4,81 +4,81 @@
       "group_activity": "On-Farm-Work",
       "sub_activity": "Land Preparation ",
       "item": "Hand",
-      "title": "Ploughing",
+      "title": "ic_beverage_preperation_a",
       "_id": "1",
-      "imageName": "graphic_cutting.png"
+      "imageName": "ic_beverage_preperation_a.png"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Land Preparation ",
       "item": "Hand",
-      "title": "Harrowing",
+      "title": "ic_beverage_preperation_h",
       "_id": "2",
-      "imageName": "graphic_seed.png"
+      "imageName": "ic_beverage_preperation_h.png"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Land Preparation ",
       "item": "Hand",
-      "title": "Ridging",
+      "title": "ic_beverage_preperation_m",
       "_id": "3",
-      "imageName": "graphic_walking.png"
+      "imageName": "ic_beverage_preperation_m.png"
     },
     {
       "group_activity": "On-Farm-Work",
       "sub_activity": "Land Preparation ",
       "item": "Hand",
-      "title": "Others",
+      "title": "ic_dippling_h",
       "_id": "4",
-      "imageName": "graphic_cutting.png"
+      "imageName": "ic_dippling_h.png"
     },
     {
       "group_activity": "On-Farm-Work",
-      "sub_activity": "",
+      "sub_activity": "Land Preparation ",
       "item": "Hand",
-      "title": "Planting",
+      "title": "ic_fertilization_a",
       "_id": "5",
-      "imageName": "graphic_seed.png"
+      "imageName": "ic_fertilization_a.png"
     },
     {
       "group_activity": "On-Farm-Work",
-      "sub_activity": "",
+      "sub_activity": "Land Preparation ",
       "item": "Hand",
-      "title": "Weeding",
+      "title": "ic_fertilization_h",
       "_id": "6",
-      "imageName": "graphic_walking.png"
+      "imageName": "ic_fertilization_h.png"
     },
     {
       "group_activity": "On-Farm-Work",
-      "sub_activity": "",
+      "sub_activity": "Land Preparation ",
       "item": "Hand",
-      "title": "Pest Control",
+      "title": "ic_beverage_preperation_h",
       "_id": "7",
-      "imageName": "graphic_walking.png"
+      "imageName": "ic_beverage_preperation_h.png"
     },
     {
       "group_activity": "On-Farm-Work",
-      "sub_activity": "",
+      "sub_activity": "Land Preparation ",
       "item": "Hand",
-      "title": "Fertilization",
+      "title": "ic_fertilization_m",
       "_id": "8",
-      "imageName": "graphic_cutting.png"
+      "imageName": "ic_fertilization_m.png"
     },
     {
       "group_activity": "On-Farm-Work",
-      "sub_activity": "",
+      "sub_activity": "Land Preparation ",
       "item": "Hand",
-      "title": "Protection of Crops",
+      "title": "ic_harrowing_a",
       "_id": "9",
-      "imageName": "graphic_walking.png"
+      "imageName": "ic_harrowing_a.png"
     },
     {
       "group_activity": "On-Farm-Work",
-      "sub_activity": "",
+      "sub_activity": "Land Preparation ",
       "item": "Hand",
-      "title": "Irrigation ",
+      "title": "ic_harrowing_h",
       "_id": "10",
-      "imageName": "graphic_walking.png"
+      "imageName": "ic_harrowing_h.png"
     }
   ]
 }
